@@ -1,23 +1,16 @@
 import { getProfile } from '@/lib/auth/profile'
-import { logout } from '@/app/(auth)/login/actions'
-import { Button } from '@/components/ui/button'
+import { PageHeader } from '@/components/page-header'
 
 export default async function PedidosPage() {
   const profile = await getProfile()
+  const primer = profile?.nombre.split(' ')[0] ?? ''
+
   return (
-    <main className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">Hola, {profile?.nombre.split(' ')[0]}</h1>
-          <p className="text-sm text-muted-foreground">Pedidos del día (placeholder — Tarea 7)</p>
-        </div>
-        <form action={logout}>
-          <Button type="submit" variant="ghost" className="h-10">Salir</Button>
-        </form>
+    <div className="p-5 space-y-5">
+      <PageHeader title={`Hola, ${primer}`} subtitle="Pedidos del día" />
+      <div className="rounded-xl border border-dashed p-10 text-center text-muted-foreground">
+        Acá va la lista de pedidos del día. (Tarea 7)
       </div>
-      <div className="rounded-lg border border-dashed p-8 text-center text-muted-foreground">
-        Acá va la lista de pedidos.
-      </div>
-    </main>
+    </div>
   )
 }
