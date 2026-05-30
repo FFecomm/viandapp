@@ -42,7 +42,7 @@ export default async function CreditoPage({ searchParams }: { searchParams: Sear
     <div className="p-5 space-y-5">
       <PageHeader
         title="Crédito a favor"
-        subtitle="Padres que pagaron por adelantado"
+        subtitle="Saldo en viandas de cada alumno (prepago)"
         action={
           puedeCargar ? (
             <Link href="/credito/cargar" className={cn(buttonVariants(), 'h-11 px-4')}>
@@ -67,7 +67,7 @@ export default async function CreditoPage({ searchParams }: { searchParams: Sear
 
       {!alumnos?.length ? (
         <div className="rounded-xl border border-dashed p-10 text-center text-muted-foreground">
-          {q ? 'No encontramos alumnos.' : 'Nadie tiene crédito ni deuda por ahora.'}
+          {q ? 'No encontramos alumnos.' : 'Nadie tiene saldo a favor por ahora.'}
         </div>
       ) : (
         <ul className="space-y-2">

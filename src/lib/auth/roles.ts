@@ -40,3 +40,20 @@ export function puedeGestionarUsuarios(rol: Rol): boolean {
 export function puedeVerCaja(rol: Rol): boolean {
   return rol === 'administrativo'
 }
+
+export function esPadre(rol: Rol): boolean {
+  return rol === 'padre'
+}
+
+export function esStaff(rol: Rol): boolean {
+  return rol === 'operadora' || rol === 'encargada' || rol === 'administrativo'
+}
+
+/**
+ * Ruta de inicio según el rol. Login y / redirigen acá.
+ */
+export function rutaInicio(rol: Rol): string {
+  if (rol === 'padre') return '/familia'
+  if (rol === 'encargada') return '/encargada'
+  return '/pedidos'
+}

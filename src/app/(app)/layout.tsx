@@ -4,8 +4,8 @@ import { logout } from '@/app/(auth)/login/actions'
 import { TabBar } from '@/components/tab-bar'
 
 /**
- * Layout autenticado. Garantiza que existe un perfil en `usuarios`.
- * Si la cuenta de auth no tiene perfil, cierra sesión.
+ * Layout autenticado del staff (operadora, encargada, administrativo).
+ * Padres se redirigen a /familia.
  */
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const profile = await getProfile()
@@ -13,6 +13,14 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!profile) {
     await logout()
     redirect('/login')
+  }
+
+  if (profile.rol === 'padre') {
+    redirect('/familia')
+  }
+
+  if (profile.rol === 'encargada') {
+    redirect('/encargada')
   }
 
   return (

@@ -22,7 +22,7 @@ export interface Database {
 
 // Tipos de dominio frecuentes (manuales hasta tener generación automática).
 
-export type Rol = 'operadora' | 'encargada' | 'administrativo'
+export type Rol = 'operadora' | 'encargada' | 'administrativo' | 'padre'
 
 export type Profile = {
   id: string

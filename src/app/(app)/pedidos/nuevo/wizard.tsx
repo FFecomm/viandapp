@@ -2,24 +2,16 @@
 
 import { useMemo, useState, useTransition } from 'react'
 import { toast } from 'sonner'
-import { Check, ChevronLeft, Search, User } from 'lucide-react'
-import { cargarPedidoYVolver } from '../actions'
+import { useRouter } from 'next/navigation'
+import { Check, ChevronLeft, ChevronRight, Search, User } from 'lucide-react'
+import { cargarPedidoOperadora } from '../actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
-import {
-  describirCredito,
-  diaCicloDe,
-  fechaHoyAR,
-  fechaMananaAR,
-  formatFecha,
-  formatPesos,
-  FORMAS_PAGO_LABEL,
-} from '@/lib/format'
-import type { FormaPago, TipoMenu } from '@/lib/supabase/types'
+import { diaCicloDe, fechaHoyAR } from '@/lib/format'
+import type { TipoMenu } from '@/lib/supabase/types'
 
 type Alumno = {
   id: string
@@ -30,392 +22,356 @@ type Alumno = {
   viandas_credito: number
 }
 type MenuRow = { dia_ciclo: number; tipo_menu: 'A' | 'B' | 'C'; descripcion: string }
-type Producto = { id: string; nombre: string; precio: number; categoria: 'bebida' | 'extra' }
 
-type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7
+type DiaSeleccionado = { fecha: string; menu: TipoMenu | null; observaciones: string }
 
-const FIJOS: { menu: TipoMenu; label: string }[] = [
-  { menu: 'Hamburguesa', label: 'Hamburguesa con papas' },
-  { menu: 'Fideos', label: 'Fideos con queso' },
-  { menu: 'Sandwich', label: 'Sándwich de suprema' },
+const FIJOS: { menu: TipoMenu; descripcion: string }[] = [
+  { menu: 'Hamburguesa', descripcion: 'Hamburguesa con papas' },
+  { menu: 'Fideos', descripcion: 'Fideos con queso' },
+  { menu: 'Sandwich', descripcion: 'Sándwich de suprema' },
 ]
+
+const DIAS_SEMANA = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+
+function proximosDiasHabiles(n: number, incluirHoy = true): string[] {
+  const dias: string[] = []
+  const hoyStr = fechaHoyAR()
+  const [y, m, d] = hoyStr.split('-').map(Number)
+  const cursor = new Date(Date.UTC(y, m - 1, d))
+  if (!incluirHoy) cursor.setUTCDate(cursor.getUTCDate() + 1)
+  while (dias.length < n) {
+    const dow = cursor.getUTCDay()
+    if (dow !== 0 && dow !== 6) {
+      const yy = cursor.getUTCFullYear()
+      const mm = String(cursor.getUTCMonth() + 1).padStart(2, '0')
+      const dd = String(cursor.getUTCDate()).padStart(2, '0')
+      dias.push(`${yy}-${mm}-${dd}`)
+    }
+    cursor.setUTCDate(cursor.getUTCDate() + 1)
+  }
+  return dias
+}
+
+function formatDiaLargo(fecha: string): string {
+  const [y, m, d] = fecha.split('-').map(Number)
+  const date = new Date(Date.UTC(y, m - 1, d))
+  return `${DIAS_SEMANA[date.getUTCDay()]} ${d} de ${MESES[m - 1]}`
+}
+
+function etiquetaMenu(menu: TipoMenu): string {
+  return menu === 'A' || menu === 'B' || menu === 'C' ? `Menú ${menu}` : menu
+}
+
+type Step = 0 | 1 | 2 | 3
 
 export function NuevoPedidoWizard({
   alumnos,
   menus,
-  productos,
   precioVianda,
 }: {
   alumnos: Alumno[]
   menus: MenuRow[]
-  productos: Producto[]
   precioVianda: number
 }) {
-  const [step, setStep] = useState<Step>(1)
+  const router = useRouter()
+  const [step, setStep] = useState<Step>(0)
   const [alumno, setAlumno] = useState<Alumno | null>(null)
   const [query, setQuery] = useState('')
-  const [fecha, setFecha] = useState<string>(fechaHoyAR())
-  const [menu, setMenu] = useState<TipoMenu | null>(null)
-  const [obs, setObs] = useState<string>('')
-  const [seleccionados, setSeleccionados] = useState<Set<string>>(new Set())
-  const [forma, setForma] = useState<FormaPago | null>(null)
+  const [seleccionados, setSeleccionados] = useState<DiaSeleccionado[]>([])
   const [pending, startTransition] = useTransition()
 
   const matches = useMemo(() => {
-    if (!query.trim()) return []
-    const q = query.toLowerCase()
-    return alumnos.filter((a) => a.nombre_completo.toLowerCase().includes(q)).slice(0, 8)
-  }, [query, alumnos])
+    if (alumno) return []
+    if (!query.trim()) return alumnos.slice(0, 10)
+    const q = query.trim().toLowerCase()
+    return alumnos.filter((a) => a.nombre_completo.toLowerCase().includes(q)).slice(0, 12)
+  }, [alumnos, query, alumno])
 
-  const menusDelDia = useMemo(() => {
-    const dia = diaCicloDe(fecha)
-    return menus.filter((m) => m.dia_ciclo === dia)
-  }, [menus, fecha])
+  const diasDisponibles = useMemo(() => proximosDiasHabiles(10, true), [])
 
-  const productosElegidos = useMemo(
-    () => productos.filter((p) => seleccionados.has(p.id)),
-    [productos, seleccionados],
-  )
-
-  const totalExtras = productosElegidos.reduce((s, p) => s + p.precio, 0)
-  const totalPedido = precioVianda + totalExtras
-
-  const creditoPesos = alumno ? Number(alumno.credito_pesos) : 0
   const viandasDisponibles = alumno?.viandas_credito ?? 0
-  const tieneCredito = viandasDisponibles > 0 || creditoPesos > 0
+  const viandasUsar = seleccionados.length
+  const saldoDespues = viandasDisponibles - viandasUsar
+  const saldoSuficiente = saldoDespues >= 0
+  const todosTienenMenu = seleccionados.length > 0 && seleccionados.every((s) => s.menu !== null)
 
-  const previewCredito = useMemo(() => {
-    if (!alumno || forma !== 'credito') return null
-    const nuevoSaldo = creditoPesos - totalPedido
-    const nuevasViandas = Math.max(0, viandasDisponibles - 1)
-    return { nuevoSaldo, nuevasViandas }
-  }, [alumno, forma, creditoPesos, totalPedido, viandasDisponibles])
-
-  function next() {
-    setStep((s) => Math.min(7, s + 1) as Step)
-  }
-  function back() {
-    setStep((s) => Math.max(1, s - 1) as Step)
-  }
-
-  function toggleProducto(id: string) {
+  function toggleDia(fecha: string) {
     setSeleccionados((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
+      if (prev.find((s) => s.fecha === fecha)) return prev.filter((s) => s.fecha !== fecha)
+      return [...prev, { fecha, menu: null, observaciones: '' }].sort((a, b) => a.fecha.localeCompare(b.fecha))
     })
+  }
+  function setMenuDia(fecha: string, menu: TipoMenu) {
+    setSeleccionados((prev) => prev.map((s) => (s.fecha === fecha ? { ...s, menu } : s)))
+  }
+  function setObsDia(fecha: string, obs: string) {
+    setSeleccionados((prev) => prev.map((s) => (s.fecha === fecha ? { ...s, observaciones: obs } : s)))
   }
 
   function confirmar() {
-    if (!alumno || !menu || !forma) return
+    if (!alumno || !todosTienenMenu || !saldoSuficiente) return
     startTransition(async () => {
-      const result = await cargarPedidoYVolver({
+      const result = await cargarPedidoOperadora({
         alumno_id: alumno.id,
-        fecha,
-        menu,
-        observaciones: obs.trim() || null,
-        forma_pago_vianda: forma,
         precio_vianda: precioVianda,
-        productos: productosElegidos.map((p) => ({ producto_id: p.id, cantidad: 1 })),
+        dias: seleccionados.map((s) => ({
+          fecha: s.fecha,
+          menu: s.menu!,
+          observaciones: s.observaciones.trim() || null,
+        })),
       })
       if (result?.error) toast.error(result.error)
+      else {
+        toast.success(`Pedido cargado para ${alumno.nombre_completo.split(' ')[0]}`)
+        router.push(`/pedidos?fecha=${seleccionados[0].fecha}`)
+      }
     })
   }
 
   return (
     <div className="space-y-5">
-      <Pasos paso={step} />
+      <Indicador paso={step} />
 
-      {step > 1 ? (
-        <Button onClick={back} variant="ghost" size="sm" className="-ml-2 h-9">
+      {step > 0 ? (
+        <Button
+          onClick={() => {
+            if (step === 1) {
+              setAlumno(null)
+              setSeleccionados([])
+            }
+            setStep((s) => Math.max(0, s - 1) as Step)
+          }}
+          variant="ghost"
+          size="sm"
+          className="-ml-2 h-9"
+        >
           <ChevronLeft className="size-4" /> Atrás
         </Button>
       ) : null}
 
-      {step === 1 && (
+      {step === 0 && (
         <section className="space-y-3">
-          <h2 className="text-xl font-medium">¿Para quién es el pedido?</h2>
-          {alumno ? (
-            <div className="flex items-center justify-between rounded-xl border p-4">
-              <div className="flex items-center gap-3">
-                <User className="size-5 text-muted-foreground" />
-                <div>
-                  <p className="font-medium">{alumno.nombre_completo}</p>
-                  <p className="text-sm text-muted-foreground">{alumno.grado}° {alumno.division}</p>
-                </div>
-              </div>
-              <Button variant="ghost" size="sm" onClick={() => { setAlumno(null); setQuery('') }}>
-                Cambiar
-              </Button>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-                <Input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Buscar por nombre"
-                  className="h-12 pl-9 text-base"
-                  autoFocus
-                />
-              </div>
-              {matches.length > 0 && (
-                <ul className="rounded-xl border divide-y bg-card max-h-72 overflow-auto">
-                  {matches.map((a) => (
-                    <li key={a.id}>
-                      <button
-                        type="button"
-                        onClick={() => { setAlumno(a); next() }}
-                        className="w-full text-left p-3 hover:bg-muted"
-                      >
-                        <p className="font-medium">{a.nombre_completo}</p>
-                        <p className="text-xs text-muted-foreground">{a.grado}° {a.division}</p>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
-          {alumno && (
-            <Button onClick={next} className="w-full h-12 text-base">Continuar</Button>
-          )}
+          <h2 className="text-xl font-medium">¿Para qué alumno?</h2>
+          <div className="relative">
+            <Search className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Buscar por nombre"
+              className="pl-9 h-11 text-base"
+              autoFocus
+            />
+          </div>
+          <ul className="space-y-2 max-h-[60vh] overflow-y-auto">
+            {matches.map((a) => (
+              <li key={a.id}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAlumno(a)
+                    setStep(1)
+                  }}
+                  className="w-full rounded-xl border p-3 text-left hover:bg-muted flex items-center justify-between gap-2"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <User className="size-5 text-muted-foreground shrink-0" />
+                    <div className="min-w-0">
+                      <p className="font-medium truncate">{a.nombre_completo}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {a.grado}° {a.division}
+                      </p>
+                    </div>
+                  </div>
+                  <Badge variant="secondary" className="shrink-0">
+                    {a.viandas_credito} viandas
+                  </Badge>
+                </button>
+              </li>
+            ))}
+            {matches.length === 0 ? (
+              <li className="text-sm text-muted-foreground text-center py-4">Sin resultados</li>
+            ) : null}
+          </ul>
+        </section>
+      )}
+
+      {step === 1 && alumno && (
+        <section className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Para <span className="font-medium text-foreground">{alumno.nombre_completo}</span> · {alumno.viandas_credito} viandas disponibles
+          </p>
+          <h2 className="text-xl font-medium">¿Qué días?</h2>
+          <p className="text-sm text-muted-foreground">Elegí uno o más días hábiles.</p>
+          <ul className="space-y-2">
+            {diasDisponibles.map((fecha) => {
+              const elegido = !!seleccionados.find((s) => s.fecha === fecha)
+              return (
+                <li key={fecha}>
+                  <button
+                    type="button"
+                    onClick={() => toggleDia(fecha)}
+                    className={cn(
+                      'w-full flex items-center justify-between rounded-xl border p-4 text-left transition-colors',
+                      elegido ? 'border-primary bg-primary/10' : 'hover:bg-muted',
+                    )}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        'size-6 rounded-md border flex items-center justify-center',
+                        elegido && 'bg-primary border-primary',
+                      )}>
+                        {elegido && <Check className="size-4 text-primary-foreground" />}
+                      </div>
+                      <p className="font-medium">{formatDiaLargo(fecha)}</p>
+                    </div>
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+          <Button
+            onClick={() => setStep(2)}
+            disabled={seleccionados.length === 0}
+            className="w-full h-12 text-base"
+          >
+            Siguiente <ChevronRight className="size-4" />
+          </Button>
         </section>
       )}
 
       {step === 2 && (
-        <section className="space-y-3">
-          <h2 className="text-xl font-medium">¿Qué día?</h2>
-          <div className="grid grid-cols-2 gap-2">
-            <BotonAccesoFecha onClick={() => { setFecha(fechaHoyAR()); next() }} active={fecha === fechaHoyAR()} label="Hoy" />
-            <BotonAccesoFecha onClick={() => { setFecha(fechaMananaAR()); next() }} active={fecha === fechaMananaAR()} label="Mañana" />
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="fecha">Otra fecha</Label>
-            <Input
-              id="fecha"
-              type="date"
-              value={fecha}
-              min={fechaHoyAR()}
-              onChange={(e) => setFecha(e.target.value)}
-              className="h-12 text-base"
-            />
-          </div>
-          <Button onClick={next} className="w-full h-12 text-base">Continuar con {formatFecha(fecha)}</Button>
-        </section>
-      )}
-
-      {step === 3 && (
-        <section className="space-y-3">
-          <h2 className="text-xl font-medium">¿Qué menú?</h2>
-          <p className="text-sm text-muted-foreground">Para el {formatFecha(fecha)}</p>
-          <div className="grid grid-cols-2 gap-2">
-            {menusDelDia.map((m) => (
-              <BotonMenu
-                key={m.tipo_menu}
-                titulo={`Menú ${m.tipo_menu}`}
-                descripcion={m.descripcion}
-                active={menu === m.tipo_menu}
-                onClick={() => { setMenu(m.tipo_menu as TipoMenu); next() }}
-              />
-            ))}
-            {FIJOS.map((f) => (
-              <BotonMenu
-                key={f.menu}
-                titulo={f.menu}
-                descripcion={f.label}
-                active={menu === f.menu}
-                onClick={() => { setMenu(f.menu); next() }}
-              />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {step === 4 && (
-        <section className="space-y-3">
-          <h2 className="text-xl font-medium">¿Alguna observación?</h2>
-          <p className="text-sm text-muted-foreground">Ej: «sin cebolla», «con poco condimento». Opcional.</p>
-          <Textarea
-            value={obs}
-            onChange={(e) => setObs(e.target.value)}
-            placeholder="Escribí acá si hace falta…"
-            className="min-h-24 text-base"
-          />
-          <div className="flex gap-2">
-            <Button onClick={next} variant="outline" className="flex-1 h-12 text-base">Saltar</Button>
-            <Button onClick={next} className="flex-1 h-12 text-base">Continuar</Button>
-          </div>
-        </section>
-      )}
-
-      {step === 5 && (
-        <section className="space-y-3">
-          <h2 className="text-xl font-medium">¿Productos adicionales?</h2>
-          {productos.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay productos cargados en el catálogo.</p>
-          ) : (
-            <ul className="space-y-2">
-              {productos.map((p) => {
-                const sel = seleccionados.has(p.id)
-                return (
-                  <li key={p.id}>
-                    <button
-                      type="button"
-                      onClick={() => toggleProducto(p.id)}
-                      className={cn(
-                        'w-full flex items-center justify-between gap-2 rounded-xl border p-4 text-left transition-colors',
-                        sel && 'border-primary bg-primary/5',
-                      )}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={cn(
-                          'size-6 rounded-md border flex items-center justify-center',
-                          sel && 'bg-primary border-primary',
-                        )}>
-                          {sel && <Check className="size-4 text-primary-foreground" />}
-                        </div>
-                        <div>
-                          <p className="font-medium">{p.nombre}</p>
-                          <p className="text-xs text-muted-foreground capitalize">{p.categoria}</p>
-                        </div>
-                      </div>
-                      <span className="font-medium">{formatPesos(p.precio)}</span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-          <Button onClick={next} className="w-full h-12 text-base">
-            Continuar {seleccionados.size > 0 ? `(${seleccionados.size} extra${seleccionados.size === 1 ? '' : 's'})` : ''}
-          </Button>
-        </section>
-      )}
-
-      {step === 6 && (
-        <section className="space-y-3">
-          <h2 className="text-xl font-medium">¿Cómo paga?</h2>
-          <p className="text-sm">
-            Total: <span className="font-semibold">{formatPesos(totalPedido)}</span>
-            {totalExtras > 0 ? ` (vianda ${formatPesos(precioVianda)} + extras ${formatPesos(totalExtras)})` : null}
-          </p>
-
-          <div className="grid grid-cols-2 gap-2">
-            {(['credito', 'transferencia', 'efectivo', 'a_deber'] as const).map((opt) => {
-              const deshab = opt === 'credito' && !tieneCredito
+        <section className="space-y-5">
+          <h2 className="text-xl font-medium">Elegí el menú de cada día</h2>
+          <ul className="space-y-5">
+            {seleccionados.map((s) => {
+              const dia = diaCicloDe(s.fecha)
+              const menusDelDia = menus.filter((m) => m.dia_ciclo === dia)
+              const opciones: { value: TipoMenu; titulo: string; descripcion: string }[] = [
+                ...menusDelDia.map((m) => ({
+                  value: m.tipo_menu as TipoMenu,
+                  titulo: `Menú ${m.tipo_menu}`,
+                  descripcion: m.descripcion,
+                })),
+                ...FIJOS.map((f) => ({ value: f.menu, titulo: f.menu, descripcion: f.descripcion })),
+              ]
               return (
-                <button
-                  key={opt}
-                  type="button"
-                  disabled={deshab}
-                  onClick={() => { setForma(opt); next() }}
-                  className={cn(
-                    'rounded-xl border p-4 text-left transition-colors',
-                    forma === opt ? 'border-primary bg-primary/10' : 'hover:bg-muted',
-                    deshab && 'opacity-50 cursor-not-allowed',
-                  )}
-                >
-                  <p className="font-medium">{FORMAS_PAGO_LABEL[opt]}</p>
-                  {opt === 'credito' && alumno && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {tieneCredito ? describirCredito(viandasDisponibles, creditoPesos) : 'Sin saldo'}
-                    </p>
-                  )}
-                </button>
+                <li key={s.fecha} className="space-y-3 rounded-2xl border p-4">
+                  <p className="text-base font-medium">{formatDiaLargo(s.fecha)}</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {opciones.map((o) => (
+                      <button
+                        key={o.value}
+                        type="button"
+                        onClick={() => setMenuDia(s.fecha, o.value)}
+                        className={cn(
+                          'h-24 rounded-xl border p-3 text-left transition-colors flex flex-col justify-between',
+                          s.menu === o.value ? 'border-primary bg-primary/10' : 'hover:bg-muted',
+                        )}
+                      >
+                        <Badge variant="secondary" className="w-fit text-xs">{o.titulo}</Badge>
+                        <p className="text-xs leading-tight">{o.descripcion}</p>
+                      </button>
+                    ))}
+                  </div>
+                  <Textarea
+                    value={s.observaciones}
+                    onChange={(e) => setObsDia(s.fecha, e.target.value)}
+                    placeholder="Observaciones (opcional)"
+                    className="min-h-16 text-sm"
+                  />
+                </li>
               )
             })}
-          </div>
-
-          {previewCredito && alumno && (
-            <div className="rounded-xl border bg-violet-50 p-4 text-sm">
-              <p className="text-muted-foreground">Después del pedido quedan:</p>
-              <p className="font-medium mt-1">
-                {previewCredito.nuevasViandas} viandas y {formatPesos(previewCredito.nuevoSaldo)} en saldo.
-              </p>
-            </div>
-          )}
-        </section>
-      )}
-
-      {step === 7 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-medium">Confirmar pedido</h2>
-          <ul className="space-y-2 rounded-xl border p-4 text-sm">
-            <Row label="Alumno" value={`${alumno?.nombre_completo} (${alumno?.grado}° ${alumno?.division})`} />
-            <Row label="Fecha" value={formatFecha(fecha)} />
-            <Row label="Menú" value={menu === 'A' || menu === 'B' || menu === 'C' ? `Menú ${menu}` : (menu ?? '')} />
-            {obs ? <Row label="Observaciones" value={obs} /> : null}
-            {productosElegidos.length > 0 && (
-              <Row label="Extras" value={productosElegidos.map((p) => p.nombre).join(', ')} />
-            )}
-            <Row label="Forma de pago" value={forma ? FORMAS_PAGO_LABEL[forma] : ''} />
-            <Row label="Total" value={formatPesos(totalPedido)} bold />
           </ul>
-
-          <Button onClick={confirmar} disabled={pending} className="w-full h-12 text-base">
-            {pending ? 'Guardando…' : 'Confirmar pedido'}
+          <Button
+            onClick={() => setStep(3)}
+            disabled={!todosTienenMenu}
+            className="w-full h-12 text-base"
+          >
+            Siguiente <ChevronRight className="size-4" />
           </Button>
         </section>
       )}
-    </div>
-  )
-}
 
-function Pasos({ paso }: { paso: Step }) {
-  return (
-    <div className="flex items-center gap-1">
-      {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-        <div
-          key={n}
-          className={cn(
-            'flex-1 h-1 rounded-full',
-            paso >= n ? 'bg-primary' : 'bg-muted',
+      {step === 3 && alumno && (
+        <section className="space-y-5">
+          <h2 className="text-xl font-medium">Confirmar pedido</h2>
+          <div className="rounded-2xl border overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/50">
+                <tr>
+                  <th className="text-left p-3 font-medium">Día</th>
+                  <th className="text-left p-3 font-medium">Menú</th>
+                </tr>
+              </thead>
+              <tbody>
+                {seleccionados.map((s) => (
+                  <tr key={s.fecha} className="border-t">
+                    <td className="p-3">
+                      <p>{formatDiaLargo(s.fecha)}</p>
+                      {s.observaciones ? (
+                        <p className="text-xs text-muted-foreground mt-0.5">{s.observaciones}</p>
+                      ) : null}
+                    </td>
+                    <td className="p-3">{s.menu ? etiquetaMenu(s.menu) : ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="rounded-2xl border p-4 space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Alumno</span>
+              <span className="font-medium">{alumno.nombre_completo}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Saldo actual</span>
+              <span>{viandasDisponibles} {viandasDisponibles === 1 ? 'vianda' : 'viandas'}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Viandas a usar</span>
+              <span>{viandasUsar}</span>
+            </div>
+            <div className="border-t pt-2 flex justify-between">
+              <span className="text-muted-foreground">Saldo que queda</span>
+              <span className={cn('font-semibold', !saldoSuficiente && 'text-destructive')}>
+                {saldoDespues}
+              </span>
+            </div>
+          </div>
+
+          {!saldoSuficiente ? (
+            <div className="rounded-xl bg-orange-50 border border-orange-200 p-4 text-sm">
+              <p className="font-medium">Saldo insuficiente</p>
+              <p className="text-muted-foreground mt-1">
+                Cargá saldo desde <span className="font-medium">Crédito → Cargar pago</span> y volvé a intentar.
+              </p>
+            </div>
+          ) : (
+            <Button onClick={confirmar} disabled={pending} className="w-full h-12 text-base">
+              {pending ? 'Guardando…' : 'Confirmar pedido'}
+            </Button>
           )}
-        />
-      ))}
+        </section>
+      )}
     </div>
   )
 }
 
-function BotonAccesoFecha({ active, label, onClick }: { active: boolean; label: string; onClick: () => void }) {
+function Indicador({ paso }: { paso: Step }) {
+  const labels = ['Alumno', 'Días', 'Menús', 'Confirmar']
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        'h-14 rounded-xl border font-medium transition-colors',
-        active ? 'border-primary bg-primary/10' : 'hover:bg-muted',
-      )}
-    >
-      {label}
-    </button>
-  )
-}
-
-function BotonMenu({ titulo, descripcion, active, onClick }: { titulo: string; descripcion: string; active: boolean; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        'h-28 rounded-xl border p-3 text-left transition-colors flex flex-col justify-between',
-        active ? 'border-primary bg-primary/10' : 'hover:bg-muted',
-      )}
-    >
-      <Badge variant="secondary" className="w-fit">{titulo}</Badge>
-      <p className="text-sm leading-tight">{descripcion}</p>
-    </button>
-  )
-}
-
-function Row({ label, value, bold }: { label: string; value: string; bold?: boolean }) {
-  return (
-    <li className="flex items-start justify-between gap-2">
-      <span className="text-muted-foreground shrink-0">{label}</span>
-      <span className={cn('text-right', bold && 'font-semibold')}>{value}</span>
-    </li>
+    <div className="flex items-center gap-3 text-sm text-muted-foreground">
+      <span>
+        <span className="font-semibold text-foreground">{Math.min(paso + 1, 4)}</span> / 4
+      </span>
+      <div className="flex-1 flex gap-1">
+        {labels.map((_, n) => (
+          <div key={n} className={cn('flex-1 h-1 rounded-full', paso >= n ? 'bg-primary' : 'bg-muted')} />
+        ))}
+      </div>
+    </div>
   )
 }

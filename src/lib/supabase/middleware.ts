@@ -29,12 +29,14 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const path = request.nextUrl.pathname
 
-  const isAuthRoute = path.startsWith('/login')
-  const isPublic = isAuthRoute || path.startsWith('/_next') || path === '/manifest.webmanifest' || path === '/sw.js' || path === '/icon.svg' || path.startsWith('/icon-') || path === '/apple-icon.png'
+  const isAuthRoute = path.startsWith('/login') || path.startsWith('/registro') || path.startsWith('/bienvenida') || path.startsWith('/confirmar-email')
+  const isPublic = isAuthRoute || path.startsWith('/api/pagos/webhook') || path.startsWith('/_next') || path === '/manifest.webmanifest' || path === '/sw.js' || path === '/icon.svg' || path.startsWith('/icon-') || path === '/apple-icon.png'
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    // Sin sesión, los visitantes que entran al root van a la bienvenida;
+    // cualquier otra ruta protegida los manda al login.
+    url.pathname = path === '/' ? '/bienvenida' : '/login'
     return NextResponse.redirect(url)
   }
 

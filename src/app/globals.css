@@ -23,6 +23,14 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Paleta de marca Croix · ViandApp */
+  --color-brand-navy: #1A3A6B;
+  --color-brand-blue: #378ADD;
+  --color-brand-green: #1D9E75;
+  --color-brand-orange: #E0851F;
+  --color-brand-violet: #534AB7;
+  --color-brand-dark: #1A1D21;
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -53,12 +61,14 @@
 @layer base {
   :root {
     --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    /* DARK #1A1D21 */
+    --foreground: oklch(0.205 0.005 240);
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
+    --card-foreground: oklch(0.205 0.005 240);
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.55 0.18 251);
+    --popover-foreground: oklch(0.205 0.005 240);
+    /* BLUE #378ADD — acción principal */
+    --primary: oklch(0.62 0.16 245);
     --primary-foreground: oklch(0.985 0 0);
     --secondary: oklch(0.97 0 0);
     --secondary-foreground: oklch(0.205 0 0);
@@ -69,7 +79,7 @@
     --destructive: oklch(0.577 0.245 27.325);
     --border: oklch(0.922 0 0);
     --input: oklch(0.922 0 0);
-    --ring: oklch(0.55 0.18 251);
+    --ring: oklch(0.62 0.16 245);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);

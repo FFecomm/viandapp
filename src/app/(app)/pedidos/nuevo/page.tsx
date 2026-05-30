@@ -5,10 +5,10 @@ import { requireRole } from '@/lib/auth/roles'
 import { NuevoPedidoWizard } from './wizard'
 
 export default async function NuevoPedidoPage() {
-  await requireRole(['operadora'])
+  await requireRole(['operadora', 'administrativo'])
 
   const supabase = createClient()
-  const [{ data: alumnos }, { data: menus }, { data: productos }, { data: config }] = await Promise.all([
+  const [{ data: alumnos }, { data: menus }, { data: config }] = await Promise.all([
     supabase
       .from('alumnos')
       .select('id, nombre_completo, grado, division, credito_pesos, viandas_credito')
@@ -19,11 +19,6 @@ export default async function NuevoPedidoPage() {
       .from('menu_ciclo')
       .select('dia_ciclo, tipo_menu, descripcion')
       .order('dia_ciclo'),
-    supabase
-      .from('productos')
-      .select('id, nombre, precio, categoria')
-      .eq('activo', true)
-      .order('nombre'),
     supabase
       .from('configuracion')
       .select('value')
@@ -40,7 +35,6 @@ export default async function NuevoPedidoPage() {
       <NuevoPedidoWizard
         alumnos={(alumnos ?? []) as never}
         menus={(menus ?? []) as never}
-        productos={(productos ?? []) as never}
         precioVianda={Number(config?.value ?? 9500)}
       />
     </div>

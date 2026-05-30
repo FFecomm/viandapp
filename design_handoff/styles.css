@@ -1,0 +1,44 @@
+/* ViandApp — design tokens */
+:root {
+  --va-blue: #378ADD;
+  --va-blue-50: #E6F1FB;
+  --va-blue-100: #C9E0F5;
+  --va-green: #1D9E75;
+  --va-green-50: #E4F5EE;
+  --va-yellow: #FAEEDA;
+  --va-yellow-ink: #8A6A1F;
+  --va-red: #FCEBEB;
+  --va-red-ink: #C0392B;
+  --va-violet: #534AB7;
+  --va-violet-50: #ECEAF8;
+
+  --va-ink: #1A1D21;
+  --va-ink-2: #4B5158;
+  --va-ink-3: #8A9099;
+  --va-line: #E8EAED;
+  --va-line-2: #F1F2F4;
+  --va-bg: #FFFFFF;
+  --va-surface: #FAFAFB;
+
+  --va-r-card: 16px;
+  --va-r-btn: 14px;
+  --va-r-chip: 999px;
+
+  --va-font: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+
+.va {
+  font-family: var(--va-font);
+  color: var(--va-ink);
+  background: var(--va-bg);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+.va * { box-sizing: border-box; }
+
+.va-scroll { overflow-y: auto; height: 100%; }
+.va-scroll::-webkit-scrollbar { display: none; }
+
+/* hide scrollbars inside artboards */
+.va ::-webkit-scrollbar { display: none; }

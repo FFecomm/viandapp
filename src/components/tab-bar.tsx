@@ -14,6 +14,8 @@ import {
   UserCog,
   ReceiptText,
   LogOut,
+  ClipboardList,
+  HandCoins,
 } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { logout } from '@/app/(auth)/login/actions'
@@ -30,14 +32,15 @@ const TABS_PRIMARIOS: Record<Rol, Tab[]> = {
     { href: '/credito', icon: Wallet, label: 'Crédito' },
   ],
   encargada: [
-    { href: '/pedidos', icon: CalendarDays, label: 'Pedidos' },
-    { href: '/planilla', icon: FileText, label: 'Planilla' },
+    { href: '/encargada', icon: ClipboardList, label: 'Salón' },
+    { href: '/encargada/cobro', icon: HandCoins, label: 'Cobrar' },
   ],
   administrativo: [
     { href: '/pedidos', icon: CalendarDays, label: 'Pedidos' },
     { href: '/caja', icon: ReceiptText, label: 'Caja' },
     { href: '/credito', icon: Wallet, label: 'Crédito' },
   ],
+  padre: [],
 }
 
 const TABS_MAS: Record<Rol, Tab[]> = {
@@ -53,6 +56,7 @@ const TABS_MAS: Record<Rol, Tab[]> = {
     { href: '/usuarios', icon: UserCog, label: 'Usuarios' },
     { href: '/planilla', icon: FileText, label: 'Planilla' },
   ],
+  padre: [],
 }
 
 export function TabBar({ rol, nombre }: { rol: Rol; nombre: string }) {

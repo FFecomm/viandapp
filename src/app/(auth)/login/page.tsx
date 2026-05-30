@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getProfile } from '@/lib/auth/profile'
 import { LoginForm } from './login-form'
@@ -14,6 +15,12 @@ export default async function LoginPage() {
           <p className="text-sm text-muted-foreground">Entrá con tu cuenta</p>
         </div>
         <LoginForm />
+        <p className="text-sm text-center text-muted-foreground">
+          ¿No tenés cuenta?{' '}
+          <Link href="/registro" className="text-primary font-medium">
+            Registrate
+          </Link>
+        </p>
       </div>
     </main>
   )

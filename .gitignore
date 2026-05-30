@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# binarios y docs personales (handoff, presentaciones)
+*.zip
+*.pptx
+*.docx
+preview.html
+ViandApp-handoff.zip
