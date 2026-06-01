@@ -10,8 +10,8 @@ export default function PoliticaPrivacidadPage() {
 
       <h2 className="text-lg font-semibold mt-6">1. Quiénes somos</h2>
       <p>
-        ViandApp es una herramienta operada en colaboración con <strong>Croix SAS</strong> ({/* TODO: dirección legal */}),
-        que permite a las familias gestionar y pagar las viandas escolares de sus hijos.
+        ViandApp es una herramienta operada en colaboración con <strong>Croix SAS</strong>, con domicilio legal en
+        la República Argentina, que permite a las familias gestionar y pagar las viandas escolares de sus hijos.
       </p>
 
       <h2 className="text-lg font-semibold mt-6">2. Qué datos guardamos</h2>
@@ -43,7 +43,7 @@ export default function PoliticaPrivacidadPage() {
       <h2 className="text-lg font-semibold mt-6">5. Tus derechos</h2>
       <p>
         Tenés derecho a acceder, rectificar o pedir la eliminación de tus datos en cualquier momento.
-        Escribinos a <strong>{/* TODO: email de contacto */}</strong> y respondemos dentro de los 10 días hábiles.
+        Escribinos a <a href="mailto:fmajul2@gmail.com" className="text-primary underline"><strong>fmajul2@gmail.com</strong></a> y respondemos dentro de los 10 días hábiles.
       </p>
 
       <h2 className="text-lg font-semibold mt-6">6. Datos de menores</h2>

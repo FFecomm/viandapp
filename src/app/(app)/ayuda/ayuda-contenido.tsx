@@ -110,8 +110,8 @@ export function AyudaContenido({ rol }: { rol: Rol }) {
     <div className="space-y-3">
       <p className="text-sm text-muted-foreground">
         Si no encontrás la respuesta, escribinos a{' '}
-        <a href="mailto:soporte@viandapp.com" className="text-primary underline">
-          soporte@viandapp.com
+        <a href="mailto:fmajul2@gmail.com" className="text-primary underline">
+          fmajul2@gmail.com
         </a>
         .
       </p>

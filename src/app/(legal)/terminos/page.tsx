@@ -52,13 +52,13 @@ export default function TerminosPage() {
       <h2 className="text-lg font-semibold mt-6">7. Contacto</h2>
       <p>
         Para consultas, reclamos o ejercer tus derechos sobre tus datos, escribinos a{' '}
-        <strong>{/* TODO: email de contacto */}</strong>.
+        <a href="mailto:fmajul2@gmail.com" className="text-primary underline"><strong>fmajul2@gmail.com</strong></a>.
       </p>
 
       <h2 className="text-lg font-semibold mt-6">8. Ley aplicable</h2>
       <p>
         Estos términos se rigen por las leyes de la República Argentina. Cualquier controversia se somete a los
-        tribunales ordinarios de la ciudad de {/* TODO: ciudad */}.
+        tribunales ordinarios de la ciudad de San Miguel de Tucumán, provincia de Tucumán.
       </p>
     </>
   )
