@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { paymentClient, tieneMpConfigurado } from '@/lib/mercadopago'
+import { paymentClient, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
 import { enviarPushAUsuario } from '@/lib/push'
 
 /**
@@ -48,7 +48,7 @@ function validarFirmaMp(req: Request, dataId: string): { ok: boolean; motivo?: s
  * external_reference (= nuestro pago_id) y acreditamos.
  */
 export async function POST(req: Request) {
-  if (!tieneMpConfigurado()) {
+  if (!tieneMpOAuthConfigurado()) {
     return NextResponse.json({ ok: true, skipped: 'no-mp-config' })
   }
 
@@ -75,7 +75,8 @@ export async function POST(req: Request) {
   }
 
   try {
-    const payment = await paymentClient().get({ id: mp_payment_id })
+    const pay = await paymentClient()
+    const payment = await pay.get({ id: mp_payment_id })
     const externalRef = String(payment.external_reference ?? '')
     if (!externalRef) {
       return NextResponse.json({ error: 'Pago sin external_reference' }, { status: 400 })

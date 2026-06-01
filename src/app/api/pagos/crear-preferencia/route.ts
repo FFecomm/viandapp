@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { COMISION_POR_VIANDA, preferenceClient, tieneMpConfigurado } from '@/lib/mercadopago'
+import { COMISION_POR_VIANDA, preferenceClient, tieneMpConectado, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
 
 type Body = {
   alumno_id: string
@@ -8,8 +8,14 @@ type Body = {
 }
 
 export async function POST(req: Request) {
-  if (!tieneMpConfigurado()) {
-    return NextResponse.json({ error: 'Mercado Pago no está configurado' }, { status: 503 })
+  if (!tieneMpOAuthConfigurado()) {
+    return NextResponse.json({ error: 'Mercado Pago OAuth no está configurado' }, { status: 503 })
+  }
+  if (!(await tieneMpConectado())) {
+    return NextResponse.json(
+      { error: 'El colegio todavía no conectó su cuenta de Mercado Pago' },
+      { status: 503 },
+    )
   }
 
   const supabase = createClient()
@@ -54,7 +60,8 @@ export async function POST(req: Request) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
 
   try {
-    const preference = await preferenceClient().create({
+    const pref = await preferenceClient()
+    const preference = await pref.create({
       body: {
         items: [
           {

@@ -10,8 +10,9 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { describirCredito, formatPesos } from '@/lib/format'
 import { PrecioViandaForm } from './precio-vianda-form'
+import { MpConexionPanel } from '@/components/mp-conexion-panel'
 
-type SearchParams = { q?: string }
+type SearchParams = { q?: string; mp?: string; detalle?: string }
 
 export default async function CreditoPage({ searchParams }: { searchParams: SearchParams }) {
   const profile = await getProfile()
@@ -59,6 +60,8 @@ export default async function CreditoPage({ searchParams }: { searchParams: Sear
           <span className="font-medium">{formatPesos(precioVianda)}</span>
         </div>
       )}
+
+      {puedeCargar ? <MpConexionPanel searchParams={searchParams} /> : null}
 
       <form method="GET" className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
-import { tieneMpConfigurado } from '@/lib/mercadopago'
+import { tieneMpConectado, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
 import { PageHeader } from '@/components/page-header'
 import { SaldoForm } from './saldo-form'
 
@@ -32,6 +32,7 @@ export default async function SaldoPage() {
     viandas_credito: a.viandas_credito,
   }))
   const precioVianda = Number(config?.value ?? 9500)
+  const mpDisponible = tieneMpOAuthConfigurado() && (await tieneMpConectado())
 
   return (
     <div className="p-5 space-y-5 max-w-md mx-auto">
@@ -39,7 +40,7 @@ export default async function SaldoPage() {
         <ChevronLeft className="size-4" /> Volver
       </Link>
       <PageHeader title="Cargar saldo" subtitle="Pagás una vez y pedís cuando quieras." />
-      <SaldoForm alumnos={alumnos} precioVianda={precioVianda} mpDisponible={tieneMpConfigurado()} />
+      <SaldoForm alumnos={alumnos} precioVianda={precioVianda} mpDisponible={mpDisponible} />
     </div>
   )
 }
