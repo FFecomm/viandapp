@@ -15,11 +15,23 @@ export default async function LoginPage() {
           <p className="text-sm text-muted-foreground">Entrá con tu cuenta</p>
         </div>
         <LoginForm />
-        <p className="text-sm text-center text-muted-foreground">
-          ¿No tenés cuenta?{' '}
-          <Link href="/registro" className="text-primary font-medium">
-            Registrate
-          </Link>
+        <div className="space-y-2 text-sm text-center text-muted-foreground">
+          <p>
+            <Link href="/recuperar" className="text-primary font-medium">
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </p>
+          <p>
+            ¿No tenés cuenta?{' '}
+            <Link href="/registro" className="text-primary font-medium">
+              Registrate
+            </Link>
+          </p>
+        </div>
+        <p className="text-xs text-center text-muted-foreground pt-2">
+          Al entrar aceptás los{' '}
+          <Link href="/terminos" className="underline">Términos</Link>{' '}y la{' '}
+          <Link href="/politica-privacidad" className="underline">Política de Privacidad</Link>.
         </p>
       </div>
     </main>

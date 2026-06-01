@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { COMISION_POR_VIANDA, preferenceClient, tieneMpConectado, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
+import { reportarError } from '@/lib/reportar-error'
 
 type Body = {
   alumno_id: string
@@ -97,6 +98,7 @@ export async function POST(req: Request) {
       pago_id: pagoId,
     })
   } catch (e) {
+    await reportarError('mp-crear-preferencia', e, { alumno_id, viandas })
     const msg = e instanceof Error ? e.message : 'Error desconocido'
     return NextResponse.json({ error: `Error al crear preferencia: ${msg}` }, { status: 500 })
   }

@@ -9,6 +9,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { describirCredito } from '@/lib/format'
 import { PushToggle } from '@/components/push-toggle'
+import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
 
 type MiAlumno = {
   id: string
@@ -39,6 +40,8 @@ export default async function FamiliaHomePage() {
         <PageHeader title={`Hola, ${primer}`} subtitle="Estos son tus hijos" />
         <PushToggle publicKey={vapidPublicKey} />
       </div>
+
+      <PwaInstallPrompt />
 
       {alumnos.length === 0 ? (
         <div className="rounded-xl border border-dashed p-10 text-center text-muted-foreground">

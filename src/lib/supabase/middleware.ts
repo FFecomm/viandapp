@@ -29,8 +29,9 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const path = request.nextUrl.pathname
 
-  const isAuthRoute = path.startsWith('/login') || path.startsWith('/registro') || path.startsWith('/bienvenida') || path.startsWith('/confirmar-email')
-  const isPublic = isAuthRoute || path.startsWith('/api/pagos/webhook') || path.startsWith('/_next') || path === '/manifest.webmanifest' || path === '/sw.js' || path === '/icon.svg' || path.startsWith('/icon-') || path === '/apple-icon.png'
+  const isAuthRoute = path.startsWith('/login') || path.startsWith('/registro') || path.startsWith('/bienvenida') || path.startsWith('/confirmar-email') || path.startsWith('/recuperar')
+  const isLegalRoute = path.startsWith('/politica-privacidad') || path.startsWith('/terminos')
+  const isPublic = isAuthRoute || isLegalRoute || path.startsWith('/api/pagos/webhook') || path.startsWith('/_next') || path === '/manifest.webmanifest' || path === '/sw.js' || path === '/icon.svg' || path.startsWith('/icon-') || path === '/apple-icon.png'
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone()

@@ -3,6 +3,7 @@ import crypto from 'crypto'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { paymentClient, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
 import { enviarPushAUsuario } from '@/lib/push'
+import { reportarError } from '@/lib/reportar-error'
 
 /**
  * Valida la firma `x-signature` de Mercado Pago.
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
 
   const firma = validarFirmaMp(req, mp_payment_id)
   if (!firma.ok) {
-    console.warn('[mp-webhook] firma inválida:', firma.motivo)
+    await reportarError('mp-webhook-firma', new Error(firma.motivo ?? 'firma inválida'), { mp_payment_id })
     return NextResponse.json({ error: 'Firma inválida' }, { status: 401 })
   }
 
@@ -89,6 +90,7 @@ export async function POST(req: Request) {
       p_mp_status: String(payment.status ?? 'pendiente'),
     })
     if (error) {
+      await reportarError('mp-webhook-acreditar', error, { mp_payment_id, pago_id: externalRef })
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
@@ -116,6 +118,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true })
   } catch (e) {
+    await reportarError('mp-webhook', e, { mp_payment_id })
     const msg = e instanceof Error ? e.message : 'Error desconocido'
     return NextResponse.json({ error: msg }, { status: 500 })
   }
