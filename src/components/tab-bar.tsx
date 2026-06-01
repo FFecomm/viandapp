@@ -16,6 +16,8 @@ import {
   LogOut,
   ClipboardList,
   HandCoins,
+  HelpCircle,
+  BarChart3,
 } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { logout } from '@/app/(auth)/login/actions'
@@ -47,14 +49,19 @@ const TABS_MAS: Record<Rol, Tab[]> = {
   operadora: [
     { href: '/productos', icon: ShoppingBasket, label: 'Productos' },
     { href: '/planilla', icon: FileText, label: 'Planilla' },
+    { href: '/ayuda', icon: HelpCircle, label: 'Ayuda' },
   ],
-  encargada: [],
+  encargada: [
+    { href: '/ayuda', icon: HelpCircle, label: 'Ayuda' },
+  ],
   administrativo: [
     { href: '/alumnos', icon: Users, label: 'Alumnos' },
     { href: '/productos', icon: ShoppingBasket, label: 'Productos' },
     { href: '/menus', icon: UtensilsCrossed, label: 'Menús' },
     { href: '/usuarios', icon: UserCog, label: 'Usuarios' },
     { href: '/planilla', icon: FileText, label: 'Planilla' },
+    { href: '/reportes', icon: BarChart3, label: 'Reportes' },
+    { href: '/ayuda', icon: HelpCircle, label: 'Ayuda' },
   ],
   padre: [],
 }

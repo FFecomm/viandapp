@@ -69,9 +69,19 @@ export default async function ResultadoPagoPage({ searchParams }: { searchParams
         </div>
       )}
 
-      <Link href="/familia" className={cn(buttonVariants(), 'w-full h-12 text-base')}>
-        Volver al inicio
-      </Link>
+      <div className="space-y-2">
+        {p && aprobado ? (
+          <Link
+            href={`/familia/saldo/recibo/${p.id}`}
+            className={cn(buttonVariants({ variant: 'outline' }), 'w-full h-12 text-base')}
+          >
+            Ver comprobante
+          </Link>
+        ) : null}
+        <Link href="/familia" className={cn(buttonVariants(), 'w-full h-12 text-base')}>
+          Volver al inicio
+        </Link>
+      </div>
     </div>
   )
 }

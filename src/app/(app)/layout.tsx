@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { getProfile } from '@/lib/auth/profile'
 import { logout } from '@/app/(auth)/login/actions'
 import { TabBar } from '@/components/tab-bar'
+import { OnboardingTour } from '@/components/onboarding-tour'
 
 /**
  * Layout autenticado del staff (operadora, encargada, administrativo).
@@ -27,6 +28,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 pb-20">{children}</main>
       <TabBar rol={profile.rol} nombre={profile.nombre} />
+      <OnboardingTour rol={profile.rol} />
     </div>
   )
 }
