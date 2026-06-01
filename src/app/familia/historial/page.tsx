@@ -1,4 +1,3 @@
-import { Trash2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
 import { PageHeader } from '@/components/page-header'
