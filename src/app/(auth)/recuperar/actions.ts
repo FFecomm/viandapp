@@ -9,7 +9,7 @@ export async function pedirRecupero(formData: FormData): Promise<{ ok?: true; er
   const supabase = createClient()
   const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${base}/recuperar/nueva-clave`,
+    redirectTo: `${base}/auth/callback?next=/recuperar/nueva-clave`,
   })
 
   // Por seguridad, devolvemos OK aunque el email no exista (no leak de cuentas).
