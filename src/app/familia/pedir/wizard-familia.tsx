@@ -116,11 +116,14 @@ export function WizardFamilia({
   alumnoPreseleccionado,
   menus,
   fechasYaPedidas,
+  reservadas,
 }: {
   alumnos: MiAlumno[]
   alumnoPreseleccionado: string | null
   menus: MenuRow[]
   fechasYaPedidas: string[]
+  /** Cantidad de pedidos confirmados con fecha futura para el alumno seleccionado. */
+  reservadas: number
 }) {
   const alumno = useMemo<MiAlumno | null>(() => {
     if (alumnoPreseleccionado) return alumnos.find((a) => a.id === alumnoPreseleccionado) ?? null
@@ -149,17 +152,19 @@ export function WizardFamilia({
     )
   }
 
-  return <WizardConAlumno alumno={alumno} menus={menus} fechasYaPedidas={fechasYaPedidas} />
+  return <WizardConAlumno alumno={alumno} menus={menus} fechasYaPedidas={fechasYaPedidas} reservadas={reservadas} />
 }
 
 function WizardConAlumno({
   alumno,
   menus,
   fechasYaPedidas,
+  reservadas,
 }: {
   alumno: MiAlumno
   menus: MenuRow[]
   fechasYaPedidas: string[]
+  reservadas: number
 }) {
   const diasDisponibles = useMemo(() => proximosDiasHabiles(10), [])
   const fechasYaPedidasSet = useMemo(() => new Set(fechasYaPedidas), [fechasYaPedidas])
@@ -357,11 +362,17 @@ function WizardConAlumno({
           </div>
 
           <div className="rounded-2xl border p-4 space-y-2 text-sm">
-            <Fila label="Saldo actual" valor={`${viandasDisponibles} ${viandasDisponibles === 1 ? 'vianda' : 'viandas'}`} />
-            <Fila label="Viandas a usar" valor={`${viandasUsar}`} />
+            <Fila label="Libres ahora" valor={`${viandasDisponibles} ${viandasDisponibles === 1 ? 'vianda' : 'viandas'}`} />
+            {reservadas > 0 ? (
+              <Fila
+                label="Ya reservadas (próximos días)"
+                valor={`${reservadas} ${reservadas === 1 ? 'vianda' : 'viandas'}`}
+              />
+            ) : null}
+            <Fila label="A usar con este pedido" valor={`${viandasUsar}`} />
             <div className="border-t pt-2">
               <Fila
-                label="Saldo que queda"
+                label="Libres después de confirmar"
                 valor={`${saldoDespues} ${Math.abs(saldoDespues) === 1 ? 'vianda' : 'viandas'}`}
                 bold
                 negativo={!saldoSuficiente}

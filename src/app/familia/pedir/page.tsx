@@ -36,15 +36,20 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
         ? alumnos[0].id
         : null
 
-  // Fechas ya pedidas (desde hoy) para el alumno elegido — para deshabilitarlas en el wizard.
+  // Pedidos confirmados con fecha futura: bloquean los días en el wizard
+  // (no se puede pedir dos veces el mismo día) y se cuentan como "reservadas"
+  // para que el padre vea cuánto saldo ya tiene asignado a próximos días.
   let fechasYaPedidas: string[] = []
+  let reservadas = 0
   if (alumnoElegidoId) {
     const { data: pedidos } = await supabase
       .from('pedidos')
       .select('fecha')
       .eq('alumno_id', alumnoElegidoId)
+      .eq('estado', 'confirmado')
       .gte('fecha', fechaHoyAR())
     fechasYaPedidas = (pedidos ?? []).map((p: { fecha: string }) => p.fecha)
+    reservadas = fechasYaPedidas.length
   }
 
   return (
@@ -58,6 +63,7 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
         alumnoPreseleccionado={alumnoFiltro}
         menus={(menus ?? []) as never}
         fechasYaPedidas={fechasYaPedidas}
+        reservadas={reservadas}
       />
     </div>
   )

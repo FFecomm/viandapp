@@ -25,6 +25,26 @@ export function describirCredito(viandas: number, pesos: number): string {
   return 'Sin crédito'
 }
 
+/**
+ * Saldo expandido para la home del padre: muestra disponibles + reservadas.
+ * "Disponibles" = lo que se puede usar para pedir más viandas.
+ * "Reservadas" = pedidos confirmados con fecha futura (ya descontados del
+ * saldo, pero el padre los ve como "viandas pagas que aún no se consumieron").
+ */
+export function describirCreditoConReservas(
+  disponibles: number,
+  reservadas: number,
+  pesos: number,
+): string {
+  if (pesos < 0) return `Debe ${formatPesos(-pesos)}`
+  const total = disponibles + reservadas
+  if (total === 0) return 'Sin crédito'
+  const partes: string[] = []
+  if (disponibles > 0) partes.push(`${disponibles} ${disponibles === 1 ? 'libre' : 'libres'}`)
+  if (reservadas > 0) partes.push(`${reservadas} ${reservadas === 1 ? 'reservada' : 'reservadas'}`)
+  return partes.join(' · ')
+}
+
 const dateFmt = new Intl.DateTimeFormat('es-AR', {
   day: '2-digit',
   month: '2-digit',
