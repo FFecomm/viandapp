@@ -4,6 +4,20 @@ import { createClient } from '@/lib/supabase/server'
 import { asegurarPerfilPadre } from '@/lib/auth/asegurar-perfil'
 
 /**
+ * Sanitiza el parámetro `next` para evitar open redirect. Solo permite paths
+ * relativos que empiecen con "/" y NO con "//" (que sería protocol-relative),
+ * "/\\" (que algunos browsers parsean como protocol-relative), o "/@" (que
+ * la concatenación con el origin transforma en userinfo + host externo).
+ */
+function nextSeguro(input: string): string {
+  if (!input.startsWith('/')) return '/'
+  if (input.startsWith('//')) return '/'
+  if (input.startsWith('/\\')) return '/'
+  if (input.startsWith('/@')) return '/'
+  return input
+}
+
+/**
  * Callback de Supabase Auth. Soporta dos flujos:
  *  - PKCE: ?code=... → exchangeCodeForSession (OAuth, magic link disparado client-side)
  *  - OTP : ?token_hash=...&type=... → verifyOtp (recuperación de contraseña,
@@ -14,7 +28,7 @@ export async function GET(request: Request) {
   const code = url.searchParams.get('code')
   const tokenHash = url.searchParams.get('token_hash')
   const type = url.searchParams.get('type') as EmailOtpType | null
-  const next = url.searchParams.get('next') ?? '/'
+  const next = nextSeguro(url.searchParams.get('next') ?? '/')
 
   const supabase = createClient()
 

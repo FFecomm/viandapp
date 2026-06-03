@@ -3,7 +3,12 @@ import { redirect } from 'next/navigation'
 import { getProfile } from '@/lib/auth/profile'
 import { LoginForm } from './login-form'
 
-type SearchParams = { desactivado?: string; borrado?: string; auth_error?: string }
+type SearchParams = {
+  desactivado?: string
+  borrado?: string
+  auth_error?: string
+  dos_factores_cancelado?: string
+}
 
 export default async function LoginPage({ searchParams }: { searchParams: SearchParams }) {
   const profile = await getProfile()
@@ -16,7 +21,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
         ? { tono: 'info' as const, texto: 'Tu cuenta fue eliminada. Si querés volver, registrate de nuevo.' }
         : searchParams.auth_error === '1'
           ? { tono: 'warning' as const, texto: 'El link expiró o ya fue usado. Pedí uno nuevo desde "Olvidaste tu contraseña".' }
-          : null
+          : searchParams.dos_factores_cancelado === '1'
+            ? { tono: 'info' as const, texto: 'Cancelaste el segundo paso. Si perdiste el acceso a tu app autenticadora, pedile al administrativo que la desactive.' }
+            : null
 
   return (
     <main className="min-h-screen flex items-center justify-center p-6 bg-muted/30">

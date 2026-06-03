@@ -10,9 +10,19 @@ type RegistroInput = {
   password: string
   nombre: string
   telefono: string
+  // Campo trampa para bots. Es un input "hidden" que solo un bot completaría
+  // automáticamente; un humano no lo ve. Si llega con contenido, abortamos
+  // sin mostrar error específico (devolvemos OK para no avisarle al bot que
+  // lo detectamos).
+  correo_secundario?: string
 }
 
 export async function registrar(input: RegistroInput): Promise<{ error: string } | void> {
+  // Honeypot: si el bot llenó el campo trampa, fingimos éxito y nos vamos.
+  if (input.correo_secundario && input.correo_secundario.trim().length > 0) {
+    redirect('/confirmar-email?email=bot')
+  }
+
   const email = input.email.trim().toLowerCase()
   const password = input.password
   const nombre = input.nombre.trim()

@@ -1,84 +1,62 @@
-# Plan de backup · ViandApp
+# Backup de la base de datos
 
-## Qué incluye Supabase por defecto
+ViandApp corre un GitHub Action diario que hace `pg_dump` de la base de Supabase y la guarda como artifact (retención 30 días).
 
-**Plan Free (el actual):**
-- ❌ Sin point-in-time recovery (PITR)
-- ❌ Sin backups automáticos disponibles para restaurar
-- ⚠️ Si Supabase tiene un incidente catastrófico (poco frecuente pero posible) → pérdida total de datos
+El workflow está en [.github/workflows/backup-supabase.yml](../.github/workflows/backup-supabase.yml).
 
-**Plan Pro (USD $25/mes):**
-- ✅ PITR de 7 días incluido
-- ✅ Backups diarios automáticos
-- ✅ Soporte por email
+## Cómo activarlo
 
-**Recomendación:** mientras la app esté en producción real con familias y dinero, **subir al plan Pro**. El costo es despreciable vs. el costo de perder los datos.
+1. **Conseguir la connection string del pooler.**
+   - Entrar a [Supabase → Project Settings → Database → Connection string](https://supabase.com/dashboard/project/qecpszqssdockwumybhc/settings/database)
+   - Elegir el tab **Session pooler** (no el direct: el direct no soporta IPv4 desde GitHub Actions).
+   - La URI tiene esta forma:
+     ```
+     postgresql://postgres.qecpszqssdockwumybhc:<DB_PASSWORD>@aws-0-<region>.pooler.supabase.com:5432/postgres
+     ```
+   - Reemplazar `<DB_PASSWORD>` por la contraseña de la base.
 
----
+2. **Crear el secret en GitHub.**
+   - Ir a `github.com/FFecomm/viandapp/settings/secrets/actions`
+   - Apretar **New repository secret**
+   - Name: `SUPABASE_DB_URL`
+   - Value: la URI completa del paso anterior
+   - Save
 
-## Plan B: Backup manual periódico (gratis)
+3. **(Opcional) Crear el secret para notificación de fallo.**
+   - Mismo lugar, name: `ERROR_WEBHOOK_URL`
+   - Value: webhook de Slack o Discord
+   - Si no se setea, el action falla en silencio (igual queda registrado en la pestaña Actions).
 
-Si por ahora seguís en Free, configurá un cron que exporte la DB y la guarde fuera de Supabase.
+4. **Probar el action manualmente.**
+   - Ir a `github.com/FFecomm/viandapp/actions/workflows/backup-supabase.yml`
+   - Apretar **Run workflow** → **Run workflow**.
+   - Esperar 1-2 min. Si todo OK, en la corrida aparece el artifact descargable `viandapp_YYYY-MM-DD_HHMM.sql.gz`.
 
-### Opción 1: GitHub Action semanal (recomendada)
+## Cómo restaurar
 
-Crear `.github/workflows/backup.yml`:
-
-```yaml
-name: Supabase backup
-on:
-  schedule:
-    - cron: '0 3 * * 1'  # Lunes 3am UTC = lunes 00:00 ART
-  workflow_dispatch:
-
-jobs:
-  dump:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: pg_dump
-        env:
-          PG_URI: ${{ secrets.SUPABASE_PG_URI }}
-        run: |
-          sudo apt-get install -y postgresql-client
-          mkdir -p backups
-          pg_dump --no-owner --no-acl "$PG_URI" \
-            | gzip > backups/viandapp-$(date +%Y%m%d).sql.gz
-      - uses: actions/upload-artifact@v4
-        with:
-          name: backup-${{ github.run_id }}
-          path: backups/
-          retention-days: 90
-```
-
-**Setup:**
-1. En Supabase → Settings → Database → **Connection string** → modo **URI** → copiar.
-2. En el repo de GitHub → Settings → Secrets → New secret `SUPABASE_PG_URI` → pegar.
-3. Commit del workflow → corre cada lunes y guarda 90 días de backups.
-
-**Para restaurar:**
-1. Descargar el `.sql.gz` del Action.
-2. `gunzip` + `psql nuevo_proyecto < dump.sql`
-
-### Opción 2: Script local en tu compu
-
-Si querés correrlo manualmente de vez en cuando:
+Si pasa algo y hay que volver a un backup:
 
 ```bash
-# Descargar dump completo
-pg_dump --no-owner --no-acl \
-  "postgresql://postgres.qecpszqssdockwumybhc:vAS2OtKolVYrwXTx@aws-1-sa-east-1.pooler.supabase.com:5432/postgres" \
-  | gzip > viandapp-$(date +%F).sql.gz
+# Descargar el artifact desde GitHub Actions
+gunzip viandapp_2026-06-03_0400.sql.gz
+
+# Aplicar al proyecto de STAGING primero (NUNCA directo a prod sin probar)
+psql "postgresql://postgres.STAGING:<pw>@aws-0-<region>.pooler.supabase.com:5432/postgres" < viandapp_2026-06-03_0400.sql
 ```
 
-Guardalo en Drive, Dropbox o disco externo.
+El dump usa `--clean --if-exists` para ser idempotente: borra y recrea las tablas. Si querés restaurar SIN borrar lo existente, hay que editar el SQL manualmente o usar `pg_restore` con flags distintos.
 
----
+## Limitaciones
 
-## Decisión sugerida
+- **Solo retiene 30 días en GitHub.** Si necesitás histórico más largo, descargar manualmente los artifacts mensuales y guardar en cold storage.
+- **No incluye Supabase Storage (buckets de archivos).** Hoy no usamos Storage, pero si en el futuro guardamos imágenes (logos, fotos de menús, etc.), hay que sumar `supabase storage download` al workflow.
+- **El password de la DB se rota manualmente.** Si lo cambiás en Supabase, hay que actualizar el secret `SUPABASE_DB_URL`.
 
-| Etapa | Backup |
-|-------|--------|
-| Hoy (pre-lanzamiento) | Backup manual semanal o ninguno |
-| Lanzamiento con familias reales | **Plan Pro de Supabase** (USD $25/mes) + GitHub Action semanal como redundancia |
-| Crecimiento (>500 familias) | Plan Pro + backups diarios manuales + monitoreo activo |
+## Alternativa pagada (cuando la operación crezca)
+
+| Plan Supabase | Costo | Qué te da |
+|---|---|---|
+| Pro | USD 25/mes | Daily backups automáticos, retención 7 días, PITR opcional, soporte por email |
+| Team | USD 599/mes | Retención 14 días + PITR 7 días |
+
+Para el MVP el GitHub Action alcanza. Cuando estés con >50 familias y dinero real, conviene Pro como red de seguridad adicional.

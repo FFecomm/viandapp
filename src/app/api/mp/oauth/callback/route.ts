@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { mpExchangeCode } from '@/lib/mercadopago'
+import { registrarAudit } from '@/lib/audit'
 
 const STATE_COOKIE = 'mp_oauth_state'
 
@@ -66,6 +67,16 @@ export async function GET(req: Request) {
     if (upsertError) {
       return redirectConEstado(req, 'error', upsertError.message)
     }
+
+    await registrarAudit({
+      actor_id: user.id,
+      accion: 'mp_conexion_creada',
+      recurso_tipo: 'mp_conexion',
+      recurso_id: String(token.user_id),
+      detalle: { mp_user_id: token.user_id },
+      ip: req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip'),
+      user_agent: req.headers.get('user-agent'),
+    })
 
     const res = redirectConEstado(req, 'ok')
     res.cookies.delete(STATE_COOKIE)

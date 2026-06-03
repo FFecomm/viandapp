@@ -24,6 +24,7 @@ export function RegistroForm({ googleHabilitado = false }: { googleHabilitado?: 
         password: String(data.get('password') ?? ''),
         nombre: String(data.get('nombre') ?? ''),
         telefono: String(data.get('telefono') ?? ''),
+        correo_secundario: String(data.get('correo_secundario') ?? ''),
       })
       if (result?.error) {
         toast.error(result.error)
@@ -62,6 +63,12 @@ export function RegistroForm({ googleHabilitado = false }: { googleHabilitado?: 
       </>
     ) : null}
     <form onSubmit={onSubmit} className="space-y-4">
+      {/* Campo trampa para bots. Invisible para humanos (lectores de pantalla
+          también lo ignoran porque está aria-hidden). */}
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}>
+        <label htmlFor="correo_secundario">No completar este campo</label>
+        <input id="correo_secundario" name="correo_secundario" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="space-y-2">
         <Label htmlFor="nombre" className="text-base">Nombre y apellido</Label>
         <Input id="nombre" name="nombre" required autoComplete="name" className="h-12 text-base" />

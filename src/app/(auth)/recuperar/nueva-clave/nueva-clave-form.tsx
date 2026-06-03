@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createClient } from '@/lib/supabase/client'
 import { PASSWORD_HINT, PASSWORD_MIN, validarPasswordFuerte } from '@/lib/auth/password'
+import { guardarNuevaClave } from './actions'
 
 export function NuevaClaveForm() {
   const router = useRouter()
@@ -37,13 +38,15 @@ export function NuevaClaveForm() {
       return
     }
     startTransition(async () => {
-      const supabase = createClient()
-      const { error } = await supabase.auth.updateUser({ password: pwd })
-      if (error) {
-        toast.error(error.message || 'No se pudo cambiar la contraseña')
+      const fd = new FormData()
+      fd.set('nueva', pwd)
+      fd.set('repetir', pwd2)
+      const res = await guardarNuevaClave(fd)
+      if (res.error) {
+        toast.error(res.error)
         return
       }
-      toast.success('Contraseña actualizada')
+      toast.success('Contraseña actualizada. Te mandamos un email confirmando el cambio.')
       router.replace('/')
       router.refresh()
     })

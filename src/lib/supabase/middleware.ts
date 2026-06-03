@@ -29,14 +29,14 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const path = request.nextUrl.pathname
 
-  const isAuthRoute = path.startsWith('/login') || path.startsWith('/registro') || path.startsWith('/bienvenida') || path.startsWith('/confirmar-email') || path.startsWith('/recuperar')
+  const isAuthRoute = path.startsWith('/login') || path.startsWith('/registro') || path.startsWith('/bienvenida') || path.startsWith('/confirmar-email') || path.startsWith('/recuperar') || path.startsWith('/dos-factores')
   const isLegalRoute = path.startsWith('/politica-privacidad') || path.startsWith('/terminos')
   const isPublic = isAuthRoute || isLegalRoute || path.startsWith('/api/pagos/webhook') || path.startsWith('/auth/callback') || path.startsWith('/_next') || path === '/manifest.webmanifest' || path === '/sw.js' || path === '/icon.svg' || path.startsWith('/icon-') || path === '/apple-icon.png'
 
   // Rutas que permitimos aunque el usuario esté autenticado (no lo redirigimos
   // a `/` desde acá). Caso típico: el padre apretó "recuperar contraseña" estando
   // logueado vía el link del mail — necesita poder cambiar la clave.
-  const permitirAunqueLogueado = path.startsWith('/recuperar/nueva-clave')
+  const permitirAunqueLogueado = path.startsWith('/recuperar/nueva-clave') || path.startsWith('/dos-factores')
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone()
@@ -69,6 +69,19 @@ export async function updateSession(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/'
     return NextResponse.redirect(url)
+  }
+
+  // MFA: si el usuario tiene 2FA activado y la sesión está en AAL1
+  // (logueado con password pero no completó el código TOTP), forzar el paso
+  // por /dos-factores antes de dejar entrar a cualquier ruta protegida.
+  // No bloqueamos /dos-factores ni recursos estáticos para no caer en loops.
+  if (user && !isPublic) {
+    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
+    if (aal && aal.nextLevel === 'aal2' && aal.currentLevel === 'aal1') {
+      const url = request.nextUrl.clone()
+      url.pathname = '/dos-factores'
+      return NextResponse.redirect(url)
+    }
   }
 
   return response

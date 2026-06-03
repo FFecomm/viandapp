@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getProfile } from '@/lib/auth/profile'
 import { rutaInicio } from '@/lib/auth/roles'
 import { CuentaForms } from './cuenta-forms'
+import { TwoFactorSection } from './two-factor-section'
 
 const ROL_LABEL: Record<string, string> = {
   padre: 'Familia',
@@ -51,6 +52,8 @@ export default async function CuentaPage() {
         </section>
 
         <CuentaForms esPadre={profile.rol === 'padre'} />
+
+        {profile.rol !== 'padre' ? <TwoFactorSection /> : null}
       </div>
     </div>
   )

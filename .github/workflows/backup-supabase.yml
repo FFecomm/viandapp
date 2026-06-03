@@ -1,0 +1,73 @@
+name: Backup Supabase (diario)
+
+# Corre todos los días a las 04:00 UTC = 01:00 hora Argentina.
+# También se puede disparar manualmente desde la pestaña Actions de GitHub.
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  backup:
+    name: pg_dump → artifact
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+      - name: Instalar postgresql-client (v17 — match Supabase)
+        run: |
+          sudo apt-get update
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(. /etc/os-release && echo $VERSION_CODENAME)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-17
+
+      - name: Generar dump
+        env:
+          # Connection string del pooler de Supabase. Setear como secret en
+          # GitHub: Settings → Secrets and variables → Actions → New secret
+          # nombre: SUPABASE_DB_URL
+          # valor: postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres
+          DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::Falta el secret SUPABASE_DB_URL"
+            exit 1
+          fi
+          STAMP=$(date -u +'%Y-%m-%d_%H%M')
+          mkdir -p out
+          pg_dump \
+            --no-owner \
+            --no-privileges \
+            --clean \
+            --if-exists \
+            --schema=public \
+            --schema=auth \
+            --schema=storage \
+            --file=out/viandapp_${STAMP}.sql \
+            "$DATABASE_URL"
+          gzip out/viandapp_${STAMP}.sql
+          ls -la out/
+          echo "BACKUP_NAME=viandapp_${STAMP}.sql.gz" >> "$GITHUB_ENV"
+
+      - name: Subir como artifact (retención 30 días)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BACKUP_NAME }}
+          path: out/${{ env.BACKUP_NAME }}
+          retention-days: 30
+          compression-level: 0
+
+      - name: Notificar a Slack/Discord si falló
+        if: failure()
+        env:
+          WEBHOOK: ${{ secrets.ERROR_WEBHOOK_URL }}
+        run: |
+          if [ -n "$WEBHOOK" ]; then
+            curl -s -X POST -H 'Content-Type: application/json' \
+              -d '{"text":"⚠️ Backup diario de Supabase FALLÓ. Revisar la corrida en Actions.","content":"⚠️ Backup diario de Supabase FALLÓ. Revisar la corrida en Actions."}' \
+              "$WEBHOOK" || true
+          fi

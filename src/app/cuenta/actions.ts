@@ -7,6 +7,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getProfile } from '@/lib/auth/profile'
 import { reportarError } from '@/lib/reportar-error'
 import { validarPasswordFuerte } from '@/lib/auth/password'
+import { emailNotificacionSeguridad, enviarEmail } from '@/lib/email'
 
 type Result = { error?: string; ok?: boolean; info?: string }
 
@@ -44,7 +45,22 @@ export async function cambiarMiPassword(formData: FormData): Promise<Result> {
     return { error: 'No pudimos cambiar la contraseña. Intentá de nuevo.' }
   }
 
-  return { ok: true, info: 'Contraseña actualizada.' }
+  // Notificación de seguridad por email. Best-effort: no rompe el flujo si falla.
+  const cuando = new Date().toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' })
+  const nombreCorto = user.user_metadata?.nombre?.split(' ')[0] ?? user.email?.split('@')[0] ?? 'familia'
+  await enviarEmail({
+    to: user.email,
+    subject: 'Tu contraseña de ViandApp fue cambiada',
+    html: emailNotificacionSeguridad({
+      titulo: 'Contraseña cambiada',
+      saludoNombre: nombreCorto,
+      accion: 'tu contraseña fue cambiada exitosamente',
+      cuando,
+      consejo: 'Cambiá tu contraseña ahora desde "Olvidaste tu contraseña" en la pantalla de login, y avisanos a fmajul2@gmail.com.',
+    }),
+  })
+
+  return { ok: true, info: 'Contraseña actualizada. Te mandamos un email confirmando el cambio.' }
 }
 
 /**
@@ -69,6 +85,95 @@ export async function cambiarMiEmail(formData: FormData): Promise<Result> {
     ok: true,
     info: 'Te mandamos un email a la dirección nueva. Confirmá desde ahí para activarla.',
   }
+}
+
+/**
+ * Inicia la inscripción de un factor TOTP. Devuelve el QR (data URI) y un
+ * `factorId` que hay que usar en confirmar2FA con el primer código generado
+ * por la app autenticadora.
+ *
+ * Si el usuario ya tiene un factor activo, devuelve error (primero hay que
+ * desactivar el viejo para evitar zombies).
+ */
+export async function iniciarEnroll2FA(): Promise<{
+  error?: string
+  factorId?: string
+  qr?: string
+  secreto?: string
+}> {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No estás autenticado' }
+
+  // Si ya tiene factors verificados, no permitimos enroll de uno nuevo.
+  // listFactors() solo devuelve verified, así que con que haya uno alcanza.
+  const { data: factores } = await supabase.auth.mfa.listFactors()
+  if (factores?.totp && factores.totp.length > 0) {
+    return { error: 'Ya tenés la verificación en dos pasos activada. Desactivala primero para volver a configurarla.' }
+  }
+
+  const { data, error } = await supabase.auth.mfa.enroll({
+    factorType: 'totp',
+    friendlyName: `ViandApp · ${new Date().toLocaleDateString('es-AR')}`,
+  })
+  if (error || !data) {
+    await reportarError('mfa-enroll', error, { user_id: user.id })
+    return { error: 'No pudimos generar el QR. Intentá de nuevo en un minuto.' }
+  }
+  return {
+    factorId: data.id,
+    qr: data.totp.qr_code,
+    secreto: data.totp.secret,
+  }
+}
+
+/**
+ * Confirma la inscripción TOTP con el primer código generado por la app.
+ * Después de esto el usuario va a tener que pasar por 2FA en cada login.
+ */
+export async function confirmarEnroll2FA(formData: FormData): Promise<Result> {
+  const factorId = String(formData.get('factor_id') ?? '')
+  const codigo = String(formData.get('codigo') ?? '').trim()
+  if (!factorId) return { error: 'Falta el factor_id' }
+  if (!/^\d{6}$/.test(codigo)) return { error: 'El código tiene 6 dígitos' }
+
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No estás autenticado' }
+
+  const { data: challenge, error: errChallenge } = await supabase.auth.mfa.challenge({ factorId })
+  if (errChallenge || !challenge) {
+    return { error: 'No pudimos validar el código. Probá de nuevo.' }
+  }
+
+  const { error: errVerify } = await supabase.auth.mfa.verify({
+    factorId,
+    challengeId: challenge.id,
+    code: codigo,
+  })
+  if (errVerify) {
+    return { error: 'El código no es correcto. Mirá la app autenticadora y reintentá.' }
+  }
+  return { ok: true, info: 'Verificación en dos pasos activada.' }
+}
+
+/**
+ * Desactiva todos los factores TOTP del usuario. Necesita haber pasado 2FA
+ * recientemente (la sesión tiene que estar en AAL2).
+ */
+export async function desactivar2FA(): Promise<Result> {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No estás autenticado' }
+
+  const { data: factores } = await supabase.auth.mfa.listFactors()
+  const totp = factores?.totp ?? []
+  if (totp.length === 0) return { ok: true, info: 'Ya estaba desactivada.' }
+
+  for (const f of totp) {
+    await supabase.auth.mfa.unenroll({ factorId: f.id })
+  }
+  return { ok: true, info: 'Verificación en dos pasos desactivada.' }
 }
 
 /**
