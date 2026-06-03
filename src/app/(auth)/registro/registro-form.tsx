@@ -7,9 +7,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { registrar } from './actions'
+import { loginConGoogle } from '../login/actions'
+import { PASSWORD_HINT, PASSWORD_MIN } from '@/lib/auth/password'
 
-export function RegistroForm() {
+export function RegistroForm({ googleHabilitado = false }: { googleHabilitado?: boolean }) {
   const [pending, startTransition] = useTransition()
+  const [pendingGoogle, startGoogle] = useTransition()
   const router = useRouter()
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -30,7 +33,34 @@ export function RegistroForm() {
     })
   }
 
+  function onGoogle() {
+    startGoogle(async () => {
+      const res = await loginConGoogle()
+      if (res?.error) toast.error(res.error)
+    })
+  }
+
   return (
+    <div className="space-y-4">
+    {googleHabilitado ? (
+      <>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onGoogle}
+          disabled={pendingGoogle || pending}
+          className="w-full h-12 text-base gap-2"
+        >
+          <GoogleIcon />
+          {pendingGoogle ? 'Conectando…' : 'Continuar con Google'}
+        </Button>
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <div className="flex-1 h-px bg-border" />
+          <span>o con email</span>
+          <div className="flex-1 h-px bg-border" />
+        </div>
+      </>
+    ) : null}
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="nombre" className="text-base">Nombre y apellido</Label>
@@ -65,14 +95,26 @@ export function RegistroForm() {
           type="password"
           autoComplete="new-password"
           required
-          minLength={6}
+          minLength={PASSWORD_MIN}
           className="h-12 text-base"
         />
-        <p className="text-xs text-muted-foreground">Mínimo 6 caracteres.</p>
+        <p className="text-xs text-muted-foreground">{PASSWORD_HINT}</p>
       </div>
-      <Button type="submit" disabled={pending} className="w-full h-12 text-base">
+      <Button type="submit" disabled={pending || pendingGoogle} className="w-full h-12 text-base">
         {pending ? 'Creando cuenta…' : 'Crear cuenta'}
       </Button>
     </form>
+    </div>
+  )
+}
+
+function GoogleIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+      <path d="M17.64 9.2a10.34 10.34 0 0 0-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92a8.82 8.82 0 0 0 2.68-6.62Z" fill="#4285F4"/>
+      <path d="M9 18a8.65 8.65 0 0 0 5.96-2.18l-2.92-2.26a5.42 5.42 0 0 1-8.06-2.84H.96v2.34A9 9 0 0 0 9 18Z" fill="#34A853"/>
+      <path d="M3.98 10.72a5.42 5.42 0 0 1 0-3.44V4.94H.96a9 9 0 0 0 0 8.12l3.02-2.34Z" fill="#FBBC04"/>
+      <path d="M9 3.58a4.86 4.86 0 0 1 3.44 1.36l2.58-2.58A8.65 8.65 0 0 0 9 0 9 9 0 0 0 .96 4.94l3.02 2.34A5.42 5.42 0 0 1 9 3.58Z" fill="#EA4335"/>
+    </svg>
   )
 }

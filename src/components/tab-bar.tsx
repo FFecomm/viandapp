@@ -14,6 +14,7 @@ import {
   UserCog,
   ReceiptText,
   LogOut,
+  CircleUser,
   ClipboardList,
   HandCoins,
   HelpCircle,
@@ -50,9 +51,11 @@ const TABS_MAS: Record<Rol, Tab[]> = {
     { href: '/productos', icon: ShoppingBasket, label: 'Productos' },
     { href: '/planilla', icon: FileText, label: 'Planilla' },
     { href: '/ayuda', icon: HelpCircle, label: 'Ayuda' },
+    { href: '/cuenta', icon: CircleUser, label: 'Mi cuenta' },
   ],
   encargada: [
     { href: '/ayuda', icon: HelpCircle, label: 'Ayuda' },
+    { href: '/cuenta', icon: CircleUser, label: 'Mi cuenta' },
   ],
   administrativo: [
     { href: '/alumnos', icon: Users, label: 'Alumnos' },
@@ -62,6 +65,7 @@ const TABS_MAS: Record<Rol, Tab[]> = {
     { href: '/planilla', icon: FileText, label: 'Planilla' },
     { href: '/reportes', icon: BarChart3, label: 'Reportes' },
     { href: '/ayuda', icon: HelpCircle, label: 'Ayuda' },
+    { href: '/cuenta', icon: CircleUser, label: 'Mi cuenta' },
   ],
   padre: [],
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Home, History, Wallet, MoreHorizontal, LogOut, HelpCircle } from 'lucide-react'
+import { Home, History, Wallet, MoreHorizontal, LogOut, HelpCircle, UserCog } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { logout } from '@/app/(auth)/login/actions'
 import { cn } from '@/lib/utils'
@@ -61,9 +61,17 @@ export function TabBarFamilia({ nombre }: { nombre: string }) {
             <SheetTitle>Hola, {nombre.split(' ')[0]}</SheetTitle>
           </SheetHeader>
           <Link
-            href="/familia/ayuda"
+            href="/cuenta"
             onClick={() => setOpen(false)}
             className="mt-4 flex items-center gap-3 p-4 rounded-xl border bg-card hover:bg-muted transition-colors"
+          >
+            <UserCog className="size-5" />
+            <span className="font-medium">Mi cuenta</span>
+          </Link>
+          <Link
+            href="/familia/ayuda"
+            onClick={() => setOpen(false)}
+            className="mt-3 flex items-center gap-3 p-4 rounded-xl border bg-card hover:bg-muted transition-colors"
           >
             <HelpCircle className="size-5" />
             <span className="font-medium">Ayuda</span>

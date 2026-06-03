@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { validarPasswordFuerte } from '@/lib/auth/password'
 
 type RegistroInput = {
   email: string
@@ -20,9 +21,8 @@ export async function registrar(input: RegistroInput): Promise<{ error: string }
   if (!email || !password || !nombre) {
     return { error: 'Completá nombre, email y contraseña' }
   }
-  if (password.length < 6) {
-    return { error: 'La contraseña debe tener al menos 6 caracteres' }
-  }
+  const motivo = validarPasswordFuerte(password)
+  if (motivo) return { error: motivo }
 
   const supabase = createClient()
 

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { EmailOtpType } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
+import { asegurarPerfilPadre } from '@/lib/auth/asegurar-perfil'
 
 /**
  * Callback de Supabase Auth. Soporta dos flujos:
@@ -20,6 +21,10 @@ export async function GET(request: Request) {
   if (tokenHash && type) {
     const { error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
     if (!error) {
+      // El flujo OTP también puede traer signup confirmations: asegurar perfil.
+      if (type === 'signup' || type === 'email') {
+        await asegurarPerfilPadre()
+      }
       return NextResponse.redirect(`${url.origin}${next}`)
     }
     console.error('[auth/callback] verifyOtp falló:', error.message)
@@ -28,6 +33,9 @@ export async function GET(request: Request) {
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      // OAuth (Google) y signups por PKCE crean sesión sin pasar por nuestro
+      // login action: aseguramos el perfil acá.
+      await asegurarPerfilPadre()
       return NextResponse.redirect(`${url.origin}${next}`)
     }
     console.error('[auth/callback] exchangeCodeForSession falló:', error.message)

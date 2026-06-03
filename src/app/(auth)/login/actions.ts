@@ -47,3 +47,25 @@ export async function logout() {
   revalidatePath('/', 'layout')
   redirect('/login')
 }
+
+/**
+ * Inicia el flujo de OAuth con Google. Supabase devuelve la URL a la que hay
+ * que redirigir al usuario; la cookie de PKCE verifier la setea automáticamente
+ * y el callback en /auth/callback completa el intercambio.
+ *
+ * Sólo se usa si Google está habilitado en Supabase Dashboard → Auth → Providers.
+ */
+export async function loginConGoogle(): Promise<{ error?: string } | void> {
+  const supabase = createClient()
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${baseUrl}/auth/callback?next=/`,
+    },
+  })
+  if (error || !data?.url) {
+    return { error: 'No se pudo iniciar el login con Google. Probá con email y contraseña.' }
+  }
+  redirect(data.url)
+}

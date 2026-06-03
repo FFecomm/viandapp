@@ -46,6 +46,25 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Defensa en profundidad: si el usuario fue desactivado por un admin pero
+  // todavía tiene token válido, cerramos su sesión en cuanto vuelva a pegar al
+  // server. Sin este check podría seguir navegando hasta que se le venza el JWT.
+  if (user) {
+    const { data: perfil } = await supabase
+      .from('usuarios')
+      .select('activo')
+      .eq('id', user.id)
+      .maybeSingle()
+    const activo = (perfil as { activo?: boolean } | null)?.activo
+    if (perfil && activo === false) {
+      await supabase.auth.signOut()
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      url.searchParams.set('desactivado', '1')
+      return NextResponse.redirect(url)
+    }
+  }
+
   if (user && isAuthRoute && !permitirAunqueLogueado) {
     const url = request.nextUrl.clone()
     url.pathname = '/'

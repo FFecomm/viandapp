@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createClient } from '@/lib/supabase/client'
+import { PASSWORD_HINT, PASSWORD_MIN, validarPasswordFuerte } from '@/lib/auth/password'
 
 export function NuevaClaveForm() {
   const router = useRouter()
@@ -26,8 +27,9 @@ export function NuevaClaveForm() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (pwd.length < 6) {
-      toast.error('La contraseña debe tener al menos 6 caracteres')
+    const motivo = validarPasswordFuerte(pwd)
+    if (motivo) {
+      toast.error(motivo)
       return
     }
     if (pwd !== pwd2) {
@@ -67,11 +69,12 @@ export function NuevaClaveForm() {
           type="password"
           autoComplete="new-password"
           required
-          minLength={6}
+          minLength={PASSWORD_MIN}
           value={pwd}
           onChange={(e) => setPwd(e.target.value)}
           className="h-12 text-base"
         />
+        <p className="text-xs text-muted-foreground">{PASSWORD_HINT}</p>
       </div>
       <div className="space-y-2">
         <Label htmlFor="pwd2" className="text-base">Repetí la contraseña</Label>
@@ -80,7 +83,7 @@ export function NuevaClaveForm() {
           type="password"
           autoComplete="new-password"
           required
-          minLength={6}
+          minLength={PASSWORD_MIN}
           value={pwd2}
           onChange={(e) => setPwd2(e.target.value)}
           className="h-12 text-base"

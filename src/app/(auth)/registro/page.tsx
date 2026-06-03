@@ -16,7 +16,7 @@ export default async function RegistroPage() {
             Para padres y tutores. Después vinculás a tus hijos.
           </p>
         </div>
-        <RegistroForm />
+        <RegistroForm googleHabilitado={process.env.NEXT_PUBLIC_GOOGLE_AUTH === '1'} />
         <p className="text-sm text-center text-muted-foreground">
           ¿Ya tenés cuenta?{' '}
           <Link href="/login" className="text-primary font-medium">
