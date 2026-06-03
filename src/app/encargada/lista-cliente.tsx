@@ -136,7 +136,7 @@ function FiltroChips({
         type="button"
         onClick={() => onChange('')}
         className={cn(
-          'h-8 rounded-full border px-3 text-xs',
+          'min-h-10 rounded-full border px-3 py-1.5 text-xs',
           value === '' ? 'border-primary bg-primary/10' : 'hover:bg-muted',
         )}
       >
@@ -148,7 +148,7 @@ function FiltroChips({
           type="button"
           onClick={() => onChange(o)}
           className={cn(
-            'h-8 rounded-full border px-3 text-xs',
+            'min-h-10 rounded-full border px-3 py-1.5 text-xs',
             value === o ? 'border-primary bg-primary/10' : 'hover:bg-muted',
           )}
         >

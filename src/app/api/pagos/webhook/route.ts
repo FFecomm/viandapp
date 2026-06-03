@@ -10,11 +10,17 @@ import { reportarError } from '@/lib/reportar-error'
  * Formato del header: `ts=1234567890,v1=abc123...`
  * Cadena firmada: `id:<data.id>;request-id:<x-request-id>;ts:<ts>;`
  * Algoritmo: HMAC-SHA256 con MP_WEBHOOK_SECRET.
- * Si MP_WEBHOOK_SECRET no está configurado, no se valida (modo dev).
+ * En producción MP_WEBHOOK_SECRET es OBLIGATORIO: sin secret rechazamos para
+ * evitar que un atacante envíe pagos falsos. En dev/test sí dejamos pasar.
  */
 function validarFirmaMp(req: Request, dataId: string): { ok: boolean; motivo?: string } {
   const secret = process.env.MP_WEBHOOK_SECRET
-  if (!secret) return { ok: true } // Dev: sin secret, no se valida.
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      return { ok: false, motivo: 'MP_WEBHOOK_SECRET no configurado en producción' }
+    }
+    return { ok: true }
+  }
 
   const signatureHeader = req.headers.get('x-signature')
   const requestId = req.headers.get('x-request-id')
@@ -84,10 +90,29 @@ export async function POST(req: Request) {
     }
 
     const supabase = createAdminClient()
+    const mpStatus = String(payment.status ?? 'pendiente')
+
+    // Estados de reverso post-aprobación (contracargo, devolución, cancelación
+    // posterior). Llamamos a fn_revertir_pago_mp en vez de fn_acreditar_pago_mp
+    // para vaciar el saldo no consumido y registrar el egreso en caja.
+    const ESTADOS_REVERSO = new Set(['refunded', 'charged_back', 'cancelled'])
+    if (ESTADOS_REVERSO.has(mpStatus)) {
+      const { error: errReverso } = await supabase.rpc('fn_revertir_pago_mp', {
+        p_pago_id: externalRef,
+        p_mp_payment_id: mp_payment_id,
+        p_mp_status: mpStatus,
+      })
+      if (errReverso) {
+        await reportarError('mp-webhook-revertir', errReverso, { mp_payment_id, pago_id: externalRef, mpStatus })
+        return NextResponse.json({ error: errReverso.message }, { status: 500 })
+      }
+      return NextResponse.json({ ok: true, reverso: mpStatus })
+    }
+
     const { error } = await supabase.rpc('fn_acreditar_pago_mp', {
       p_pago_id: externalRef,
       p_mp_payment_id: mp_payment_id,
-      p_mp_status: String(payment.status ?? 'pendiente'),
+      p_mp_status: mpStatus,
     })
     if (error) {
       await reportarError('mp-webhook-acreditar', error, { mp_payment_id, pago_id: externalRef })
@@ -95,7 +120,7 @@ export async function POST(req: Request) {
     }
 
     // Aviso push al padre si el pago fue aprobado.
-    if (String(payment.status) === 'approved') {
+    if (mpStatus === 'approved') {
       try {
         const { data: pago } = await supabase
           .from('pagos')
@@ -112,7 +137,7 @@ export async function POST(req: Request) {
           })
         }
       } catch (e) {
-        console.error('[push] fallo notificando pago acreditado:', e)
+        await reportarError('mp-webhook-push', e, { mp_payment_id, pago_id: externalRef })
       }
     }
 

@@ -34,7 +34,7 @@ export async function GET(req: Request) {
   res.cookies.set(STATE_COOKIE, state, {
     httpOnly: true,
     sameSite: 'lax',
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 60 * 10,
     path: '/',
   })

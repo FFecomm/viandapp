@@ -1,5 +1,6 @@
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { reportarError } from '@/lib/reportar-error'
 
 const MP_OAUTH_BASE = 'https://auth.mercadopago.com.ar/authorization'
 const MP_TOKEN_URL = 'https://api.mercadopago.com/oauth/token'
@@ -140,7 +141,7 @@ export async function obtenerConexionMpActiva(): Promise<ConexionMp | null> {
         expires_at: expiresAt,
       }
     } catch (e) {
-      console.error('[mp] no se pudo refrescar el token, uso el actual:', e)
+      await reportarError('mp-refresh-token', e, { conexion_id: c.id })
     }
   }
 

@@ -1,5 +1,6 @@
 import webpush from 'web-push'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { reportarError } from '@/lib/reportar-error'
 
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
 const PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY
@@ -49,7 +50,7 @@ export async function enviarPushAUsuario(usuarioId: string, payload: Payload): P
     .select('id, endpoint, p256dh, auth')
     .eq('usuario_id', usuarioId)
   if (error) {
-    console.error('[push] error leyendo suscripciones:', error.message)
+    await reportarError('push-leer-suscripciones', error, { usuarioId })
     return
   }
   if (!subs || subs.length === 0) return
@@ -71,7 +72,7 @@ export async function enviarPushAUsuario(usuarioId: string, payload: Payload): P
           // Suscripción caducada, limpiarla
           await supabase.from('push_subscriptions').delete().eq('id', s.id)
         } else {
-          console.error('[push] error enviando:', e instanceof Error ? e.message : e)
+          await reportarError('push-enviar', e, { usuarioId, statusCode: status })
         }
       }
     }),

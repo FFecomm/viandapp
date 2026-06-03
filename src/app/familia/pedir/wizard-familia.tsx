@@ -33,19 +33,66 @@ const FIJOS: { menu: TipoMenu; descripcion: string }[] = [
 const DIAS_SEMANA = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 
+// Feriados nacionales no laborables de Argentina (fechas con día fijo).
+// Los feriados con fecha móvil (Carnaval, Semana Santa) se agregan año a año.
+// Fuente: ley 27.399 + decretos anuales.
+const FERIADOS_AR: Set<string> = new Set([
+  // 2026
+  '2026-01-01', // Año Nuevo
+  '2026-02-16', '2026-02-17', // Carnaval
+  '2026-03-23', // Memoria por la Verdad y la Justicia (24 mar, lunes si cae feriado)
+  '2026-03-24', // Día Nacional de la Memoria
+  '2026-04-02', // Día del Veterano y de los Caídos en Malvinas
+  '2026-04-03', // Viernes Santo
+  '2026-05-01', // Día del Trabajador
+  '2026-05-25', // Día de la Revolución de Mayo
+  '2026-06-15', // Paso a la Inmortalidad del Gral. Güemes (trasladado)
+  '2026-06-20', // Día de la Bandera (sábado)
+  '2026-07-09', // Día de la Independencia
+  '2026-08-17', // Paso a la Inmortalidad del Gral. San Martín
+  '2026-10-12', // Día del Respeto a la Diversidad Cultural
+  '2026-11-23', // Día de la Soberanía Nacional (trasladado al lunes)
+  '2026-12-08', // Inmaculada Concepción
+  '2026-12-25', // Navidad
+  // 2027
+  '2027-01-01',
+  '2027-02-08', '2027-02-09', // Carnaval
+  '2027-03-24',
+  '2027-03-25', // Jueves Santo (no laborable)
+  '2027-03-26', // Viernes Santo
+  '2027-04-02',
+  '2027-05-01',
+  '2027-05-25',
+  '2027-06-17', // Güemes
+  '2027-06-20',
+  '2027-07-09',
+  '2027-08-16', // San Martín (trasladado)
+  '2027-10-11', // Diversidad Cultural (trasladado)
+  '2027-11-22', // Soberanía (trasladado)
+  '2027-12-08',
+  '2027-12-25',
+])
+
 function proximosDiasHabiles(n: number): string[] {
   const dias: string[] = []
   const hoyStr = fechaHoyAR()
   const [y, m, d] = hoyStr.split('-').map(Number)
   const cursor = new Date(Date.UTC(y, m - 1, d))
   cursor.setUTCDate(cursor.getUTCDate() + 1)
-  while (dias.length < n) {
+  // Tope de seguridad para no loopear si la app vive de acá a varios años
+  // sin tabla de feriados actualizada.
+  let intentos = 0
+  while (dias.length < n && intentos < 60) {
+    intentos++
     const dow = cursor.getUTCDay()
-    if (dow !== 0 && dow !== 6) {
-      const yy = cursor.getUTCFullYear()
-      const mm = String(cursor.getUTCMonth() + 1).padStart(2, '0')
-      const dd = String(cursor.getUTCDate()).padStart(2, '0')
-      dias.push(`${yy}-${mm}-${dd}`)
+    const yy = cursor.getUTCFullYear()
+    const mm = String(cursor.getUTCMonth() + 1).padStart(2, '0')
+    const dd = String(cursor.getUTCDate()).padStart(2, '0')
+    const fechaStr = `${yy}-${mm}-${dd}`
+    const esFinde = dow === 0 || dow === 6
+    const esFeriado = FERIADOS_AR.has(fechaStr)
+    if (!esFinde && !esFeriado) {
+      dias.push(fechaStr)
     }
     cursor.setUTCDate(cursor.getUTCDate() + 1)
   }
@@ -68,13 +115,11 @@ export function WizardFamilia({
   alumnos,
   alumnoPreseleccionado,
   menus,
-  precioVianda,
   fechasYaPedidas,
 }: {
   alumnos: MiAlumno[]
   alumnoPreseleccionado: string | null
   menus: MenuRow[]
-  precioVianda: number
   fechasYaPedidas: string[]
 }) {
   const alumno = useMemo<MiAlumno | null>(() => {
@@ -104,18 +149,16 @@ export function WizardFamilia({
     )
   }
 
-  return <WizardConAlumno alumno={alumno} menus={menus} precioVianda={precioVianda} fechasYaPedidas={fechasYaPedidas} />
+  return <WizardConAlumno alumno={alumno} menus={menus} fechasYaPedidas={fechasYaPedidas} />
 }
 
 function WizardConAlumno({
   alumno,
   menus,
-  precioVianda,
   fechasYaPedidas,
 }: {
   alumno: MiAlumno
   menus: MenuRow[]
-  precioVianda: number
   fechasYaPedidas: string[]
 }) {
   const diasDisponibles = useMemo(() => proximosDiasHabiles(10), [])
@@ -151,7 +194,6 @@ function WizardConAlumno({
     startTransition(async () => {
       const result = await cargarPedidoFamilia({
         alumno_id: alumno.id,
-        precio_vianda: precioVianda,
         dias: seleccionados.map((s) => ({
           fecha: s.fecha,
           menu: s.menu!,

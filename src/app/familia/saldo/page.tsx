@@ -41,6 +41,11 @@ export default async function SaldoPage() {
       </Link>
       <PageHeader title="Cargar saldo" subtitle="Pagás una vez y pedís cuando quieras." />
       <SaldoForm alumnos={alumnos} precioVianda={precioVianda} mpDisponible={mpDisponible} />
+      <div className="pt-2 text-center">
+        <Link href="/familia/saldo/pagos" className="text-sm text-primary underline">
+          Ver historial de pagos
+        </Link>
+      </div>
     </div>
   )
 }

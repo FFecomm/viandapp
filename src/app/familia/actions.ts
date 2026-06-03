@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
 import { enviarPushAUsuario } from '@/lib/push'
+import { reportarError } from '@/lib/reportar-error'
 import type { TipoMenu } from '@/lib/supabase/types'
 
 type DiaPedido = {
@@ -15,7 +16,6 @@ type DiaPedido = {
 
 type CargarPedidoInput = {
   alumno_id: string
-  precio_vianda: number
   dias: DiaPedido[]
 }
 
@@ -27,6 +27,18 @@ export async function cargarPedidoFamilia(
   if (!input.dias.length) return { error: 'Elegí al menos un día' }
 
   const supabase = createClient()
+
+  // El precio se lee server-side desde la configuración, no se confía en el
+  // que pueda venir del cliente (evita manipulación en la request).
+  const { data: configRow } = await supabase
+    .from('configuracion')
+    .select('value')
+    .eq('key', 'precio_vianda_actual')
+    .maybeSingle()
+  const precioVianda = Number(configRow?.value ?? 0)
+  if (!Number.isFinite(precioVianda) || precioVianda <= 0) {
+    return { error: 'El precio de la vianda no está configurado. Hablá con la administración.' }
+  }
 
   // Prepago estricto: verificar server-side que el saldo en viandas alcance para
   // todos los días seleccionados antes de insertar ningún pedido.
@@ -51,7 +63,7 @@ export async function cargarPedidoFamilia(
       p_menu: dia.menu,
       p_observaciones: dia.observaciones,
       p_forma_pago_vianda: 'credito',
-      p_precio_vianda: input.precio_vianda,
+      p_precio_vianda: precioVianda,
       p_productos: [],
     })
     if (error) {
@@ -88,7 +100,7 @@ export async function cargarPedidoFamilia(
       }
     }
   } catch (e) {
-    console.error('[push] fallo notificando pedido confirmado:', e)
+    await reportarError('familia-push-pedido', e, { alumno_id: input.alumno_id })
   }
 
   revalidatePath('/familia')

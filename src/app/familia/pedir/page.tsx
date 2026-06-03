@@ -23,10 +23,9 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
   const supabase = createClient()
   const alumnoFiltro = searchParams.alumno ?? null
 
-  const [{ data: alumnosData }, { data: menus }, { data: config }] = await Promise.all([
+  const [{ data: alumnosData }, { data: menus }] = await Promise.all([
     supabase.rpc('fn_mis_alumnos').returns<MiAlumno[]>(),
     supabase.from('menu_ciclo').select('dia_ciclo, tipo_menu, descripcion').order('dia_ciclo'),
-    supabase.from('configuracion').select('value').eq('key', 'precio_vianda_actual').maybeSingle(),
   ])
 
   const alumnos = ((alumnosData ?? []) as MiAlumno[])
@@ -58,7 +57,6 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
         alumnos={alumnos as never}
         alumnoPreseleccionado={alumnoFiltro}
         menus={(menus ?? []) as never}
-        precioVianda={Number(config?.value ?? 9500)}
         fechasYaPedidas={fechasYaPedidas}
       />
     </div>

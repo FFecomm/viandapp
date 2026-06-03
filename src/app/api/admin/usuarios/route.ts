@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getProfile } from '@/lib/auth/profile'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { registrarAudit } from '@/lib/audit'
 
 const ROLES = new Set(['operadora', 'encargada', 'administrativo'])
 
@@ -51,6 +52,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: errProfile.message }, { status: 400 })
   }
 
+  await registrarAudit({
+    actor_id: profile.id,
+    accion: 'usuario_creado',
+    recurso_tipo: 'usuario',
+    recurso_id: data.user.id,
+    detalle: { email, rol, nombre },
+    ip: req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip'),
+    user_agent: req.headers.get('user-agent'),
+  })
+
   return NextResponse.json({ ok: true, id: data.user.id })
 }
 
@@ -73,6 +84,15 @@ export async function DELETE(req: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 400 })
 
   // La fila en `usuarios` se borra en cascada por ON DELETE CASCADE de auth.users.
+
+  await registrarAudit({
+    actor_id: profile.id,
+    accion: 'usuario_borrado',
+    recurso_tipo: 'usuario',
+    recurso_id: id,
+    ip: req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip'),
+    user_agent: req.headers.get('user-agent'),
+  })
 
   return NextResponse.json({ ok: true })
 }

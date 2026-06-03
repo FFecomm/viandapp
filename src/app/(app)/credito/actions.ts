@@ -38,6 +38,9 @@ export async function actualizarPrecioVianda(formData: FormData): Promise<Result
   await requireRole(['administrativo'])
   const precio = Number(formData.get('precio') ?? 0)
   if (!Number.isFinite(precio) || precio <= 0) return { error: 'Precio inválido' }
+  // Tope superior para evitar errores de tipeo (ej. agregar un cero de más).
+  // Si el negocio realmente vende a más de $100k la vianda, ajustar acá.
+  if (precio > 100_000) return { error: 'Precio sospechosamente alto. Verificá el valor.' }
 
   const supabase = createClient()
   const { error } = await supabase
