@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { CalendarCheck, CreditCard, Sparkles, ChevronRight } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
+import { InstalarAppLink } from '@/components/instalar-app-link'
 import { cn } from '@/lib/utils'
 
 type Slide = {
@@ -85,6 +86,9 @@ export function Bienvenida() {
               >
                 Ya tengo cuenta
               </Link>
+              <div className="pt-3 border-t mt-2">
+                <InstalarAppLink />
+              </div>
             </>
           ) : (
             <>

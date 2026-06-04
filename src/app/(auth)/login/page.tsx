@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getProfile } from '@/lib/auth/profile'
 import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
+import { InstalarAppLink } from '@/components/instalar-app-link'
 import { LoginForm } from './login-form'
 
 type SearchParams = {
@@ -65,6 +66,10 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           <Link href="/terminos" className="underline">Términos</Link>{' '}y la{' '}
           <Link href="/politica-privacidad" className="underline">Política de Privacidad</Link>.
         </p>
+
+        <div className="pt-4 border-t">
+          <InstalarAppLink />
+        </div>
       </div>
     </main>
   )
