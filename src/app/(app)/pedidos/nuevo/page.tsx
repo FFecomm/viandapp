@@ -5,7 +5,8 @@ import { requireRole } from '@/lib/auth/roles'
 import { NuevoPedidoWizard } from './wizard'
 
 export default async function NuevoPedidoPage() {
-  await requireRole(['operadora', 'administrativo'])
+  const profile = await requireRole(['operadora', 'administrativo', 'encargada'])
+  const volverHref = profile.rol === 'encargada' ? '/encargada' : '/pedidos'
 
   const supabase = createClient()
   const [{ data: alumnos }, { data: menus }, { data: config }] = await Promise.all([
@@ -28,7 +29,7 @@ export default async function NuevoPedidoPage() {
 
   return (
     <div className="p-5 space-y-4">
-      <Link href="/pedidos" className="inline-flex items-center gap-1 text-sm text-muted-foreground">
+      <Link href={volverHref} className="inline-flex items-center gap-1 text-sm text-muted-foreground">
         <ChevronLeft className="size-4" /> Volver
       </Link>
       <h1 className="text-2xl font-semibold tracking-tight">Cargar pedido</h1>
@@ -36,6 +37,7 @@ export default async function NuevoPedidoPage() {
         alumnos={(alumnos ?? []) as never}
         menus={(menus ?? []) as never}
         precioVianda={Number(config?.value ?? 9500)}
+        volverHref={volverHref}
       />
     </div>
   )

@@ -3,15 +3,15 @@
 import { useMemo, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { Check, ChevronLeft, ChevronRight, Search, User } from 'lucide-react'
+import { Banknote, Check, ChevronLeft, ChevronRight, CreditCard, Hourglass, Search, User, Wallet } from 'lucide-react'
 import { cargarPedidoOperadora } from '../actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
-import { diaCicloDe, fechaHoyAR } from '@/lib/format'
-import type { TipoMenu } from '@/lib/supabase/types'
+import { diaCicloDe, fechaHoyAR, formatPesos } from '@/lib/format'
+import type { FormaPago, TipoMenu } from '@/lib/supabase/types'
 
 type Alumno = {
   id: string
@@ -69,16 +69,19 @@ export function NuevoPedidoWizard({
   alumnos,
   menus,
   precioVianda,
+  volverHref = '/pedidos',
 }: {
   alumnos: Alumno[]
   menus: MenuRow[]
   precioVianda: number
+  volverHref?: string
 }) {
   const router = useRouter()
   const [step, setStep] = useState<Step>(0)
   const [alumno, setAlumno] = useState<Alumno | null>(null)
   const [query, setQuery] = useState('')
   const [seleccionados, setSeleccionados] = useState<DiaSeleccionado[]>([])
+  const [formaPago, setFormaPago] = useState<FormaPago>('credito')
   const [pending, startTransition] = useTransition()
 
   const matches = useMemo(() => {
@@ -95,6 +98,9 @@ export function NuevoPedidoWizard({
   const saldoDespues = viandasDisponibles - viandasUsar
   const saldoSuficiente = saldoDespues >= 0
   const todosTienenMenu = seleccionados.length > 0 && seleccionados.every((s) => s.menu !== null)
+  const totalPesos = viandasUsar * precioVianda
+  const requierePago = formaPago === 'credito'
+  const puedeConfirmar = todosTienenMenu && (!requierePago || saldoSuficiente)
 
   function toggleDia(fecha: string) {
     setSeleccionados((prev) => {
@@ -110,11 +116,12 @@ export function NuevoPedidoWizard({
   }
 
   function confirmar() {
-    if (!alumno || !todosTienenMenu || !saldoSuficiente) return
+    if (!alumno || !puedeConfirmar) return
     startTransition(async () => {
       const result = await cargarPedidoOperadora({
         alumno_id: alumno.id,
         precio_vianda: precioVianda,
+        forma_pago_vianda: formaPago,
         dias: seleccionados.map((s) => ({
           fecha: s.fecha,
           menu: s.menu!,
@@ -124,7 +131,8 @@ export function NuevoPedidoWizard({
       if (result?.error) toast.error(result.error)
       else {
         toast.success(`Pedido cargado para ${alumno.nombre_completo.split(' ')[0]}`)
-        router.push(`/pedidos?fecha=${seleccionados[0].fecha}`)
+        const dest = volverHref === '/encargada' ? '/encargada' : `/pedidos?fecha=${seleccionados[0].fecha}`
+        router.push(dest)
       }
     })
   }
@@ -296,7 +304,8 @@ export function NuevoPedidoWizard({
 
       {step === 3 && alumno && (
         <section className="space-y-5">
-          <h2 className="text-xl font-medium">Confirmar pedido</h2>
+          <h2 className="text-xl font-medium">¿Cómo lo paga?</h2>
+
           <div className="rounded-2xl border overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-muted/50">
@@ -327,33 +336,66 @@ export function NuevoPedidoWizard({
               <span className="font-medium">{alumno.nombre_completo}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Saldo actual</span>
-              <span>{viandasDisponibles} {viandasDisponibles === 1 ? 'vianda' : 'viandas'}</span>
+              <span className="text-muted-foreground">Cantidad</span>
+              <span>{viandasUsar} {viandasUsar === 1 ? 'vianda' : 'viandas'}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Viandas a usar</span>
-              <span>{viandasUsar}</span>
-            </div>
-            <div className="border-t pt-2 flex justify-between">
-              <span className="text-muted-foreground">Saldo que queda</span>
-              <span className={cn('font-semibold', !saldoSuficiente && 'text-destructive')}>
-                {saldoDespues}
-              </span>
+              <span className="text-muted-foreground">Total</span>
+              <span className="font-medium">{formatPesos(totalPesos)}</span>
             </div>
           </div>
 
-          {!saldoSuficiente ? (
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Forma de pago</p>
+            <div className="grid grid-cols-2 gap-2">
+              <OpcionPago
+                icon={Wallet}
+                label="Saldo a favor"
+                hint={`${viandasDisponibles} ${viandasDisponibles === 1 ? 'vianda' : 'viandas'}`}
+                value="credito"
+                activa={formaPago}
+                onSelect={setFormaPago}
+              />
+              <OpcionPago
+                icon={Banknote}
+                label="Efectivo"
+                hint="cobrado en mano"
+                value="efectivo"
+                activa={formaPago}
+                onSelect={setFormaPago}
+              />
+              <OpcionPago
+                icon={CreditCard}
+                label="Transferencia"
+                hint="ya recibida"
+                value="transferencia"
+                activa={formaPago}
+                onSelect={setFormaPago}
+              />
+              <OpcionPago
+                icon={Hourglass}
+                label="A deber"
+                hint="paga después"
+                value="a_deber"
+                activa={formaPago}
+                onSelect={setFormaPago}
+              />
+            </div>
+          </div>
+
+          {requierePago && !saldoSuficiente ? (
             <div className="rounded-xl bg-orange-50 border border-orange-200 p-4 text-sm">
               <p className="font-medium">Saldo insuficiente</p>
               <p className="text-muted-foreground mt-1">
-                Cargá saldo desde <span className="font-medium">Crédito → Cargar pago</span> y volvé a intentar.
+                Faltan {Math.abs(saldoDespues)} {Math.abs(saldoDespues) === 1 ? 'vianda' : 'viandas'}.
+                Elegí otra forma de pago o cargá saldo desde Crédito.
               </p>
             </div>
-          ) : (
-            <Button onClick={confirmar} disabled={pending} className="w-full h-12 text-base">
-              {pending ? 'Guardando…' : 'Confirmar pedido'}
-            </Button>
-          )}
+          ) : null}
+
+          <Button onClick={confirmar} disabled={pending || !puedeConfirmar} className="w-full h-12 text-base">
+            {pending ? 'Guardando…' : 'Confirmar pedido'}
+          </Button>
         </section>
       )}
     </div>
@@ -373,5 +415,39 @@ function Indicador({ paso }: { paso: Step }) {
         ))}
       </div>
     </div>
+  )
+}
+
+function OpcionPago({
+  icon: Icon,
+  label,
+  hint,
+  value,
+  activa,
+  onSelect,
+}: {
+  icon: React.ComponentType<{ className?: string }>
+  label: string
+  hint: string
+  value: FormaPago
+  activa: FormaPago
+  onSelect: (v: FormaPago) => void
+}) {
+  const selected = activa === value
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(value)}
+      className={cn(
+        'rounded-xl border p-3 text-left transition-colors flex flex-col gap-1',
+        selected ? 'border-primary bg-primary/10' : 'hover:bg-muted',
+      )}
+    >
+      <div className="flex items-center gap-2">
+        <Icon className="size-4" />
+        <span className="font-medium text-sm">{label}</span>
+      </div>
+      <span className="text-xs text-muted-foreground">{hint}</span>
+    </button>
   )
 }

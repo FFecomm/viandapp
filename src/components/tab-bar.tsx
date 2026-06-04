@@ -36,6 +36,7 @@ const TABS_PRIMARIOS: Record<Rol, Tab[]> = {
   ],
   encargada: [
     { href: '/encargada', icon: ClipboardList, label: 'Salón' },
+    { href: '/pedidos/nuevo', icon: CalendarDays, label: 'Cargar' },
     { href: '/encargada/cobro', icon: HandCoins, label: 'Cobrar' },
   ],
   administrativo: [

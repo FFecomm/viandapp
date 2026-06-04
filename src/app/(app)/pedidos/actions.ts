@@ -69,32 +69,43 @@ type DiaPedido = {
 type CargarPedidoMultiInput = {
   alumno_id: string
   precio_vianda: number
+  forma_pago_vianda: FormaPago
   dias: DiaPedido[]
 }
 
 /**
- * Carga N pedidos (uno por día) para un alumno, con validación previa de saldo
- * para garantizar prepago estricto. Igual contrato que cargarPedidoFamilia
- * pero con role check `operadora`/`administrativo`.
+ * Carga N pedidos (uno por día) para un alumno. La operadora elige forma de pago:
+ * - 'credito' → consume saldo (requiere saldo suficiente)
+ * - 'efectivo' / 'transferencia' → cobro por fuera de la app, va a caja
+ * - 'a_deber' → queda como deuda del alumno
  */
 export async function cargarPedidoOperadora(
   input: CargarPedidoMultiInput,
 ): Promise<{ error?: string } | void> {
-  await requireRole(['operadora', 'administrativo'])
+  await requireRole(['operadora', 'administrativo', 'encargada'])
 
   if (!input.dias.length) return { error: 'Elegí al menos un día' }
 
+  const FORMAS_VALIDAS: FormaPago[] = ['credito', 'efectivo', 'transferencia', 'a_deber']
+  if (!FORMAS_VALIDAS.includes(input.forma_pago_vianda)) {
+    return { error: 'Forma de pago inválida' }
+  }
+
   const supabase = createClient()
 
-  const { data: alumno, error: errAlumno } = await supabase
-    .from('alumnos')
-    .select('viandas_credito')
-    .eq('id', input.alumno_id)
-    .single()
-  if (errAlumno || !alumno) return { error: 'No se pudo verificar el saldo' }
-  if (alumno.viandas_credito < input.dias.length) {
-    return {
-      error: `Saldo insuficiente: ${alumno.viandas_credito} viandas disponibles, ${input.dias.length} necesarias.`,
+  // Solo validamos saldo si la forma elegida es crédito. Efectivo/transferencia/
+  // a_deber NO requieren saldo previo: el dinero entra (o no) por fuera del app.
+  if (input.forma_pago_vianda === 'credito') {
+    const { data: alumno, error: errAlumno } = await supabase
+      .from('alumnos')
+      .select('viandas_credito')
+      .eq('id', input.alumno_id)
+      .single()
+    if (errAlumno || !alumno) return { error: 'No se pudo verificar el saldo' }
+    if (alumno.viandas_credito < input.dias.length) {
+      return {
+        error: `Saldo insuficiente: ${alumno.viandas_credito} viandas disponibles, ${input.dias.length} necesarias.`,
+      }
     }
   }
 
@@ -104,7 +115,7 @@ export async function cargarPedidoOperadora(
       p_fecha: dia.fecha,
       p_menu: dia.menu,
       p_observaciones: dia.observaciones,
-      p_forma_pago_vianda: 'credito',
+      p_forma_pago_vianda: input.forma_pago_vianda,
       p_precio_vianda: input.precio_vianda,
       p_productos: [],
     })
@@ -116,4 +127,5 @@ export async function cargarPedidoOperadora(
   revalidatePath('/pedidos')
   revalidatePath('/credito')
   revalidatePath(`/credito/${input.alumno_id}`)
+  revalidatePath('/caja')
 }
