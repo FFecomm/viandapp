@@ -5,7 +5,6 @@ import { useMemo, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { diaCicloDe, fechaHoyAR, formatPesos } from '@/lib/format'
@@ -20,8 +19,9 @@ type MiAlumno = {
   viandas_credito: number
 }
 type MenuRow = { dia_ciclo: number; tipo_menu: 'A' | 'B' | 'C'; descripcion: string }
+type OpcionRow = { id: string; menu: string; texto: string; orden: number }
 
-type DiaSeleccionado = { fecha: string; menu: TipoMenu | null; observaciones: string }
+type DiaSeleccionado = { fecha: string; menu: TipoMenu | null; opcionesIds: string[] }
 
 const FIJOS: { menu: TipoMenu; descripcion: string }[] = [
   { menu: 'Hamburguesa', descripcion: 'Hamburguesa con papas' },
@@ -92,6 +92,7 @@ export function WizardFamilia({
   alumnos,
   alumnoPreseleccionado,
   menus,
+  opciones,
   fechasYaPedidas,
   precioVianda,
   mpDisponible,
@@ -99,6 +100,7 @@ export function WizardFamilia({
   alumnos: MiAlumno[]
   alumnoPreseleccionado: string | null
   menus: MenuRow[]
+  opciones: OpcionRow[]
   fechasYaPedidas: string[]
   precioVianda: number
   mpDisponible: boolean
@@ -134,6 +136,7 @@ export function WizardFamilia({
     <WizardConAlumno
       alumno={alumno}
       menus={menus}
+      opciones={opciones}
       fechasYaPedidas={fechasYaPedidas}
       precioVianda={precioVianda}
       mpDisponible={mpDisponible}
@@ -144,12 +147,14 @@ export function WizardFamilia({
 function WizardConAlumno({
   alumno,
   menus,
+  opciones,
   fechasYaPedidas,
   precioVianda,
   mpDisponible,
 }: {
   alumno: MiAlumno
   menus: MenuRow[]
+  opciones: OpcionRow[]
   fechasYaPedidas: string[]
   precioVianda: number
   mpDisponible: boolean
@@ -168,16 +173,32 @@ function WizardConAlumno({
   function toggleDia(fecha: string) {
     setSeleccionados((prev) => {
       if (prev.find((s) => s.fecha === fecha)) return prev.filter((s) => s.fecha !== fecha)
-      return [...prev, { fecha, menu: null, observaciones: '' }].sort((a, b) => a.fecha.localeCompare(b.fecha))
+      return [...prev, { fecha, menu: null, opcionesIds: [] }].sort((a, b) => a.fecha.localeCompare(b.fecha))
     })
   }
 
   function setMenuDia(fecha: string, menu: TipoMenu) {
-    setSeleccionados((prev) => prev.map((s) => (s.fecha === fecha ? { ...s, menu } : s)))
+    setSeleccionados((prev) => prev.map((s) => (s.fecha === fecha ? { ...s, menu, opcionesIds: [] } : s)))
   }
 
-  function setObsDia(fecha: string, obs: string) {
-    setSeleccionados((prev) => prev.map((s) => (s.fecha === fecha ? { ...s, observaciones: obs } : s)))
+  function toggleOpcionDia(fecha: string, opcionId: string) {
+    setSeleccionados((prev) =>
+      prev.map((s) => {
+        if (s.fecha !== fecha) return s
+        const yaEsta = s.opcionesIds.includes(opcionId)
+        const opcionesIds = yaEsta
+          ? s.opcionesIds.filter((id) => id !== opcionId)
+          : [...s.opcionesIds, opcionId]
+        return { ...s, opcionesIds }
+      }),
+    )
+  }
+
+  function textoOpciones(opcionesIds: string[]): string {
+    const textos = opcionesIds
+      .map((id) => opciones.find((o) => o.id === id)?.texto)
+      .filter((t): t is string => !!t)
+    return textos.join(', ')
   }
 
   function pagarYConfirmar() {
@@ -196,7 +217,7 @@ function WizardConAlumno({
           pedidos: seleccionados.map((s) => ({
             fecha: s.fecha,
             menu: s.menu,
-            observaciones: s.observaciones.trim() || undefined,
+            observaciones: textoOpciones(s.opcionesIds) || undefined,
           })),
         }),
       })
@@ -238,6 +259,21 @@ function WizardConAlumno({
           <p className="text-sm text-muted-foreground">
             Elegí uno o más días. Los días donde ya tenés pedido aparecen deshabilitados.
           </p>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              const proximos5 = diasDisponibles
+                .filter((f) => !fechasYaPedidasSet.has(f))
+                .slice(0, 5)
+              setSeleccionados(
+                proximos5.map((f) => ({ fecha: f, menu: null, opcionesIds: [] })),
+              )
+            }}
+            className="w-full h-11"
+          >
+            Pedir los próximos 5 días hábiles
+          </Button>
           <ul className="space-y-2">
             {diasDisponibles.map((fecha) => {
               const yaPedido = fechasYaPedidasSet.has(fecha)
@@ -289,7 +325,7 @@ function WizardConAlumno({
             {seleccionados.map((s) => {
               const dia = diaCicloDe(s.fecha)
               const menusDelDia = menus.filter((m) => m.dia_ciclo === dia)
-              const opciones: { value: TipoMenu; titulo: string; descripcion: string }[] = [
+              const menusDisponibles: { value: TipoMenu; titulo: string; descripcion: string }[] = [
                 ...menusDelDia.map((m) => ({
                   value: m.tipo_menu as TipoMenu,
                   titulo: `Menú ${m.tipo_menu}`,
@@ -297,11 +333,14 @@ function WizardConAlumno({
                 })),
                 ...FIJOS.map((f) => ({ value: f.menu, titulo: f.menu, descripcion: f.descripcion })),
               ]
+              const opcionesDelMenu = s.menu
+                ? opciones.filter((o) => o.menu === s.menu)
+                : []
               return (
                 <li key={s.fecha} className="space-y-3 rounded-2xl border p-4">
                   <p className="text-base font-medium">{formatDiaLargo(s.fecha)}</p>
                   <div className="grid grid-cols-2 gap-2">
-                    {opciones.map((o) => (
+                    {menusDisponibles.map((o) => (
                       <button
                         key={o.value}
                         type="button"
@@ -318,12 +357,34 @@ function WizardConAlumno({
                       </button>
                     ))}
                   </div>
-                  <Textarea
-                    value={s.observaciones}
-                    onChange={(e) => setObsDia(s.fecha, e.target.value)}
-                    placeholder="Observaciones (opcional, ej: «sin queso»)"
-                    className="min-h-16 text-sm"
-                  />
+                  {s.menu && opcionesDelMenu.length > 0 ? (
+                    <div className="space-y-2 pt-2 border-t">
+                      <p className="text-sm font-medium text-muted-foreground">
+                        Opciones (tildá las que quieras)
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {opcionesDelMenu.map((op) => {
+                          const tildada = s.opcionesIds.includes(op.id)
+                          return (
+                            <button
+                              key={op.id}
+                              type="button"
+                              onClick={() => toggleOpcionDia(s.fecha, op.id)}
+                              className={cn(
+                                'rounded-full border px-3 py-1.5 text-sm transition-colors flex items-center gap-1.5',
+                                tildada
+                                  ? 'border-primary bg-primary text-primary-foreground'
+                                  : 'hover:bg-muted',
+                              )}
+                            >
+                              {tildada ? <Check className="size-3.5" /> : null}
+                              {op.texto}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
                 </li>
               )
             })}
@@ -351,17 +412,20 @@ function WizardConAlumno({
                 </tr>
               </thead>
               <tbody>
-                {seleccionados.map((s) => (
-                  <tr key={s.fecha} className="border-t">
-                    <td className="p-3">
-                      <p>{formatDiaLargo(s.fecha)}</p>
-                      {s.observaciones ? (
-                        <p className="text-xs text-muted-foreground mt-0.5">{s.observaciones}</p>
-                      ) : null}
-                    </td>
-                    <td className="p-3">{s.menu ? etiquetaMenu(s.menu) : ''}</td>
-                  </tr>
-                ))}
+                {seleccionados.map((s) => {
+                  const obs = textoOpciones(s.opcionesIds)
+                  return (
+                    <tr key={s.fecha} className="border-t">
+                      <td className="p-3">
+                        <p>{formatDiaLargo(s.fecha)}</p>
+                        {obs ? (
+                          <p className="text-xs text-muted-foreground mt-0.5">{obs}</p>
+                        ) : null}
+                      </td>
+                      <td className="p-3">{s.menu ? etiquetaMenu(s.menu) : ''}</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

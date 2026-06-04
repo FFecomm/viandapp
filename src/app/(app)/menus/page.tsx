@@ -1,6 +1,10 @@
+import Link from 'next/link'
+import { Settings2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
 import { PageHeader } from '@/components/page-header'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { MenuCell } from './menu-cell'
 
 type MenuRow = { id: string; dia_ciclo: number; tipo_menu: 'A' | 'B' | 'C'; descripcion: string }
@@ -24,6 +28,14 @@ export default async function MenusPage() {
         title="Menús del ciclo"
         subtitle="14 días × 3 tipos. Se repiten cada 2 semanas."
       />
+
+      <Link
+        href="/menus/opciones"
+        className={cn(buttonVariants({ variant: 'outline' }), 'h-11 w-full sm:w-auto')}
+      >
+        <Settings2 className="size-4" />
+        Opciones por menú (sin queso, salsas, etc.)
+      </Link>
 
       <div className="space-y-4">
         {dias.map((dia) => {

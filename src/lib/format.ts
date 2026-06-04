@@ -91,6 +91,40 @@ export function fechaMananaAR(): string {
   return ar.toISOString().slice(0, 10)
 }
 
+/**
+ * Ventana en la que las familias pueden hacer pedidos:
+ * - Lunes a viernes: abierto 00:00-09:59 y 15:00-23:59 (cierra entre 10 y 15
+ *   para la preparación de las viandas del día)
+ * - Sábados y domingos: todo el día
+ *
+ * Devuelve un objeto con el estado y, si está cerrado, una explicación corta
+ * para mostrar al usuario.
+ */
+export function estadoVentanaPedidos(): { abierto: boolean; motivo: string | null } {
+  const now = new Date()
+  // Argentina = UTC-3 fijo
+  const ar = new Date(now.getTime() - 3 * 60 * 60 * 1000)
+  const diaSemana = ar.getUTCDay() // 0=domingo .. 6=sábado
+  const horaAR = ar.getUTCHours()
+  const minutosAR = ar.getUTCMinutes()
+
+  const esFinde = diaSemana === 0 || diaSemana === 6
+  if (esFinde) return { abierto: true, motivo: null }
+
+  const minutosTotales = horaAR * 60 + minutosAR
+  const inicioCierre = 10 * 60 // 10:00
+  const finCierre = 15 * 60 // 15:00
+
+  if (minutosTotales >= inicioCierre && minutosTotales < finCierre) {
+    return {
+      abierto: false,
+      motivo: 'Los pedidos cierran de 10:00 a 15:00 mientras preparan las viandas. Volvé a las 15.',
+    }
+  }
+
+  return { abierto: true, motivo: null }
+}
+
 export function diaCicloDe(fecha: string): number {
   // Mapea una fecha YYYY-MM-DD a un dia del ciclo 1-14.
   // Usamos los días desde una fecha de referencia (lunes anclado en 2026-01-05).

@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Clock } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
 import { tieneMpConectado, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
-import { fechaHoyAR } from '@/lib/format'
+import { estadoVentanaPedidos, fechaHoyAR } from '@/lib/format'
 import { WizardFamilia } from './wizard-familia'
 
 type SearchParams = { alumno?: string }
@@ -24,9 +24,15 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
   const supabase = createClient()
   const alumnoFiltro = searchParams.alumno ?? null
 
-  const [{ data: alumnosData }, { data: menus }, { data: config }, mpDisponible] = await Promise.all([
+  const [{ data: alumnosData }, { data: menus }, { data: opcionesData }, { data: config }, mpDisponible] = await Promise.all([
     supabase.rpc('fn_mis_alumnos').returns<MiAlumno[]>(),
     supabase.from('menu_ciclo').select('dia_ciclo, tipo_menu, descripcion').order('dia_ciclo'),
+    supabase
+      .from('menu_opciones')
+      .select('id, menu, texto, orden')
+      .eq('activa', true)
+      .order('menu')
+      .order('orden'),
     supabase.from('configuracion').select('value').eq('key', 'precio_vianda_actual').maybeSingle(),
     (async () => tieneMpOAuthConfigurado() && (await tieneMpConectado()))(),
   ])
@@ -53,6 +59,7 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
   }
 
   const precioVianda = Number(config?.value ?? 0)
+  const ventana = estadoVentanaPedidos()
 
   return (
     <div className="p-5 space-y-4">
@@ -60,14 +67,24 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
         <ChevronLeft className="size-4" /> Volver
       </Link>
       <h1 className="text-2xl font-semibold tracking-tight">Pedir vianda</h1>
-      <WizardFamilia
-        alumnos={alumnos as never}
-        alumnoPreseleccionado={alumnoFiltro}
-        menus={(menus ?? []) as never}
-        fechasYaPedidas={fechasYaPedidas}
-        precioVianda={precioVianda}
-        mpDisponible={mpDisponible}
-      />
+
+      {!ventana.abierto ? (
+        <div className="rounded-2xl border bg-orange-50 border-orange-200 p-6 space-y-3 text-center">
+          <Clock className="size-12 text-orange-600 mx-auto" />
+          <h2 className="text-lg font-semibold">Pedidos cerrados por hoy</h2>
+          <p className="text-sm text-orange-900/80">{ventana.motivo}</p>
+        </div>
+      ) : (
+        <WizardFamilia
+          alumnos={alumnos as never}
+          alumnoPreseleccionado={alumnoFiltro}
+          menus={(menus ?? []) as never}
+          opciones={(opcionesData ?? []) as never}
+          fechasYaPedidas={fechasYaPedidas}
+          precioVianda={precioVianda}
+          mpDisponible={mpDisponible}
+        />
+      )}
     </div>
   )
 }
