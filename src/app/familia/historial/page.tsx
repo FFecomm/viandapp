@@ -2,9 +2,10 @@ import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
 import { PageHeader } from '@/components/page-header'
 import { Badge } from '@/components/ui/badge'
-import { fechaHoyAR, formatFecha, FORMAS_PAGO_LABEL_CORTO } from '@/lib/format'
+import { diaCicloDe, fechaHoyAR, formatFecha, FORMAS_PAGO_LABEL_CORTO } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { BorrarMiPedidoButton } from './borrar-mi-pedido-button'
+import { EditarPedidoDialog } from './editar-pedido-dialog'
 import type { FormaPago } from '@/lib/supabase/types'
 
 type Row = {
@@ -23,18 +24,29 @@ export default async function HistorialPage() {
   const supabase = createClient()
   const hoy = fechaHoyAR()
 
-  const { data: rows } = await supabase
-    .from('pedidos')
-    .select(`
-      id, fecha, menu, observaciones, forma_pago_vianda, es_agregado,
-      alumno:alumno_id ( nombre_completo, grado, division ),
-      pedido_productos ( cantidad, producto:producto_id ( nombre ) )
-    `)
-    .order('fecha', { ascending: false })
-    .order('created_at', { ascending: false })
-    .limit(60)
-    .returns<Row[]>()
+  const [{ data: rows }, { data: menusDataRaw }, { data: opcionesDataRaw }] = await Promise.all([
+    supabase
+      .from('pedidos')
+      .select(`
+        id, fecha, menu, observaciones, forma_pago_vianda, es_agregado,
+        alumno:alumno_id ( nombre_completo, grado, division ),
+        pedido_productos ( cantidad, producto:producto_id ( nombre ) )
+      `)
+      .order('fecha', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(60)
+      .returns<Row[]>(),
+    supabase.from('menu_ciclo').select('dia_ciclo, tipo_menu, descripcion').order('dia_ciclo'),
+    supabase
+      .from('menu_opciones')
+      .select('id, menu, texto')
+      .eq('activa', true)
+      .order('menu')
+      .order('orden'),
+  ])
 
+  const menusData = (menusDataRaw ?? []) as { dia_ciclo: number; tipo_menu: 'A' | 'B' | 'C'; descripcion: string }[]
+  const opcionesData = (opcionesDataRaw ?? []) as { id: string; menu: string; texto: string }[]
   const pedidos = rows ?? []
   const futuros = pedidos.filter((p) => p.fecha >= hoy)
   const pasados = pedidos.filter((p) => p.fecha < hoy)
@@ -71,7 +83,15 @@ export default async function HistorialPage() {
           </ul>
         )}
         {futuro && (
-          <div className="flex justify-end pt-1">
+          <div className="flex justify-end gap-1 pt-1">
+            <EditarPedidoDialog
+              pedidoId={p.id}
+              menuActual={p.menu}
+              observacionesActuales={p.observaciones ?? ''}
+              menusDelDia={menusData.filter((m) => m.dia_ciclo === diaCicloDe(p.fecha))}
+              opciones={opcionesData}
+              fecha={formatFecha(p.fecha)}
+            />
             <BorrarMiPedidoButton id={p.id} />
           </div>
         )}

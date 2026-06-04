@@ -121,3 +121,26 @@ export async function borrarMiPedido(formData: FormData): Promise<{ error?: stri
   revalidatePath('/familia/historial')
   revalidatePath('/familia')
 }
+
+type EditarInput = {
+  pedido_id: string
+  menu: string
+  observaciones: string | null
+}
+
+export async function editarMiPedido(input: EditarInput): Promise<{ error?: string; ok?: boolean }> {
+  await requireRole(['padre'])
+  if (!input.pedido_id) return { error: 'Falta el pedido' }
+  if (!input.menu) return { error: 'Falta el menú' }
+
+  const supabase = createClient()
+  const { error } = await supabase.rpc('fn_editar_mi_pedido', {
+    p_pedido_id: input.pedido_id,
+    p_menu: input.menu,
+    p_observaciones: input.observaciones,
+  })
+  if (error) return { error: error.message || 'No se pudo editar el pedido' }
+
+  revalidatePath('/familia/historial')
+  return { ok: true }
+}
