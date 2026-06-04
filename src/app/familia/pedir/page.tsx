@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { requireRole } from '@/lib/auth/roles'
+import { tieneMpConectado, tieneMpOAuthConfigurado } from '@/lib/mercadopago'
 import { fechaHoyAR } from '@/lib/format'
 import { WizardFamilia } from './wizard-familia'
 
@@ -23,9 +24,11 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
   const supabase = createClient()
   const alumnoFiltro = searchParams.alumno ?? null
 
-  const [{ data: alumnosData }, { data: menus }] = await Promise.all([
+  const [{ data: alumnosData }, { data: menus }, { data: config }, mpDisponible] = await Promise.all([
     supabase.rpc('fn_mis_alumnos').returns<MiAlumno[]>(),
     supabase.from('menu_ciclo').select('dia_ciclo, tipo_menu, descripcion').order('dia_ciclo'),
+    supabase.from('configuracion').select('value').eq('key', 'precio_vianda_actual').maybeSingle(),
+    (async () => tieneMpOAuthConfigurado() && (await tieneMpConectado()))(),
   ])
 
   const alumnos = ((alumnosData ?? []) as MiAlumno[])
@@ -36,21 +39,20 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
         ? alumnos[0].id
         : null
 
-  // Pedidos confirmados con fecha futura: bloquean los días en el wizard
-  // (no se puede pedir dos veces el mismo día) y se cuentan como "reservadas"
-  // para que el padre vea cuánto saldo ya tiene asignado a próximos días.
+  // Bloquear días que ya tienen pedido confirmado O pendiente de pago (otro
+  // padre del alumno está pagando ahora). pendiente_pago se libera tras 30 min.
   let fechasYaPedidas: string[] = []
-  let reservadas = 0
   if (alumnoElegidoId) {
     const { data: pedidos } = await supabase
       .from('pedidos')
       .select('fecha')
       .eq('alumno_id', alumnoElegidoId)
-      .eq('estado', 'confirmado')
+      .in('estado', ['confirmado', 'pendiente_pago'])
       .gte('fecha', fechaHoyAR())
     fechasYaPedidas = (pedidos ?? []).map((p: { fecha: string }) => p.fecha)
-    reservadas = fechasYaPedidas.length
   }
+
+  const precioVianda = Number(config?.value ?? 0)
 
   return (
     <div className="p-5 space-y-4">
@@ -63,7 +65,8 @@ export default async function PedirPage({ searchParams }: { searchParams: Search
         alumnoPreseleccionado={alumnoFiltro}
         menus={(menus ?? []) as never}
         fechasYaPedidas={fechasYaPedidas}
-        reservadas={reservadas}
+        precioVianda={precioVianda}
+        mpDisponible={mpDisponible}
       />
     </div>
   )

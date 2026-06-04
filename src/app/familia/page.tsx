@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/page-header'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { describirCreditoConReservas, fechaHoyAR } from '@/lib/format'
+import { fechaHoyAR } from '@/lib/format'
 import { PushToggle } from '@/components/push-toggle'
 import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
 import { FechaNacimientoFaltante } from './fecha-nacimiento-faltante'
@@ -33,10 +33,8 @@ export default async function FamiliaHomePage() {
   // Si todavía no tiene hijos vinculados, mandar al onboarding.
   if (alumnos.length === 0) redirect('/familia/onboarding')
 
-  // Pedidos confirmados con fecha futura por alumno: "reservadas".
-  // El saldo libre (viandas_credito) ya descuenta estos pedidos; las contamos
-  // por separado para que el padre vea cuánto pago tiene "guardado" para
-  // próximos días.
+  // Pedidos futuros por alumno. Mostramos cuántas viandas tiene "reservadas"
+  // para próximos días. Incluye pendiente_pago (esperando confirmación de MP).
   const reservadasPorAlumno = new Map<string, number>()
   const idsAlumnos = alumnos.map((a) => a.id)
   if (idsAlumnos.length > 0) {
@@ -45,7 +43,7 @@ export default async function FamiliaHomePage() {
       .from('pedidos')
       .select('alumno_id')
       .in('alumno_id', idsAlumnos)
-      .eq('estado', 'confirmado')
+      .in('estado', ['confirmado', 'pendiente_pago'])
       .gte('fecha', hoy)
     for (const p of (futuros ?? []) as { alumno_id: string }[]) {
       reservadasPorAlumno.set(p.alumno_id, (reservadasPorAlumno.get(p.alumno_id) ?? 0) + 1)
@@ -88,37 +86,27 @@ export default async function FamiliaHomePage() {
       ) : (
         <ul className="space-y-3">
           {alumnos.map((a) => {
-            const debe = Number(a.credito_pesos) < 0
             const reservadas = reservadasPorAlumno.get(a.id) ?? 0
             return (
-              <li key={a.id} className={cn(
-                'rounded-2xl border p-5 space-y-3',
-                debe && 'bg-destructive/5 border-destructive/30',
-              )}>
+              <li key={a.id} className="rounded-2xl border p-5 space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="text-lg font-medium">{a.nombre_completo}</p>
                     <p className="text-sm text-muted-foreground">{a.grado}° {a.division}</p>
                   </div>
-                  <Badge variant={debe ? 'destructive' : 'secondary'}>
-                    {describirCreditoConReservas(a.viandas_credito, reservadas, Number(a.credito_pesos))}
-                  </Badge>
+                  {reservadas > 0 ? (
+                    <Badge variant="secondary">
+                      {reservadas} {reservadas === 1 ? 'vianda pedida' : 'viandas pedidas'}
+                    </Badge>
+                  ) : null}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <Link
-                    href={`/familia/pedir?alumno=${a.id}`}
-                    className={cn(buttonVariants(), 'h-12 text-base')}
-                  >
-                    <Plus className="size-4" />
-                    Pedir vianda
-                  </Link>
-                  <Link
-                    href="/familia/saldo"
-                    className={cn(buttonVariants({ variant: 'outline' }), 'h-12 text-base')}
-                  >
-                    Cargar saldo
-                  </Link>
-                </div>
+                <Link
+                  href={`/familia/pedir?alumno=${a.id}`}
+                  className={cn(buttonVariants(), 'h-12 text-base w-full')}
+                >
+                  <Plus className="size-4" />
+                  Pedir vianda
+                </Link>
               </li>
             )
           })}

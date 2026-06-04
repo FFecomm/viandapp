@@ -4,12 +4,11 @@ import Link from 'next/link'
 import { useMemo, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react'
-import { cargarPedidoFamilia } from '../actions'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
-import { diaCicloDe, fechaHoyAR } from '@/lib/format'
+import { diaCicloDe, fechaHoyAR, formatPesos } from '@/lib/format'
 import type { TipoMenu } from '@/lib/supabase/types'
 
 type MiAlumno = {
@@ -35,42 +34,24 @@ const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', '
 
 // Feriados nacionales no laborables de Argentina (fechas con día fijo).
 // Los feriados con fecha móvil (Carnaval, Semana Santa) se agregan año a año.
-// Fuente: ley 27.399 + decretos anuales.
 const FERIADOS_AR: Set<string> = new Set([
-  // 2026
-  '2026-01-01', // Año Nuevo
-  '2026-02-16', '2026-02-17', // Carnaval
-  '2026-03-23', // Memoria por la Verdad y la Justicia (24 mar, lunes si cae feriado)
-  '2026-03-24', // Día Nacional de la Memoria
-  '2026-04-02', // Día del Veterano y de los Caídos en Malvinas
-  '2026-04-03', // Viernes Santo
-  '2026-05-01', // Día del Trabajador
-  '2026-05-25', // Día de la Revolución de Mayo
-  '2026-06-15', // Paso a la Inmortalidad del Gral. Güemes (trasladado)
-  '2026-06-20', // Día de la Bandera (sábado)
-  '2026-07-09', // Día de la Independencia
-  '2026-08-17', // Paso a la Inmortalidad del Gral. San Martín
-  '2026-10-12', // Día del Respeto a la Diversidad Cultural
-  '2026-11-23', // Día de la Soberanía Nacional (trasladado al lunes)
-  '2026-12-08', // Inmaculada Concepción
-  '2026-12-25', // Navidad
-  // 2027
+  '2026-01-01',
+  '2026-02-16', '2026-02-17',
+  '2026-03-23', '2026-03-24',
+  '2026-04-02', '2026-04-03',
+  '2026-05-01', '2026-05-25',
+  '2026-06-15', '2026-06-20',
+  '2026-07-09', '2026-08-17',
+  '2026-10-12', '2026-11-23',
+  '2026-12-08', '2026-12-25',
   '2027-01-01',
-  '2027-02-08', '2027-02-09', // Carnaval
-  '2027-03-24',
-  '2027-03-25', // Jueves Santo (no laborable)
-  '2027-03-26', // Viernes Santo
-  '2027-04-02',
-  '2027-05-01',
-  '2027-05-25',
-  '2027-06-17', // Güemes
-  '2027-06-20',
-  '2027-07-09',
-  '2027-08-16', // San Martín (trasladado)
-  '2027-10-11', // Diversidad Cultural (trasladado)
-  '2027-11-22', // Soberanía (trasladado)
-  '2027-12-08',
-  '2027-12-25',
+  '2027-02-08', '2027-02-09',
+  '2027-03-24', '2027-03-25', '2027-03-26',
+  '2027-04-02', '2027-05-01', '2027-05-25',
+  '2027-06-17', '2027-06-20',
+  '2027-07-09', '2027-08-16',
+  '2027-10-11', '2027-11-22',
+  '2027-12-08', '2027-12-25',
 ])
 
 function proximosDiasHabiles(n: number): string[] {
@@ -79,8 +60,6 @@ function proximosDiasHabiles(n: number): string[] {
   const [y, m, d] = hoyStr.split('-').map(Number)
   const cursor = new Date(Date.UTC(y, m - 1, d))
   cursor.setUTCDate(cursor.getUTCDate() + 1)
-  // Tope de seguridad para no loopear si la app vive de acá a varios años
-  // sin tabla de feriados actualizada.
   let intentos = 0
   while (dias.length < n && intentos < 60) {
     intentos++
@@ -91,9 +70,7 @@ function proximosDiasHabiles(n: number): string[] {
     const fechaStr = `${yy}-${mm}-${dd}`
     const esFinde = dow === 0 || dow === 6
     const esFeriado = FERIADOS_AR.has(fechaStr)
-    if (!esFinde && !esFeriado) {
-      dias.push(fechaStr)
-    }
+    if (!esFinde && !esFeriado) dias.push(fechaStr)
     cursor.setUTCDate(cursor.getUTCDate() + 1)
   }
   return dias
@@ -116,14 +93,15 @@ export function WizardFamilia({
   alumnoPreseleccionado,
   menus,
   fechasYaPedidas,
-  reservadas,
+  precioVianda,
+  mpDisponible,
 }: {
   alumnos: MiAlumno[]
   alumnoPreseleccionado: string | null
   menus: MenuRow[]
   fechasYaPedidas: string[]
-  /** Cantidad de pedidos confirmados con fecha futura para el alumno seleccionado. */
-  reservadas: number
+  precioVianda: number
+  mpDisponible: boolean
 }) {
   const alumno = useMemo<MiAlumno | null>(() => {
     if (alumnoPreseleccionado) return alumnos.find((a) => a.id === alumnoPreseleccionado) ?? null
@@ -152,19 +130,29 @@ export function WizardFamilia({
     )
   }
 
-  return <WizardConAlumno alumno={alumno} menus={menus} fechasYaPedidas={fechasYaPedidas} reservadas={reservadas} />
+  return (
+    <WizardConAlumno
+      alumno={alumno}
+      menus={menus}
+      fechasYaPedidas={fechasYaPedidas}
+      precioVianda={precioVianda}
+      mpDisponible={mpDisponible}
+    />
+  )
 }
 
 function WizardConAlumno({
   alumno,
   menus,
   fechasYaPedidas,
-  reservadas,
+  precioVianda,
+  mpDisponible,
 }: {
   alumno: MiAlumno
   menus: MenuRow[]
   fechasYaPedidas: string[]
-  reservadas: number
+  precioVianda: number
+  mpDisponible: boolean
 }) {
   const diasDisponibles = useMemo(() => proximosDiasHabiles(10), [])
   const fechasYaPedidasSet = useMemo(() => new Set(fechasYaPedidas), [fechasYaPedidas])
@@ -173,11 +161,9 @@ function WizardConAlumno({
   const [seleccionados, setSeleccionados] = useState<DiaSeleccionado[]>([])
   const [pending, startTransition] = useTransition()
 
-  const viandasDisponibles = alumno.viandas_credito
-  const viandasUsar = seleccionados.length
-  const saldoDespues = viandasDisponibles - viandasUsar
-  const saldoSuficiente = saldoDespues >= 0
-  const todosTienenMenu = seleccionados.length > 0 && seleccionados.every((s) => s.menu !== null)
+  const cantidad = seleccionados.length
+  const totalPesos = cantidad * precioVianda
+  const todosTienenMenu = cantidad > 0 && seleccionados.every((s) => s.menu !== null)
 
   function toggleDia(fecha: string) {
     setSeleccionados((prev) => {
@@ -194,18 +180,37 @@ function WizardConAlumno({
     setSeleccionados((prev) => prev.map((s) => (s.fecha === fecha ? { ...s, observaciones: obs } : s)))
   }
 
-  function confirmar() {
-    if (!todosTienenMenu || !saldoSuficiente) return
+  function pagarYConfirmar() {
+    if (!todosTienenMenu) return
+    if (!mpDisponible) {
+      toast.error('Mercado Pago no está configurado todavía')
+      return
+    }
+
     startTransition(async () => {
-      const result = await cargarPedidoFamilia({
-        alumno_id: alumno.id,
-        dias: seleccionados.map((s) => ({
-          fecha: s.fecha,
-          menu: s.menu!,
-          observaciones: s.observaciones.trim() || null,
-        })),
+      const res = await fetch('/api/pagos/crear-preferencia-pedidos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          alumno_id: alumno.id,
+          pedidos: seleccionados.map((s) => ({
+            fecha: s.fecha,
+            menu: s.menu,
+            observaciones: s.observaciones.trim() || undefined,
+          })),
+        }),
       })
-      if (result?.error) toast.error(result.error)
+      const json = await res.json()
+      if (!res.ok) {
+        toast.error(json.error ?? 'No se pudo iniciar el pago')
+        return
+      }
+      const url = json.init_point ?? json.sandbox_init_point
+      if (!url) {
+        toast.error('Mercado Pago no devolvió el link de pago')
+        return
+      }
+      window.location.href = url
     })
   }
 
@@ -269,7 +274,7 @@ function WizardConAlumno({
           </ul>
           <Button
             onClick={() => setStep(2)}
-            disabled={seleccionados.length === 0}
+            disabled={cantidad === 0}
             className="w-full h-12 text-base"
           >
             Siguiente <ChevronRight className="size-4" />
@@ -335,7 +340,7 @@ function WizardConAlumno({
 
       {step === 3 && (
         <section className="space-y-5">
-          <h2 className="text-xl font-medium">Confirmar pedido</h2>
+          <h2 className="text-xl font-medium">Revisá y pagá</h2>
 
           <div className="rounded-2xl border overflow-hidden">
             <table className="w-full text-sm">
@@ -362,42 +367,42 @@ function WizardConAlumno({
           </div>
 
           <div className="rounded-2xl border p-4 space-y-2 text-sm">
-            <Fila label="Libres ahora" valor={`${viandasDisponibles} ${viandasDisponibles === 1 ? 'vianda' : 'viandas'}`} />
-            {reservadas > 0 ? (
-              <Fila
-                label="Ya reservadas (próximos días)"
-                valor={`${reservadas} ${reservadas === 1 ? 'vianda' : 'viandas'}`}
-              />
-            ) : null}
-            <Fila label="A usar con este pedido" valor={`${viandasUsar}`} />
-            <div className="border-t pt-2">
-              <Fila
-                label="Libres después de confirmar"
-                valor={`${saldoDespues} ${Math.abs(saldoDespues) === 1 ? 'vianda' : 'viandas'}`}
-                bold
-                negativo={!saldoSuficiente}
-              />
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground">Precio por vianda</span>
+              <span>{formatPesos(precioVianda)}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground">Cantidad</span>
+              <span>
+                {cantidad} {cantidad === 1 ? 'vianda' : 'viandas'}
+              </span>
+            </div>
+            <div className="border-t pt-2 flex items-center justify-between text-base">
+              <span className="font-medium">Total a pagar</span>
+              <span className="font-semibold">{formatPesos(totalPesos)}</span>
             </div>
           </div>
 
-          {!saldoSuficiente ? (
-            <div className="space-y-3">
-              <div className="rounded-xl bg-orange-50 border border-orange-200 p-4 text-sm">
-                <p className="font-medium">No tenés saldo suficiente</p>
-                <p className="text-muted-foreground mt-1">
-                  Te faltan {Math.abs(saldoDespues)}{' '}
-                  {Math.abs(saldoDespues) === 1 ? 'vianda' : 'viandas'}.
-                </p>
-              </div>
-              <Link href="/familia/credito" className={cn(buttonVariants(), 'w-full h-12 text-base')}>
-                Cargar saldo primero
-              </Link>
+          {!mpDisponible ? (
+            <div className="rounded-xl border bg-orange-50 border-orange-200 p-4 text-sm">
+              <p className="font-medium">Mercado Pago no está disponible todavía</p>
+              <p className="text-muted-foreground mt-1">
+                El colegio aún no completó la conexión. Probá más tarde o avisales.
+              </p>
             </div>
-          ) : (
-            <Button onClick={confirmar} disabled={pending} className="w-full h-12 text-base">
-              {pending ? 'Guardando…' : 'Confirmar pedido'}
-            </Button>
-          )}
+          ) : null}
+
+          <Button
+            onClick={pagarYConfirmar}
+            disabled={pending || !mpDisponible}
+            className="w-full h-12 text-base"
+          >
+            {pending ? 'Redirigiendo a Mercado Pago…' : `Pagar ${formatPesos(totalPesos)} con Mercado Pago`}
+          </Button>
+
+          <p className="text-xs text-muted-foreground text-center">
+            Los pedidos se confirman cuando Mercado Pago apruebe el pago.
+          </p>
         </section>
       )}
     </div>
@@ -415,25 +420,6 @@ function Indicador({ paso }: { paso: Step }) {
           <div key={n} className={cn('flex-1 h-1 rounded-full', paso >= n ? 'bg-primary' : 'bg-muted')} />
         ))}
       </div>
-    </div>
-  )
-}
-
-function Fila({
-  label,
-  valor,
-  bold,
-  negativo,
-}: {
-  label: string
-  valor: string
-  bold?: boolean
-  negativo?: boolean
-}) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-muted-foreground">{label}</span>
-      <span className={cn(bold && 'font-semibold', negativo && 'text-destructive')}>{valor}</span>
     </div>
   )
 }
