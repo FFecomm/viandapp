@@ -76,16 +76,49 @@ const FAQS: Record<Rol, Faq[]> = {
   ],
   padre: [
     {
-      p: '¿Cómo cargo saldo?',
-      r: 'En la home tocá "Cargar saldo", elegí cuántas viandas y pagás con Mercado Pago. El saldo se acredita en segundos.',
+      p: '¿Cómo pongo ViandApp como app en mi celular?',
+      r: (
+        <div className="space-y-3">
+          <p>
+            ViandApp funciona como una app nativa. Se instala desde el navegador,
+            no desde la App Store ni Play Store.
+          </p>
+          <div>
+            <p className="font-medium">En Android (Chrome):</p>
+            <ol className="list-decimal pl-5 mt-1 space-y-0.5">
+              <li>Entrá a viandapp.vercel.app</li>
+              <li>Te aparece un cartel para instalar — tocá "Instalar"</li>
+              <li>Si no aparece: menú ⋮ arriba a la derecha → "Instalar app"</li>
+              <li>El ícono queda en tu pantalla de inicio</li>
+            </ol>
+          </div>
+          <div>
+            <p className="font-medium">En iPhone (Safari):</p>
+            <ol className="list-decimal pl-5 mt-1 space-y-0.5">
+              <li>Entrá a viandapp.vercel.app desde Safari</li>
+              <li>Tocá el ícono de Compartir (abajo, cuadrado con flecha)</li>
+              <li>Bajá y tocá "Agregar a pantalla de Inicio"</li>
+              <li>Tocá "Agregar" arriba a la derecha</li>
+            </ol>
+          </div>
+        </div>
+      ),
     },
     {
       p: '¿Cómo pido una vianda?',
-      r: 'Tocá "Pedir vianda". El wizard tiene 3 pasos: elegís los días, elegís el menú de cada uno, confirmás.',
+      r: 'Tocá "Pedir vianda". El wizard tiene 3 pasos: elegís los días (hay un botón "Próximos 5 días hábiles" para la semana completa), el menú de cada uno con sus opciones (sin queso, salsa pesto, etc.), y pagás con Mercado Pago.',
+    },
+    {
+      p: '¿Hasta cuándo puedo hacer pedidos?',
+      r: 'De lunes a viernes los pedidos están abiertos de 00:00 a 9:59 y de 15:00 a 23:59. Cierran de 10 a 15 mientras preparan las viandas. Los sábados y domingos están abiertos todo el día.',
     },
     {
       p: '¿Cómo cancelo un pedido?',
-      r: 'En "Mis pedidos" tocás "Cancelar" en el pedido que quieras anular. ⚠️ No se puede cancelar después de las 8:00 AM del día de la vianda.',
+      r: 'En "Pedidos" tocás "Cancelar" en el pedido que quieras anular. ⚠️ No se puede cancelar después de las 8:00 AM del día de la vianda.',
+    },
+    {
+      p: '¿Puedo cambiar el menú de un pedido ya hecho?',
+      r: 'Sí. En "Pedidos" tocás "Editar" sobre el pedido y cambiás el menú o las opciones. La encargada del salón ve el cambio cuando refresca su lista.',
     },
     {
       p: 'Mi hijo está ausente. ¿Pierdo la vianda?',
@@ -93,7 +126,11 @@ const FAQS: Record<Rol, Faq[]> = {
     },
     {
       p: '¿Cómo agrego otro hijo?',
-      r: 'En la home, abajo del último hijo tenés "Sumar hijo".',
+      r: 'En la home, abajo del último hijo tenés "Sumar otro hijo". Te pregunta si lo cargás vos por primera vez o si ya está cargado por la otra mamá o papá.',
+    },
+    {
+      p: '¿Cómo elimino un hijo?',
+      r: 'En la home, debajo de la tarjeta del hijo, tocá "Eliminar hijo". Se cancelan sus pedidos futuros y te desvinculás de él. Si era el único padre vinculado, el alumno se da de baja.',
     },
     {
       p: 'Olvidé mi contraseña.',

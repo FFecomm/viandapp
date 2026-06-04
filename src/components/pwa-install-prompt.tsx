@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { X, Download } from 'lucide-react'
+import { X, Download, Share, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 type BeforeInstallPromptEvent = Event & {
@@ -10,35 +10,53 @@ type BeforeInstallPromptEvent = Event & {
 }
 
 const STORAGE_KEY = 'viandapp:pwa-install-dismissed-at'
-const DISMISS_DAYS = 14  // Si rechazaste, no preguntamos por 2 semanas.
+const DISMISS_DAYS = 14
+
+function isStandalone(): boolean {
+  if (typeof window === 'undefined') return false
+  if (window.matchMedia('(display-mode: standalone)').matches) return true
+  if ((navigator as Navigator & { standalone?: boolean }).standalone) return true
+  return false
+}
+
+function detectIOSSafari(): boolean {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent
+  const esIOS = /iPhone|iPad|iPod/i.test(ua)
+  // Safari es el único que soporta "Agregar a Inicio" en iOS. Chrome / Firefox /
+  // Edge en iOS también van con WebKit pero no tienen la opción de instalar.
+  const noEsOtroNavegador = !/CriOS|FxiOS|EdgiOS|OPiOS|YaBrowser/i.test(ua)
+  return esIOS && noEsOtroNavegador
+}
 
 export function PwaInstallPrompt() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null)
-  const [visible, setVisible] = useState(false)
+  const [modo, setModo] = useState<'oculto' | 'android' | 'ios'>('oculto')
   const [installing, setInstalling] = useState(false)
 
   useEffect(() => {
-    // No mostrar si ya está instalada
-    if (window.matchMedia('(display-mode: standalone)').matches) return
-    if ((navigator as Navigator & { standalone?: boolean }).standalone) return
-
-    // Respetar dismiss reciente
+    if (isStandalone()) return
     const dismissed = localStorage.getItem(STORAGE_KEY)
     if (dismissed) {
       const age = Date.now() - Number(dismissed)
       if (age < DISMISS_DAYS * 24 * 60 * 60 * 1000) return
     }
 
+    if (detectIOSSafari()) {
+      setModo('ios')
+      return
+    }
+
     function onBeforeInstall(e: Event) {
       e.preventDefault()
       setDeferred(e as BeforeInstallPromptEvent)
-      setVisible(true)
+      setModo('android')
     }
     window.addEventListener('beforeinstallprompt', onBeforeInstall)
     return () => window.removeEventListener('beforeinstallprompt', onBeforeInstall)
   }, [])
 
-  async function instalar() {
+  async function instalarAndroid() {
     if (!deferred) return
     setInstalling(true)
     try {
@@ -49,43 +67,92 @@ export function PwaInstallPrompt() {
       }
     } finally {
       setDeferred(null)
-      setVisible(false)
+      setModo('oculto')
       setInstalling(false)
     }
   }
 
   function descartar() {
     localStorage.setItem(STORAGE_KEY, String(Date.now()))
-    setVisible(false)
+    setModo('oculto')
   }
 
-  if (!visible || !deferred) return null
+  if (modo === 'oculto') return null
 
-  return (
-    <div className="rounded-xl border bg-card p-4 text-sm shadow-sm">
-      <div className="flex items-start gap-3">
-        <div className="flex-1">
-          <p className="font-medium">Agregá ViandApp a tu pantalla de inicio</p>
-          <p className="text-muted-foreground mt-0.5">
-            Más rápido y cómodo, como una app nativa.
-          </p>
-          <div className="flex gap-2 mt-3">
-            <Button size="sm" onClick={instalar} disabled={installing}>
-              <Download className="size-4" />
-              {installing ? 'Instalando…' : 'Instalar'}
-            </Button>
-            <Button size="sm" variant="ghost" onClick={descartar}>
-              Después
-            </Button>
-          </div>
-        </div>
+  if (modo === 'ios') {
+    return (
+      <div className="rounded-2xl border-2 border-primary/30 bg-card p-4 text-sm shadow-sm relative">
         <button
           aria-label="Cerrar"
           onClick={descartar}
-          className="text-muted-foreground hover:text-foreground"
+          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
         >
           <X className="size-4" />
         </button>
+        <p className="font-medium pr-6">📱 Tené ViandApp como app en tu iPhone</p>
+        <p className="text-muted-foreground mt-1">
+          Se abre más rápido, en pantalla completa y con su propio ícono. 3 pasos:
+        </p>
+        <ol className="mt-3 space-y-2 text-sm">
+          <li className="flex items-center gap-2">
+            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0">
+              1
+            </span>
+            <span>
+              Tocá{' '}
+              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
+                <Share className="size-3" /> Compartir
+              </span>
+              {' '}abajo en Safari
+            </span>
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0">
+              2
+            </span>
+            <span>
+              Tocá{' '}
+              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
+                <Plus className="size-3" /> Agregar a Inicio
+              </span>
+            </span>
+          </li>
+          <li className="flex items-center gap-2">
+            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0">
+              3
+            </span>
+            <span>Tocá <strong>Agregar</strong> arriba a la derecha</span>
+          </li>
+        </ol>
+        <Button size="sm" variant="ghost" onClick={descartar} className="mt-3">
+          Después
+        </Button>
+      </div>
+    )
+  }
+
+  // Android / desktop
+  return (
+    <div className="rounded-2xl border-2 border-primary/30 bg-card p-4 text-sm shadow-sm relative">
+      <button
+        aria-label="Cerrar"
+        onClick={descartar}
+        className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
+      >
+        <X className="size-4" />
+      </button>
+      <p className="font-medium pr-6">📱 Tené ViandApp como app</p>
+      <p className="text-muted-foreground mt-0.5">
+        Se abre más rápido y con su propio ícono en tu pantalla de inicio.
+      </p>
+      <div className="flex gap-2 mt-3">
+        <Button size="sm" onClick={instalarAndroid} disabled={installing}>
+          <Download className="size-4" />
+          {installing ? 'Instalando…' : 'Instalar'}
+        </Button>
+        <Button size="sm" variant="ghost" onClick={descartar}>
+          Después
+        </Button>
       </div>
     </div>
   )
