@@ -52,11 +52,7 @@ export function InstalarAppLink() {
                   1
                 </span>
                 <span>
-                  Tocá el ícono de{' '}
-                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
-                    <Share className="size-3" /> Compartir
-                  </span>
-                  {' '}abajo en Safari (cuadrado con flecha hacia arriba).
+                  Tocá los <strong>•••</strong> abajo a la derecha del URL en Safari.
                 </span>
               </li>
               <li className="flex items-start gap-2">
@@ -64,11 +60,19 @@ export function InstalarAppLink() {
                   2
                 </span>
                 <span>
-                  Bajá un poco y tocá{' '}
+                  En el menú que aparece, buscá y tocá{' '}
                   <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
                     <Plus className="size-3" /> Agregar a Inicio
                   </span>
                   .
+                  <br />
+                  <span className="text-xs text-muted-foreground">
+                    (En algunos iPhones tenés que tocar primero{' '}
+                    <span className="inline-flex items-center gap-0.5 px-1 py-0.5 rounded bg-muted text-xs font-medium">
+                      <Share className="size-3" /> Compartir
+                    </span>
+                    {' '}y después buscar la opción)
+                  </span>
                 </span>
               </li>
               <li className="flex items-start gap-2">

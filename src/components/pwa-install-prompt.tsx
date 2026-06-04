@@ -94,20 +94,16 @@ export function PwaInstallPrompt() {
           Se abre más rápido, en pantalla completa y con su propio ícono. 3 pasos:
         </p>
         <ol className="mt-3 space-y-2 text-sm">
-          <li className="flex items-center gap-2">
-            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0">
+          <li className="flex items-start gap-2">
+            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0 mt-0.5">
               1
             </span>
             <span>
-              Tocá{' '}
-              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
-                <Share className="size-3" /> Compartir
-              </span>
-              {' '}abajo en Safari
+              Tocá los <strong>•••</strong> abajo a la derecha (al lado del URL)
             </span>
           </li>
-          <li className="flex items-center gap-2">
-            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0">
+          <li className="flex items-start gap-2">
+            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0 mt-0.5">
               2
             </span>
             <span>
@@ -115,10 +111,15 @@ export function PwaInstallPrompt() {
               <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
                 <Plus className="size-3" /> Agregar a Inicio
               </span>
+              {' '}(o primero{' '}
+              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
+                <Share className="size-3" /> Compartir
+              </span>
+              )
             </span>
           </li>
-          <li className="flex items-center gap-2">
-            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0">
+          <li className="flex items-start gap-2">
+            <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0 mt-0.5">
               3
             </span>
             <span>Tocá <strong>Agregar</strong> arriba a la derecha</span>

@@ -96,8 +96,8 @@ const FAQS: Record<Rol, Faq[]> = {
             <p className="font-medium">En iPhone (Safari):</p>
             <ol className="list-decimal pl-5 mt-1 space-y-0.5">
               <li>Entrá a viandapp.vercel.app desde Safari</li>
-              <li>Tocá el ícono de Compartir (abajo, cuadrado con flecha)</li>
-              <li>Bajá y tocá «Agregar a pantalla de Inicio»</li>
+              <li>Tocá los ••• abajo a la derecha del URL</li>
+              <li>Buscá y tocá «Agregar a Inicio» (o primero «Compartir» y después buscala)</li>
               <li>Tocá «Agregar» arriba a la derecha</li>
             </ol>
           </div>
