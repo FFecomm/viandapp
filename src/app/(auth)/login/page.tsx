@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getProfile } from '@/lib/auth/profile'
+import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
 import { LoginForm } from './login-form'
 
 type SearchParams = {
@@ -45,6 +46,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           </div>
         ) : null}
         <LoginForm googleHabilitado={process.env.NEXT_PUBLIC_GOOGLE_AUTH === '1'} />
+        <PwaInstallPrompt />
         <div className="space-y-2 text-sm text-center text-muted-foreground">
           <p>
             <Link href="/recuperar" className="text-primary font-medium">

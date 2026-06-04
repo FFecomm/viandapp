@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { CalendarCheck, CreditCard, Sparkles, ChevronRight } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
 import { cn } from '@/lib/utils'
 
 type Slide = {
@@ -21,9 +22,9 @@ const SLIDES: Slide[] = [
   },
   {
     icon: CreditCard,
-    titulo: 'Pagás una vez, pedís cuando quieras',
+    titulo: 'Pagás con Mercado Pago',
     texto:
-      'Cargás saldo con Mercado Pago — entra al instante. Cada vianda que pedís descuenta de tu saldo, sin deudas ni sustos.',
+      'Elegís días y menú, pagás con Mercado Pago y los pedidos quedan confirmados. Sin cuaderno, sin transferencias, sin idas y vueltas.',
   },
   {
     icon: CalendarCheck,
@@ -66,6 +67,8 @@ export function Bienvenida() {
             />
           ))}
         </div>
+
+        {esUltimo ? <PwaInstallPrompt /> : null}
 
         <div className="space-y-2">
           {esUltimo ? (
