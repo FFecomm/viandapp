@@ -87,8 +87,8 @@ const FAQS: Record<Rol, Faq[]> = {
             <p className="font-medium">En Android (Chrome):</p>
             <ol className="list-decimal pl-5 mt-1 space-y-0.5">
               <li>Entrá a viandapp.vercel.app</li>
-              <li>Te aparece un cartel para instalar — tocá "Instalar"</li>
-              <li>Si no aparece: menú ⋮ arriba a la derecha → "Instalar app"</li>
+              <li>Te aparece un cartel para instalar — tocá «Instalar»</li>
+              <li>Si no aparece: menú ⋮ arriba a la derecha → «Instalar app»</li>
               <li>El ícono queda en tu pantalla de inicio</li>
             </ol>
           </div>
@@ -97,8 +97,8 @@ const FAQS: Record<Rol, Faq[]> = {
             <ol className="list-decimal pl-5 mt-1 space-y-0.5">
               <li>Entrá a viandapp.vercel.app desde Safari</li>
               <li>Tocá el ícono de Compartir (abajo, cuadrado con flecha)</li>
-              <li>Bajá y tocá "Agregar a pantalla de Inicio"</li>
-              <li>Tocá "Agregar" arriba a la derecha</li>
+              <li>Bajá y tocá «Agregar a pantalla de Inicio»</li>
+              <li>Tocá «Agregar» arriba a la derecha</li>
             </ol>
           </div>
         </div>
