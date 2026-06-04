@@ -60,24 +60,28 @@ export function InstalarAppLink() {
                   2
                 </span>
                 <span>
-                  En el menú que aparece, buscá y tocá{' '}
+                  Tocá{' '}
                   <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
-                    <Plus className="size-3" /> Agregar a Inicio
+                    <Share className="size-3" /> Compartir
                   </span>
                   .
-                  <br />
-                  <span className="text-xs text-muted-foreground">
-                    (En algunos iPhones tenés que tocar primero{' '}
-                    <span className="inline-flex items-center gap-0.5 px-1 py-0.5 rounded bg-muted text-xs font-medium">
-                      <Share className="size-3" /> Compartir
-                    </span>
-                    {' '}y después buscar la opción)
-                  </span>
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0 mt-0.5">
                   3
+                </span>
+                <span>
+                  Bajá un poco y tocá{' '}
+                  <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-muted text-xs font-medium">
+                    <Plus className="size-3" /> Agregar a Inicio
+                  </span>
+                  .
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="size-5 rounded-full bg-primary/10 text-primary font-medium flex items-center justify-center text-xs shrink-0 mt-0.5">
+                  4
                 </span>
                 <span>
                   Tocá <strong>Agregar</strong> arriba a la derecha. Listo, el ícono te queda en tu pantalla de inicio.
