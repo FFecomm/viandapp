@@ -122,6 +122,20 @@ export async function borrarMiPedido(formData: FormData): Promise<{ error?: stri
   revalidatePath('/familia')
 }
 
+export async function desvincularAlumno(alumno_id: string): Promise<{ error?: string; ok?: boolean }> {
+  await requireRole(['padre'])
+  if (!alumno_id) return { error: 'Falta el alumno' }
+
+  const supabase = createClient()
+  const { error } = await supabase.rpc('fn_desvincular_alumno', { p_alumno_id: alumno_id })
+  if (error) return { error: error.message || 'No se pudo eliminar el alumno' }
+
+  revalidatePath('/familia')
+  revalidatePath('/familia/historial')
+  revalidatePath('/familia/credito')
+  return { ok: true }
+}
+
 type EditarInput = {
   pedido_id: string
   menu: string

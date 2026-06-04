@@ -6,7 +6,9 @@ import { OnboardingTour } from '@/components/onboarding-tour'
 
 /**
  * Layout autenticado del staff (operadora, encargada, administrativo).
- * Padres se redirigen a /familia.
+ * Padres se redirigen a /familia. La encargada puede entrar acá (cada
+ * página decide con requireRole si la deja); su tab bar sigue siendo el
+ * de encargada porque se construye en función del rol.
  */
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const profile = await getProfile()
@@ -18,10 +20,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   if (profile.rol === 'padre') {
     redirect('/familia')
-  }
-
-  if (profile.rol === 'encargada') {
-    redirect('/encargada')
   }
 
   return (

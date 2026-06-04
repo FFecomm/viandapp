@@ -11,6 +11,7 @@ import { fechaHoyAR } from '@/lib/format'
 import { PushToggle } from '@/components/push-toggle'
 import { PwaInstallPrompt } from '@/components/pwa-install-prompt'
 import { FechaNacimientoFaltante } from './fecha-nacimiento-faltante'
+import { EliminarHijoDialog } from './eliminar-hijo-dialog'
 
 type MiAlumno = {
   id: string
@@ -107,6 +108,9 @@ export default async function FamiliaHomePage() {
                   <Plus className="size-4" />
                   Pedir vianda
                 </Link>
+                <div className="flex justify-end">
+                  <EliminarHijoDialog alumnoId={a.id} nombre={a.nombre_completo} />
+                </div>
               </li>
             )
           })}
