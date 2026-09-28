@@ -1,0 +1,1578 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b1d22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Plan Felipe">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Plan Felipe Majul</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f3f2ee; --surface:#ffffff; --ink:#1b1d22; --muted:#6b6f78; --line:#e1dfd8;
+  --accent:#d9a400; --accent-ink:#1b1d22; --chip:#e8e6df; --video:#fff7d6; --video-line:#ecd27a;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#121417; --surface:#1c1f25; --ink:#f1f0eb; --muted:#9a9ea8; --line:#2c3038;
+  --accent:#f2c94c; --accent-ink:#1b1d22; --chip:#262a31; --video:#2a2718; --video-line:#5a4d1c;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#121417; --surface:#1c1f25; --ink:#f1f0eb; --muted:#9a9ea8; --line:#2c3038;
+  --accent:#f2c94c; --accent-ink:#1b1d22; --chip:#262a31; --video:#2a2718; --video-line:#5a4d1c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);}
+body{background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;font-size:16px;line-height:1.4}
+.top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:1px solid var(--line);padding:12px 16px 10px}
+h1{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:800;font-size:26px;margin:0 0 10px;letter-spacing:.01em;text-transform:uppercase}
+h1 span{color:var(--muted);font-weight:600;font-size:14px;letter-spacing:.08em;margin-left:8px;font-family:Barlow,sans-serif;text-transform:uppercase}
+.seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}
+.seg::-webkit-scrollbar{display:none}
+.seg button{flex:0 0 auto;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:600 14px Barlow,sans-serif;padding:8px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
+.days button{border:0;background:var(--chip);color:var(--ink);font:700 18px "Barlow Condensed",sans-serif;text-transform:uppercase;padding:10px 0;border-radius:8px;cursor:pointer;letter-spacing:.03em}
+.days button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding:16px 16px 40px;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sec h2{margin:0;padding:10px 14px;font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:20px;letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.sec h2 .n{font-size:12px;font-family:Barlow,sans-serif;font-weight:600;color:var(--muted);letter-spacing:.08em}
+.block{padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.block+.block{border-top:1px dashed var(--line)}
+.block p{margin:0}
+.block p.first{font-weight:600}
+.sets{color:var(--muted);font-variant-numeric:tabular-nums}
+a.v{display:flex;align-items:center;gap:10px;margin-top:4px;padding:10px 12px;border-radius:8px;background:var(--video);border:1px solid var(--video-line);color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+a.v svg{flex:0 0 auto}
+a.v small{color:var(--muted);font-weight:500;margin-left:auto;font-size:12px;letter-spacing:.06em}
+.foot{color:var(--muted);font-size:13px;text-align:center;padding-top:8px}
+@media (prefers-reduced-motion:no-preference){ main{animation:fade .18s ease} }
+@keyframes fade{from{opacity:.4}to{opacity:1}}
+</style>
+</head>
+<body>
+
+
+<div class="top">
+  <h1>Plan de entrenamiento <span>Felipe Majul</span></h1>
+  <div class="seg" id="weeks" role="tablist"></div>
+  <div class="days" id="days" role="tablist"></div>
+</div>
+<main id="main"></main>
+<script>
+const DATA = [
+ {
+  "name": "Semana 1 y 2",
+  "days": [
+   {
+    "name": "DIA 1",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "20 russian twist medball"
+        },
+        {
+         "t": "30\" seg plank sobre medball"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "BACK SQUAT BANDED"
+        },
+        {
+         "t": "4 set x 12 rep"
+        },
+        {
+         "t": "Peso: 60Kg"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/HKHNqEKzwe4"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS + PLIOMETRIA",
+      "blocks": [
+       [
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "6/6 bulgarian squat jump"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/W2yWyT6AEWk"
+        },
+        {
+         "t": "5 box jump 60 cm"
+        },
+        {
+         "t": "4 pasadas vallas"
+        }
+       ],
+       [
+        {
+         "t": "wall sit hold db db"
+        },
+        {
+         "t": "4x30\""
+        },
+        {
+         "v": "https://www.youtube.com/shorts/py7cBYBFDT4"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "Biceps banded"
+        },
+        {
+         "t": "4x 30 repp"
+        }
+       ],
+       [
+        {
+         "t": "Biceps con mancuernas"
+        },
+        {
+         "t": "4x12 alt"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "3 a 4 set"
+        },
+        {
+         "t": "10 peso muerto barra hexago 60kg"
+        },
+        {
+         "t": "rest 15\""
+        },
+        {
+         "t": "10 slam ball 9kg"
+        },
+        {
+         "t": "rest 15\""
+        },
+        {
+         "t": "8 suicide run sprint ( 7m + 7m )"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 2",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 Rondas"
+        },
+        {
+         "t": "15 k2e Rodillas al pecho colgado"
+        },
+        {
+         "t": "10/10 vups one leg"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "PRESS STRICT"
+        },
+        {
+         "t": "4 set x 4 a 6 rep con 40kg"
+        },
+        {
+         "t": "sin empujar con rodillas y piernas"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "Hang power snatch recepcion 90° dumbells 15kg"
+        },
+        {
+         "t": "4x6/6"
+        },
+        {
+         "v": "https://www.youtube.com/watch?v=JXNPBnzBCt0"
+        }
+       ],
+       [
+        {
+         "t": "Split jerk tras nuca alt. 35kg"
+        },
+        {
+         "t": "4x6/6"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/mRVha0MIGjQ"
+        }
+       ],
+       [
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "12 Vuelos laterales mancuernas"
+        },
+        {
+         "t": "10 press tras nuca sentada con mancuernas"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "Push up diamant"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/jM_nyUZGCak"
+        },
+        {
+         "t": "3x12"
+        }
+       ],
+       [
+        {
+         "t": "Triceps tras nuca polea"
+        },
+        {
+         "t": "4x12"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "RUN",
+      "blocks": [
+       [
+        {
+         "t": "1 km warm up"
+        }
+       ],
+       [
+        {
+         "t": "2x 500 mts al 75%"
+        },
+        {
+         "t": "rest 2'30\" entre set"
+        }
+       ],
+       [
+        {
+         "t": "4x200 mts al 70%"
+        },
+        {
+         "t": "micro descanso de 1'30\""
+        }
+       ],
+       [
+        {
+         "t": "2 km suaves al 70%"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 3",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 Rondas"
+        },
+        {
+         "t": "10 buen dia con kb"
+        },
+        {
+         "t": "1 min plancha"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "PESO MUERTO"
+        },
+        {
+         "t": "2x8 con 60kg"
+        },
+        {
+         "t": "2x5 con 80kg a 90kg"
+        },
+        {
+         "t": "rest 2' entre set"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "Hip thrust one leg jump"
+        },
+        {
+         "t": "3x10/10"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/D5ahLcKVxMY"
+        }
+       ],
+       [
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "20 mts sled pull traccion isquiotibial"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/z-I6VSLpMik"
+        },
+        {
+         "t": "15\" banded skipping ( repiteo con banded en cadera )"
+        }
+       ],
+       [
+        {
+         "t": "Hang muscle clean box"
+        },
+        {
+         "t": "4x6/6"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/9F50VZ88iuo"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "Dominadas"
+        },
+        {
+         "t": "4x?"
+        }
+       ],
+       [
+        {
+         "t": "Pullover on the floor db"
+        },
+        {
+         "t": "4x10"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/NuqoPT92_yc"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "15 12 9"
+        },
+        {
+         "t": "Power snatch 30kg"
+        },
+        {
+         "t": "Cal row"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 4",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 rondas"
+        },
+        {
+         "t": "1 min plancha con peso sacro lumbar"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "FRONT SQUAT"
+        },
+        {
+         "t": "4x3"
+        },
+        {
+         "t": "Peso: 60kg a 70kg"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "Clean pull deficit"
+        },
+        {
+         "t": "4x2 con 80kg"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/vuudrJmKIkI"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "PECHO",
+      "blocks": [
+       [
+        {
+         "t": "BANCA PRESS PLANO"
+        },
+        {
+         "t": "12 10 10"
+        }
+       ],
+       [
+        {
+         "t": "FONDOS DIPS"
+        },
+        {
+         "t": "4X?"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "PLIOMETRIA",
+      "blocks": [
+       [
+        {
+         "t": "SEATED VERT JUMP"
+        },
+        {
+         "t": "4X5"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/ckOWNYFPHHk"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "cal bike"
+        },
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "20 seg solo brazos"
+        },
+        {
+         "t": "20 seg solo piernas"
+        },
+        {
+         "t": "20 seg sprint completos"
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Semana 3 y 4",
+  "days": [
+   {
+    "name": "DIA 1",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "1 min plank con 40kg peso en sacrolumbar"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "BACK SQUAT"
+        },
+        {
+         "t": "2x6 con 80kg"
+        },
+        {
+         "t": "2x4 con 90kg"
+        },
+        {
+         "t": "2x2 con 100 KG"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS + PLIOMETRIA",
+      "blocks": [
+       [
+        {
+         "t": "subsuelo"
+        },
+        {
+         "t": "3 Set (combinar)"
+        },
+        {
+         "t": "8 Hang squat clean 50Kg"
+        },
+        {
+         "t": "6 box jump"
+        },
+        {
+         "t": "15\" banded skipping"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/hcw0rD4nufA"
+        }
+       ],
+       [
+        {
+         "t": "3 Set (combinar)"
+        },
+        {
+         "t": "10 squat stance narrow"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/1JncZUvSOIM"
+        },
+        {
+         "t": "5 broad jump continuos"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/5Oq8KeqqPLw"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "3 Set (combinar)"
+        },
+        {
+         "t": "1 serie de biceps 21"
+        },
+        {
+         "t": "12 triceps fondo en box peso en rodillas"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "4 set"
+        },
+        {
+         "t": "12 Peso muerto 70kg"
+        },
+        {
+         "t": "rest 10\""
+        },
+        {
+         "t": "8/8 ladmine split jerk"
+        },
+        {
+         "t": "rest 10\""
+        },
+        {
+         "t": "5 mts / 5 mts skipping lateral"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/OzBI0WvooN4"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 2",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 set"
+        },
+        {
+         "t": "20 russian twist globet kb 12kg"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "SPLIT JERK TRAS NUCA"
+        },
+        {
+         "t": "4 set"
+        },
+        {
+         "t": "6/6 con 40kgo 50kg   ( velocidad y tecnica)"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/IHvrJgmTTF0"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "Press Z"
+        },
+        {
+         "t": "12 10 10"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/us_DqJIm9II"
+        }
+       ],
+       [
+        {
+         "t": "vuelos laterales plate 10kg"
+        },
+        {
+         "t": "4x12"
+        }
+       ],
+       [
+        {
+         "t": "press tras nuca sentado"
+        },
+        {
+         "t": "12 10 10 8"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/FghebqCF_o8"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "3 Set (combinar)"
+        },
+        {
+         "t": "20 biceps barbell 20kg"
+        },
+        {
+         "t": "12 triceps soga tras nuca"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "RUN",
+      "blocks": [
+       [
+        {
+         "t": "5 min warm up"
+        },
+        {
+         "t": "rest 5'"
+        },
+        {
+         "t": "fartlek 3x ( 200 mts + 200 mts )"
+        },
+        {
+         "t": "rest 2'"
+        }
+       ],
+       [
+        {
+         "t": "4x400 mts"
+        },
+        {
+         "t": "rest 2' entre set"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 3",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 Set"
+        },
+        {
+         "t": "15 goodmorning barbell"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "Peso muerto"
+        },
+        {
+         "t": "4 Set"
+        },
+        {
+         "t": "2 rep 100kg a 110kg"
+        },
+        {
+         "t": "rest 2"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "Hip thrust velocidad en la salida reposo abajo"
+        },
+        {
+         "t": "4x 6 a 8 Rep - peso: 110kg a 120kg"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/iTLHwaacB5E"
+        }
+       ],
+       [
+        {
+         "t": "Tamtrum banded fitball seated"
+        },
+        {
+         "t": "4x15\""
+        },
+        {
+         "v": "https://youtube.com/shorts/Tgl5ItfH-Go?si=CW3AkOPR4jRyu2DX"
+        }
+       ],
+       [
+        {
+         "t": "Camilla femoral"
+        },
+        {
+         "t": "4x12"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "dominadas"
+        },
+        {
+         "t": "6 - 3 - 3 -1"
+        }
+       ],
+       [
+        {
+         "t": "pendlay row toca suelo barra peso: 50kg a 60kg"
+        },
+        {
+         "t": "10 8 8 6"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/2Na7p4rybMs"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "2 min on x 1 min off x 4 rondas"
+        },
+        {
+         "t": "10 burpees"
+        },
+        {
+         "t": "10 slam ball 9kg"
+        },
+        {
+         "t": "5 box jump"
+        },
+        {
+         "t": "6/6 split jerk mancuerna 17.5kg a 20kg"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 4",
+    "sections": [
+     {
+      "title": "CORE",
+      "blocks": [
+       [
+        {
+         "t": "3 rondas"
+        },
+        {
+         "t": "10 rep"
+        },
+        {
+         "t": "pie a la barra"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "FRONT SQUAT"
+        },
+        {
+         "t": "4X2"
+        },
+        {
+         "t": "Peso: 80kg"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "hang snatch pull"
+        },
+        {
+         "t": "4x3 con 60kg a 70kg"
+        },
+        {
+         "v": "https://www.youtube.com/watch?v=rRU9RzYi6Qw"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "PECHO",
+      "blocks": [
+       [
+        {
+         "t": "Press pecho db db 25kg"
+        },
+        {
+         "t": "3x8"
+        }
+       ],
+       [
+        {
+         "t": "aperturas planas"
+        },
+        {
+         "t": "4x10"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "PLIOMETRIA",
+      "blocks": [
+       [
+        {
+         "t": "3 set x 4 pasadas"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/9dRUaQTQWjo"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "15 12 9"
+        },
+        {
+         "t": "power snatch 40kg"
+        },
+        {
+         "t": "20 mts empuje de box o trineo 150kg"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "RUN",
+      "blocks": [
+       [
+        {
+         "t": "10 min entrada en calor"
+        }
+       ],
+       [
+        {
+         "t": "testear 10 km"
+        },
+        {
+         "t": "sub 50'"
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "name": "Semana 5 y 6",
+  "days": [
+   {
+    "name": "DIA 1",
+    "sections": [
+     {
+      "title": "ZONA MEDIA",
+      "blocks": [
+       [
+        {
+         "t": "3 SET"
+        },
+        {
+         "t": "1 MIN PLANCHA"
+        },
+        {
+         "t": "10 SLAM BALL DE RODILLAS"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "BACK SQUAT"
+        },
+        {
+         "t": "5 con 80kg"
+        },
+        {
+         "t": "3 con 90kg"
+        },
+        {
+         "t": "2x1 con 100kg a 110kg"
+        },
+        {
+         "t": "1 con 110kg a 120kg"
+        },
+        {
+         "t": "rest 1'30\" entre set"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TRANSFERENCIA",
+      "blocks": [
+       [
+        {
+         "t": "3 SET"
+        },
+        {
+         "t": "6/6  HANG SPLIT BOX 40kg a 50kg"
+        },
+        {
+         "t": "20\" BANDED SKIPPING"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/ud85IwhZZKo"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/hcw0rD4nufA"
+        }
+       ],
+       [
+        {
+         "t": "3 SET"
+        },
+        {
+         "t": "10 LANDMINE THRUSTER 2 a 3 discos de 10kg"
+        },
+        {
+         "v": "https://www.youtube.com/watch?v=9f0TrDK9hFY"
+        },
+        {
+         "t": "20\" LATERAL STEP JUMP ONE LEG"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/Lo9o-6LlvEI"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "CHIN UP"
+        },
+        {
+         "t": "4X?"
+        }
+       ],
+       [
+        {
+         "t": "TRICEPS POLEA TRAS NUCA"
+        },
+        {
+         "t": "4X15"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "4 RONDAS"
+        },
+        {
+         "t": "20 WALLBALL 9KG"
+        },
+        {
+         "t": "10 HANG POWER SNATCH 40KG"
+        },
+        {
+         "t": "8 DEADLIFT DOBLE KB JUMP"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/zv6EMmGmDeA"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 2",
+    "sections": [
+     {
+      "title": "ZONA MEDIA",
+      "blocks": [
+       [
+        {
+         "t": "3 SET"
+        },
+        {
+         "t": "10/10 PRESS PALOFF BANDED"
+        },
+        {
+         "t": "20 V- UPS"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "PUSH JERK"
+        },
+        {
+         "t": "8 8 6 6 4"
+        },
+        {
+         "v": "https://www.youtube.com/watch?v=VrHNJXoSyXw"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "Press Z"
+        },
+        {
+         "t": "10 8 8 6"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/us_DqJIm9II"
+        }
+       ],
+       [
+        {
+         "t": "VUELOS LATERALES DE RODILLAS db db"
+        },
+        {
+         "t": "4x10"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/v7TzVbVvH30"
+        }
+       ],
+       [
+        {
+         "t": "3 Set"
+        },
+        {
+         "t": "8/8 SPLIT JERK DB ONE ARM"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/Ds7cdd_GO5E"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "TRICEPS FONDOS ENTRE BOX o FONDOS"
+        },
+        {
+         "t": "3x12"
+        }
+       ],
+       [
+        {
+         "t": "BICEPS 21 (7+7+7)"
+        },
+        {
+         "t": "3 Set"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "RUN",
+      "blocks": [
+       [
+        {
+         "t": "5 min warm up (ENTRADA EN CALOR)"
+        },
+        {
+         "t": "rest 5'"
+        }
+       ],
+       [
+        {
+         "t": "3 set x 3 km"
+        },
+        {
+         "t": "zona 3"
+        },
+        {
+         "t": "rest 3' entre set"
+        }
+       ],
+       [
+        {
+         "t": "4x200"
+        },
+        {
+         "t": "rest 1' entre set (micro descanso)"
+        },
+        {
+         "t": "cansancio aerobico"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 3",
+    "sections": [
+     {
+      "title": "ZONA MEDIA",
+      "blocks": [
+       [
+        {
+         "t": "3 SET"
+        },
+        {
+         "t": "20 SIT KICKS"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/i_xTGGMmbHg"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "OBEJTIVO: PESO MUERTO"
+        },
+        {
+         "t": "BUSCAR 1 REP MAXIMA CUIDAR ESPALDA Y TECNICA"
+        }
+       ],
+       [
+        {
+         "t": "3 - 2 - 1 - 1 - 1"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "HIP THRUST ONE LEG JUMP"
+        },
+        {
+         "t": "4x 8/8"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/EbUQftM0fxA"
+        }
+       ],
+       [
+        {
+         "t": "CAMILLA FEMORAL"
+        },
+        {
+         "t": "4x12"
+        }
+       ],
+       [
+        {
+         "t": "ROMANIAN DEADLIFT ONE LEG AND PRESS"
+        },
+        {
+         "t": "4x10 alt"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/0OvEW44Yd7A"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "Remo polea alta"
+        },
+        {
+         "t": "4X10"
+        }
+       ],
+       [
+        {
+         "t": "Pullover polea"
+        },
+        {
+         "t": "4x12"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/RtL11I6oX48"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "3er piso"
+        },
+        {
+         "t": "3 rondas"
+        },
+        {
+         "t": "400 mts run cinta de correr"
+        },
+        {
+         "t": "8 hang power clean 50kg"
+        },
+        {
+         "t": "20 k2e ( rodillas al pecho colgado)"
+        }
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "name": "DIA 4",
+    "sections": [
+     {
+      "title": "ZONA MEDIA",
+      "blocks": [
+       [
+        {
+         "t": "3 SET"
+        },
+        {
+         "t": "15 SIT UP MEDBALL OH"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "FUERZA",
+      "blocks": [
+       [
+        {
+         "t": "FRONT SQUAT DEAD STOP"
+        },
+        {
+         "t": "5 5 3 3"
+        },
+        {
+         "v": "https://www.youtube.com/watch?v=XReZGnsgE7M"
+        },
+        {
+         "t": "Vas trabajar y necesitar de mucha movilidad"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "RM DE SALTO"
+        },
+        {
+         "t": "objetivo : 70 cm  o mas"
+        },
+        {
+         "t": "box jump"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/OMf31ggpnb0"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "TREN SUPERIOR",
+      "blocks": [
+       [
+        {
+         "t": "Banco pecho press"
+        },
+        {
+         "t": "12 10 8 6"
+        }
+       ],
+       [
+        {
+         "t": "press inclinado barra"
+        },
+        {
+         "t": "12 10 8 8"
+        },
+        {
+         "v": "https://www.youtube.com/shorts/a64mtMHyPfY"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACCESORIOS",
+      "blocks": [
+       [
+        {
+         "t": "barbell jump calf"
+        },
+        {
+         "t": "4x15\""
+        },
+        {
+         "v": "https://www.youtube.com/watch?v=Dnfx3nFb56k"
+        }
+       ],
+       [
+        {
+         "t": "antebrazo polea baja"
+        },
+        {
+         "t": "4x12"
+        }
+       ]
+      ]
+     },
+     {
+      "title": "ACOND. FISICO",
+      "blocks": [
+       [
+        {
+         "t": "3 rondas"
+        },
+        {
+         "t": "15 cal bike"
+        },
+        {
+         "t": "8/8 hang snatch db 17.5kg"
+        },
+        {
+         "t": "15 mts empujar trineo o box (5 discos de 20kg )"
+        }
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ }
+];
+let W = 0, D = 0;
+try { const s = JSON.parse(localStorage.getItem('fm-pos')||'{}'); if (Number.isInteger(s.w)) W = s.w; if (Number.isInteger(s.d)) D = s.d; } catch(e){}
+W = Math.min(W, DATA.length-1); D = Math.min(D, 3);
+const $ = id => document.getElementById(id);
+const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--accent)"/><path d="M10 8l6 4-6 4z" fill="var(--accent-ink)"/></svg>';
+const isSets = t => /^(\d[\d\s/x×a-]*(set|rep|rondas|rep|kg|alt|mts|min|seg|km)?\s*[\d/x×"' ]*)$/i.test(t.trim()) || /^\d[\d\s\-\/]*$/.test(t.trim()) || /^rest\b/i.test(t) || /^(\d+(x|\s)\s*)?(set|rondas)/i.test(t);
+function save(){ try{ localStorage.setItem('fm-pos', JSON.stringify({w:W,d:D})); }catch(e){} }
+function esc(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function render(){
+  $('weeks').innerHTML = DATA.map((w,i)=>`<button role="tab" aria-pressed="${i===W}" data-w="${i}">${esc(w.name)}</button>`).join('');
+  const day = DATA[W].days;
+  $('days').innerHTML = day.map((d,i)=>`<button role="tab" aria-pressed="${i===D}" data-d="${i}">${esc(d.name.replace(/DIA/i,'Día'))}</button>`).join('');
+  const secs = day[D].sections;
+  $('main').innerHTML = secs.map(s => {
+    const nv = s.blocks.flat().filter(i=>i.v).length;
+    const blocks = s.blocks.map(b => `<div class="block">` + b.map((it,k) => it.v
+      ? `<a class="v" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video<small>${it.v.includes('/shorts/')?'SHORT':'YOUTUBE'}</small></a>`
+      : `<p class="${k===0 && !isSets(it.t) ? 'first' : (isSets(it.t)?'sets':'')}">${esc(it.t)}</p>`).join('') + `</div>`).join('');
+    return `<section class="sec"><h2>${esc(s.title||'Bloque')}${nv?`<span class="n">${nv} VIDEO${nv>1?'S':''}</span>`:''}</h2>${blocks}</section>`;
+  }).join('') + `<p class="foot">${DATA[W].name} · ${day[D].name.trim()}</p>`;
+  window.scrollTo({top:0});
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-w],button[data-d]'); if(!b) return;
+  if (b.dataset.w!==undefined) { W = +b.dataset.w; } else { D = +b.dataset.d; }
+  save(); render();
+});
+render();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+</script>
+</body>
+</html>
