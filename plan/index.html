@@ -19,11 +19,12 @@
   --accent:#ff3b1f; --accent-ink:#ffffff; --chip:#222226; --stripe:repeating-linear-gradient(135deg,#ff3b1f 0 10px,#0b0b0c 10px 20px);
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+html,body{margin:0;padding:0 0 env(safe-area-inset-bottom,0px)}
 body{background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;font-size:16px;line-height:1.4;
   background-image:radial-gradient(circle at 50% -20%,#232326 0,transparent 55%)}
-.top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;padding:12px 16px 12px;border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;background:var(--bg);z-index:5;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;border-bottom:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .top::before{content:"";display:block;height:6px;margin:-12px -16px 12px;background:var(--stripe)}
+.top::after{content:"";position:absolute;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:var(--bg)}
 h1{font-family:Anton,"Barlow Condensed",Impact,sans-serif;font-weight:400;font-size:34px;line-height:.95;margin:0 0 12px;letter-spacing:.01em;text-transform:uppercase;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 h1 span{color:var(--accent);font-size:15px;letter-spacing:.14em;font-family:"Barlow Condensed",sans-serif;font-weight:700}
 .seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}
