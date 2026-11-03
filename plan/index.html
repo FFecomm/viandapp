@@ -2647,7 +2647,7 @@ function renderNut(){
       + `<section class="sec"><h2>Reglas</h2><div class="tip">${RULES.map(r=>`<p>${r}</p>`).join('')}</div></section>`
       + `<p class="foot">Cambiá un alimento por otro de la misma tabla</p>`;
   } else {
-    $('main').innerHTML = `<div class="sum"><span><b>~2.350 kcal</b></span><span><b>200 g</b> proteína</span><span>Igual todos los días</span></div>`
+    $('main').innerHTML = `<div class="sum"><span><b>~2.350 kcal</b></span><span><b>200 g</b> proteína</span><span>Igual todos los días</span></div><a class="v" href="https://claude.ai/artifact/GSTyywKMrLmbM9RX2FwYAf" target="_blank" rel="noopener">🍽️ ¿Comés algo que no está en la dieta?<small>CALCULAR</small></a>`
       + NUT.map(x => x.g
         ? `<section class="sec g"><h2><span class="t">${x.t}</span> · Gimnasio</h2></section>`
         : `<section class="sec meal"><h2><span class="t">${x.t}</span> ${x.n}</h2><div class="block"><p class="main">${x.m}</p>${x.a.map(a=>`<p class="alt o">${a}</p>`).join('')}${x.s?`<p class="alt">¿Querés cambiar algo? Mirá la pestaña <b>Cambios</b>.</p>`:''}</div></section>`).join('')
