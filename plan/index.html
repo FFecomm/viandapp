@@ -2612,49 +2612,46 @@ document.addEventListener('click', e => {
   save(); render();
 });
 
-const NUT = {"gym": {"con": {"k": "~2.300 kcal", "m": [{"t": "9:30", "n": "DESAYUNO", "m": "<b>3 huevos + 3 claras</b> revueltos, <b>2 tostadas</b> integrales y <b>1 fruta</b>", "a": ["2 huevos + <b>60 g</b> de jamón + <b>40 g</b> de port salut light, 1 tostada integral y 1 banana", "<b>200 g</b> de yogur descremado con <b>30 g</b> de granola y 1 banana, más 3 huevos revueltos"], "swap": false}, {"t": "13:00", "n": "GIMNASIO", "g": 1}, {"t": "14:30", "n": "ALMUERZO", "m": "<b>200 g</b> de pollo, <b>320 g</b> de arroz (o 300 g de fideos), ensalada grande y ½ palta chica", "a": [], "swap": true}, {"t": "18:00", "n": "MERIENDA", "m": "<b>2 huevos</b> duros con <b>60 g</b> de jamón y <b>40 g</b> de port salut light, 1 tostada integral y 1 fruta", "a": ["2 huevos + 4 claras con <b>40 g</b> de port salut light y 1 fruta"], "swap": false}, {"t": "21:30", "n": "CENA", "m": "<b>200 g</b> de carne magra, <b>300 g</b> de papa al horno o hervida, ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}]}, "sin": {"k": "~2.300 kcal", "m": [{"t": "Mañana", "n": "AYUNO", "m": "Mate amargo o con edulcorante", "a": [], "swap": false}, {"t": "12:00", "n": "PRE-ENTRENO", "m": "<b>1 banana</b> y <b>1 tostada</b> integral con <b>60 g</b> de jamón. No lo saltees.", "a": [], "swap": false}, {"t": "13:00", "n": "GIMNASIO", "g": 1}, {"t": "14:30", "n": "ALMUERZO", "m": "<b>230 g</b> de pollo, <b>320 g</b> de arroz (o 300 g de fideos), ensalada grande y ½ palta grande", "a": [], "swap": true}, {"t": "18:00", "n": "MERIENDA", "m": "<b>3 huevos + 3 claras</b> con <b>60 g</b> de jamón y <b>40 g</b> de port salut light, <b>2 tostadas</b> integrales y 1 fruta", "a": ["<b>200 g</b> de yogur descremado con <b>30 g</b> de granola y 1 banana, más 3 huevos duros y <b>60 g</b> de jamón"], "swap": false}, {"t": "21:30", "n": "CENA", "m": "<b>200 g</b> de carne magra, <b>300 g</b> de papa al horno o hervida, ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}]}}, "desc": {"con": {"k": "~1.950 kcal", "m": [{"t": "9:30", "n": "DESAYUNO", "m": "<b>3 huevos + 3 claras</b> revueltos y <b>2 tostadas</b> integrales", "a": ["2 huevos + <b>60 g</b> de jamón + <b>40 g</b> de port salut light, 1 tostada integral y 1 fruta"], "swap": false}, {"t": "14:30", "n": "ALMUERZO", "m": "<b>200 g</b> de pollo, <b>300 g</b> de papa (o 180 g de arroz), ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}, {"t": "18:00", "n": "MERIENDA", "m": "<b>2 huevos + 2 claras</b> revueltos con <b>60 g</b> de jamón y <b>40 g</b> de port salut light, y ½ fruta", "a": ["2 huevos + 4 claras con <b>40 g</b> de port salut light y 2 galletas de arroz"], "swap": false}, {"t": "21:30", "n": "CENA", "m": "<b>230 g</b> de atún (2 latas) o <b>260 g</b> de merluza, <b>235 g</b> de papa (o 145 g de arroz), ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}]}, "sin": {"k": "~1.950 kcal", "m": [{"t": "Mañana", "n": "AYUNO", "m": "Mate amargo o con edulcorante", "a": [], "swap": false}, {"t": "14:30", "n": "ALMUERZO", "m": "<b>235 g</b> de carne magra, <b>300 g</b> de papa (o 180 g de arroz), ensalada grande y ½ palta grande", "a": [], "swap": true}, {"t": "18:00", "n": "MERIENDA", "m": "<b>3 huevos + 3 claras</b> con <b>60 g</b> de jamón y <b>40 g</b> de port salut light, <b>2 tostadas</b> integrales y 1 fruta", "a": ["<b>200 g</b> de yogur descremado con <b>30 g</b> de granola, más 3 huevos + 3 claras y <b>40 g</b> de port salut light"], "swap": false}, {"t": "21:30", "n": "CENA", "m": "<b>230 g</b> de pollo, <b>300 g</b> de papa (o 180 g de arroz), ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}]}}, "fondo": {"con": {"k": "~2.600 kcal", "m": [{"t": "Antes", "n": "DESAYUNO", "m": "1,5–2 h antes de salir: <b>2 huevos</b> con <b>60 g</b> de jamón y <b>40 g</b> de port salut light, <b>3 tostadas</b> integrales con 1 cda de miel y 1 banana", "a": [], "swap": false}, {"t": "Durante", "n": "CORRIENDO", "m": "Si corrés más de 75 min, por hora: <b>1 gel + 3 dátiles</b> (o 500–750 ml de bebida deportiva). Agua con sales.", "a": [], "swap": false}, {"t": "Después", "n": "ALMUERZO", "m": "<b>235 g</b> de carne magra o 230 g de pollo, <b>390 g</b> de arroz (o 360 g de fideos), ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}, {"t": "18:00", "n": "MERIENDA", "m": "<b>60 g</b> de jamón + <b>40 g</b> de port salut light + 1 huevo en 1 tostada integral, 1 fruta y <b>15 g</b> de frutos secos", "a": [], "swap": false}, {"t": "21:30", "n": "CENA", "m": "<b>260 g</b> de merluza o 200 g de pollo, <b>300 g</b> de papa (o 180 g de arroz), ensalada grande y 1 cda de aceite de oliva", "a": [], "swap": true}]}}};
-const NTYPES = [["gym","Gimnasio"],["desc","Descanso"],["fondo","Fondo"],["eq","Cambios"]];
-let MODE = 't', NT = 'gym', NB = 'con';
-try { const s = JSON.parse(localStorage.getItem('fm-nut')||'{}'); if (s.m) MODE = s.m; if (s.t) NT = s.t; if (s.b) NB = s.b; } catch(e){}
-function saveN(){ try{ localStorage.setItem('fm-nut', JSON.stringify({m:MODE,t:NT,b:NB})); }catch(e){} }
+const NUT = [{"t": "9:30", "n": "Desayuno", "m": "<b>3 huevos + 3 claras</b> revueltos, <b>2 tostadas</b> integrales y <b>1 fruta</b>", "a": ["2 huevos + <b>60 g</b> de jamón + <b>40 g</b> de port salut light, 1 tostada integral y 1 fruta"]}, {"t": "13:00", "n": "Gimnasio", "g": 1}, {"t": "14:30", "n": "Almuerzo", "m": "<b>200 g</b> de pollo o carne magra, <b>250 g</b> de arroz (o 235 g de fideos, o 400 g de papa), ensalada grande y ½ palta chica", "a": [], "s": 1}, {"t": "18:00", "n": "Merienda", "m": "<b>2 huevos</b> + <b>60 g</b> de jamón + <b>40 g</b> de port salut light y <b>1 fruta</b>", "a": ["2 huevos + 4 claras con <b>40 g</b> de port salut light y 1 fruta"]}, {"t": "21:30", "n": "Cena", "m": "<b>200 g</b> de carne magra o pollo (o 260 g de merluza), <b>235 g</b> de papa al horno o hervida (o 145 g de arroz), ensalada grande y 1 cda de aceite de oliva", "a": [], "s": 1}];
+const NTYPES = [["plan","Plan"],["eq","Cambios"]];
+let MODE = 't', NT = 'plan';
+try { const s = JSON.parse(localStorage.getItem('fm-nut')||'{}'); if (s.m) MODE = s.m; if (s.t==='eq') NT = 'eq'; } catch(e){}
+function saveN(){ try{ localStorage.setItem('fm-nut', JSON.stringify({m:MODE,t:NT})); }catch(e){} }
 const EQ = [
- ["Proteína (en cocido)", ["Alimento","Normal","Grande"], [
-  ["Pollo (pechuga)","200 g","230 g"],["Carne magra (lomo, peceto, nalga, cuadril)","200 g","235 g"],
-  ["Carne molida especial*","220 g","260 g"],["Atún al natural","230 g (2 latas)","270 g"],["Merluza u otro pescado","260 g","300 g"]],
+ ["Proteína (en cocido)", ["Alimento","Porción"], [
+  ["Pollo (pechuga)","200 g"],["Carne magra (lomo, peceto, nalga, cuadril)","200 g"],
+  ["Carne molida especial*","220 g"],["Atún al natural","230 g (2 latas)"],["Merluza u otro pescado","260 g"]],
   "* Con carne molida, poné la mitad del aceite o la palta."],
- ["Carbohidratos (en cocido)", ["Alimento","Chica","Normal","Grande","Extra"], [
-  ["Arroz","145 g","180 g","320 g","390 g"],["Fideos","135 g","165 g","300 g","360 g"],
-  ["Papa","235 g","300 g","530 g","650 g"],["Batata","200 g","250 g","450 g","550 g"]], ""],
+ ["Carbohidratos (en cocido)", ["Alimento","Almuerzo","Cena"], [
+  ["Arroz","250 g","145 g"],["Fideos","235 g","135 g"],["Papa","400 g","235 g"],["Batata","350 g","200 g"]], ""],
  ["Grasa", ["Esto","Equivale a"], [
-  ["1 cda de aceite de oliva","½ palta chica (70 g) o 20 g de frutos secos"],["½ palta grande (100 g)","1 ½ cda de aceite o 30 g de frutos secos"]], ""],
+  ["½ palta chica (70 g)","1 cda de aceite de oliva o 20 g de frutos secos"]], ""],
  ["Desayuno y merienda", ["Esto","Equivale a"], [
   ["1 tostada integral","2 galletas de arroz o 20 g de granola"],["1 fruta","1 banana chica o 2 mandarinas"],["1 huevo","2 claras o 30 g de jamón"]], ""]
 ];
 const RULES = [
+ "<b>Es igual todos los días:</b> entrenes, descanses o corras el fondo.",
  "<b>Pesos en cocido.</b> Pesá las primeras semanas hasta que te salga a ojo.",
  "<b>Ensalada libre</b> en almuerzo y cena: lechuga, tomate, rúcula, zanahoria, pepino, repollo, cebolla, brócoli, zapallito, berenjena, chauchas, espinaca, morrón.",
  "<b>Libres siempre:</b> mate amargo, café, té, agua, edulcorante, limón, vinagre, mostaza y especias.",
  "<b>Todos los días:</b> 3–4 litros de agua, 8.000–10.000 pasos y dormir 7–9 horas.",
- "<b>1 comida libre por semana</b>, mejor el día de fondo. Alcohol al mínimo.",
+ "<b>Fondo de más de 75 min:</b> llevá 1 gel o 3 dátiles por hora para correr.",
+ "<b>1 comida libre por semana.</b> Alcohol al mínimo.",
  "<b>Pesate</b> 3–4 mañanas por semana en ayunas. Si 2 semanas seguidas bajás menos de 0,5 kg por semana, sacá ¼ del arroz o la papa de la cena. Si bajás más de 1 kg por semana o caen las cargas, sumá ¼ al almuerzo."
 ];
 function renderNut(){
   $('weeks').innerHTML = NTYPES.map(([k,l])=>`<button role="tab" aria-pressed="${k===NT}" data-nt="${k}">${l}</button>`).join('');
-  const hasSin = NT==='gym' || NT==='desc';
-  const dd = $('days'); dd.className = 'days two' + (hasSin ? '' : ' hide');
-  dd.innerHTML = hasSin ? [['con','Con desayuno'],['sin','Sin desayuno']].map(([k,l])=>`<button role="tab" aria-pressed="${k===NB}" data-nb="${k}"><span>${l}</span></button>`).join('') : '';
+  const dd = $('days'); dd.className = 'days hide'; dd.innerHTML = '';
   if (NT==='eq') {
-    $('main').innerHTML = EQ.map(([title,head,rows,note]) => `<section class="sec"><h2>${title}</h2><table class="eq${head.length>3?' c5':''}"><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table>${note?`<div class="tip"><p class="alt">${note}</p></div>`:''}</section>`).join('')
+    $('main').innerHTML = EQ.map(([title,head,rows,note]) => `<section class="sec"><h2>${title}</h2><table class="eq"><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table>${note?`<div class="tip"><p class="alt">${note}</p></div>`:''}</section>`).join('')
       + `<section class="sec"><h2>Reglas</h2><div class="tip">${RULES.map(r=>`<p>${r}</p>`).join('')}</div></section>`
-      + `<p class="foot">Cada fila vale lo mismo · cambiá dentro de la misma columna</p>`;
+      + `<p class="foot">Cambiá un alimento por otro de la misma tabla</p>`;
   } else {
-    const plan = NUT[NT][hasSin ? NB : 'con'];
-    const label = NTYPES.find(x=>x[0]===NT)[1];
-    $('main').innerHTML = `<div class="sum"><span><b>${plan.k}</b></span><span><b>200 g</b> proteína</span><span>Pesos en cocido</span></div>`
-      + plan.m.map(x => x.g
+    $('main').innerHTML = `<div class="sum"><span><b>~2.350 kcal</b></span><span><b>200 g</b> proteína</span><span>Igual todos los días</span></div>`
+      + NUT.map(x => x.g
         ? `<section class="sec g"><h2><span class="t">${x.t}</span> · Gimnasio</h2></section>`
-        : `<section class="sec meal"><h2><span class="t">${x.t}</span> ${x.n}</h2><div class="block"><p class="main">${x.m}</p>${x.a.map(a=>`<p class="alt o">${a}</p>`).join('')}${x.swap?`<p class="alt">¿Querés cambiar algo? Mirá la pestaña <b>Cambios</b>.</p>`:''}</div></section>`).join('')
-      + `<p class="foot">${label}${hasSin ? (NB==='con' ? ' · con desayuno' : ' · sin desayuno') : ''}</p>`;
+        : `<section class="sec meal"><h2><span class="t">${x.t}</span> ${x.n}</h2><div class="block"><p class="main">${x.m}</p>${x.a.map(a=>`<p class="alt o">${a}</p>`).join('')}${x.s?`<p class="alt">¿Querés cambiar algo? Mirá la pestaña <b>Cambios</b>.</p>`:''}</div></section>`).join('')
+      + `<p class="foot">Pesos en cocido · ensalada libre</p>`;
   }
   window.scrollTo({top:0});
 }
@@ -2664,8 +2661,8 @@ function renderAll(){
   if (MODE==='n') renderNut(); else { $('days').className='days'; render(); }
 }
 document.addEventListener('click', e => {
-  const b = e.target.closest('button[data-m],button[data-nt],button[data-nb]'); if(!b) return;
-  if (b.dataset.m) MODE = b.dataset.m; else if (b.dataset.nt) NT = b.dataset.nt; else NB = b.dataset.nb;
+  const b = e.target.closest('button[data-m],button[data-nt]'); if(!b) return;
+  if (b.dataset.m) MODE = b.dataset.m; else NT = b.dataset.nt;
   saveN(); renderAll();
 });
 renderAll();
