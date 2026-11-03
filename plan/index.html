@@ -2757,19 +2757,29 @@ async function runCalc(){
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {"Authorization": "Bearer " + orKey(), "Content-Type": "application/json", "X-Title": "Plan Felipe"},
-      body: JSON.stringify({model: OR_MODEL, max_tokens: 800, messages: [{role:"user", content}]})
+      body: JSON.stringify({model: OR_MODEL, max_tokens: 2000, reasoning: {enabled: false}, messages: [{role:"system", content:"Respondé únicamente con un objeto JSON válido. Nada de texto antes o después."},{role:"user", content}]})
     });
     const data = await res.json().catch(() => ({}));
     if (res.status === 401) throw new Error("La clave no funciona. Tocá \"cambiar clave\" y pegala de nuevo.");
     if (res.status === 402) throw new Error("No te queda saldo en OpenRouter. Cargá crédito y probá de nuevo.");
     if (res.status === 429) throw new Error("Muchas consultas seguidas. Esperá un minuto.");
     if (!res.ok) throw new Error((data.error && data.error.message) || "OpenRouter devolvió un error. Probá de nuevo.");
-    const txt = data.choices?.[0]?.message?.content || "";
-    const r = JSON.parse(txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
+    if (data.error) throw new Error(data.error.message || "OpenRouter devolvió un error.");
+    const ch = data.choices?.[0] || {};
+    if (ch.error) throw new Error(ch.error.message || "El modelo devolvió un error.");
+    let txt = ch.message?.content ?? "";
+    if (Array.isArray(txt)) txt = txt.map(x => typeof x === "string" ? x : (x.text || "")).join("");
+    txt = String(txt).replace(/```(json)?/gi, "").trim();
+    const a = txt.indexOf('{'), z = txt.lastIndexOf('}');
+    if (a < 0 || z <= a) throw new Error(txt ? "La IA respondió algo que no entiendo: \"" + txt.slice(0, 140) + "\"" : "La IA no devolvió texto (" + (ch.finish_reason || "sin motivo") + "). Probá de nuevo.");
+    let r;
+    try { r = JSON.parse(txt.slice(a, z + 1)); }
+    catch (pe) { throw new Error("La respuesta vino incompleta: \"" + txt.slice(0, 140) + "\""); }
+    r.gramos = Number(String(r.gramos ?? "").replace(/[^0-9.]/g, "")) || 0;
     if (!r.gramos) throw new Error("No pude calcular la porción. Describí mejor el plato.");
     CRES = {r, m: CM}; CMSG = ["", false];
   } catch (e) {
-    CMSG = [e.message && !/JSON|Unexpected/.test(e.message) ? e.message : "No pude leer la respuesta. Probá de nuevo.", true];
+    CMSG = [(e && e.message) ? (e.message === "Failed to fetch" ? "No hay conexión con OpenRouter. Revisá internet y probá de nuevo." : e.message) : "Algo falló. Probá de nuevo.", true];
   } finally { CBUSY = false; renderCalc(); if (CRES && !CMSG[1]) { const h = document.querySelectorAll('#main .sec')[1]; h && h.scrollIntoView({behavior:'smooth'}); } }
 }
 document.addEventListener('click', async e => {
