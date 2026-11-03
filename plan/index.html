@@ -153,20 +153,9 @@ label.btn.up{display:inline-flex;align-self:flex-start;align-items:center;gap:8p
 .shop input{margin-top:4px;width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto}
 .shop small{color:var(--muted);font-size:13px}
 .shop.got b{text-decoration:line-through;color:var(--muted)}
-#tfab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;min-width:58px;height:58px;padding:0 14px;border-radius:29px;border:0;background:var(--ink);color:var(--bg);font:400 24px Anton,sans-serif;letter-spacing:.04em;box-shadow:0 8px 24px rgba(0,0,0,.6);cursor:pointer}
-#tfab.on{background:var(--accent);color:#fff}
-#tover{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center}
-#tover[hidden]{display:none}
-#tsheet{width:100%;max-width:560px;background:var(--surface);border-top:5px solid var(--accent);padding:18px 16px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
-#tsheet .tt{display:flex;justify-content:space-between;align-items:center;font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-#tbig{font:400 92px/1 Anton,Impact,sans-serif;text-align:center;font-variant-numeric:tabular-nums}
-#tsheet.flash #tbig{color:var(--accent);animation:fl .5s ease-in-out 6 alternate}
-@keyframes fl{to{opacity:.25}}
 .tp{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.tp button,.ta button{border:1px solid var(--line);background:var(--chip);color:var(--ink);font:700 15px "Barlow Condensed",sans-serif;letter-spacing:.06em;padding:10px 0;border-radius:4px;cursor:pointer}
 .ta{display:grid;grid-template-columns:1fr 2fr 1fr;gap:6px}
-.ta .go{clip-path:none;border-radius:4px}
-#upd{position:fixed;left:12px;right:12px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:35;background:var(--accent);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.6);max-width:536px;margin:0 auto}
+#upd{position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:35;background:var(--accent);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.6);max-width:536px;margin:0 auto}
 #upd[hidden]{display:none}
 #upd button{border:0;background:#fff;color:var(--accent);font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;cursor:pointer}
 main{padding-bottom:110px}
@@ -180,16 +169,9 @@ main{padding-bottom:110px}
   <div class="days" id="days" role="tablist"></div>
 </div>
 <main id="main"></main>
-<button id="tfab" data-act="timer" aria-label="Temporizador de descanso">⏱</button>
-<div id="tover" hidden><div id="tsheet">
-  <div class="tt"><span>Descanso</span><button class="lnk" data-act="tclose">Cerrar</button></div>
-  <div id="tbig">1:30</div>
-  <div class="tp"><button data-act="tset" data-s="45">0:45</button><button data-act="tset" data-s="60">1:00</button><button data-act="tset" data-s="90">1:30</button><button data-act="tset" data-s="120">2:00</button><button data-act="tset" data-s="180">3:00</button></div>
-  <div class="ta"><button data-act="tadd" data-s="-15">−15 s</button><button class="go" id="tstart" data-act="tgo">Iniciar</button><button data-act="tadd" data-s="15">+15 s</button></div>
-</div></div>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.03-6";
+const APP_VERSION = "2026.11.03-7";
 const BASE_DATA = [{"name": "Semana 9 y 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "OTM 12':"}, {"t": "MIN 1: 8 CAL ROW"}, {"t": "MIN 2: 6 BURPEES BOX JUMP 60 CM"}, {"t": "MIN 3: 10 MTS SLED PUSH 140 KG"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "2 km suave"}], [{"t": "trabajo fuerte:"}, {"t": "3x 800 mts (3'45\")"}, {"t": "rest 2' entre set"}], [{"t": "2x 1 km (4' 38\" - 4' 45\")"}, {"t": "rest 2' entre set"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "CADA 8 MINUTOS X 3 SET"}, {"t": "* 2.0 MILL CAL BIKE ( NO SOLTAR AGARRE)"}, {"t": "* 500 MTS SKI ERG"}, {"t": "* HASTA COMPLETAR LOS 8 MIN CAMINATAS"}, {"t": "EN ESTOCADAS CON COREBAG O DB 20KG"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "4 set"}, {"t": "400 mts cinta run ritmo 13.5"}, {"t": "5 min bici fija carga moderada alta"}, {"t": "rest 2' entre set"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
@@ -348,34 +330,6 @@ async function importExcel(file){
   } catch (e) { IMPORT_MSG = [(e && e.message && !/Script error/.test(e.message)) ? esc(e.message) : 'No pude leer el Excel. Revisá tu conexión y probá de nuevo.', true]; }
   renderImport(); renderTop();
 }
-
-// ---------- temporizador ----------
-let T_END = 0, T_LEFT = 90, T_RUN = false, T_IV = null, ACTX = null;
-function tFmt(s){ s = Math.max(0, Math.ceil(s)); return `${Math.floor(s / 60)}:${pad(s % 60)}`; }
-function beep(){
-  try { if (!ACTX) return; const t0 = ACTX.currentTime; [0, .35, .7].forEach(o => { const g = ACTX.createGain(), os = ACTX.createOscillator(); os.frequency.value = 880; os.connect(g); g.connect(ACTX.destination); g.gain.setValueAtTime(.0001, t0 + o); g.gain.exponentialRampToValueAtTime(.5, t0 + o + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + o + .25); os.start(t0 + o); os.stop(t0 + o + .3); }); } catch(e){}
-  try { navigator.vibrate && navigator.vibrate([300, 120, 300, 120, 300]); } catch(e){}
-}
-function tTick(){
-  const left = T_RUN ? (T_END - Date.now()) / 1000 : T_LEFT;
-  $('tfab').textContent = T_RUN ? tFmt(left) : '⏱';
-  $('tfab').classList.toggle('on', T_RUN);
-  const big = $('tbig'); if (big) big.textContent = tFmt(left);
-  if (T_RUN && left <= 0) { T_RUN = false; T_LEFT = 0; clearInterval(T_IV); T_IV = null; beep(); $('tfab').textContent = '⏱'; $('tfab').classList.remove('on'); if ($('tbig')) { $('tbig').textContent = '¡YA!'; $('tsheet').classList.add('flash'); } renderTimerBtns(); }
-}
-function renderTimerBtns(){ const b = $('tstart'); if (b) b.textContent = T_RUN ? 'Pausa' : 'Iniciar'; }
-function openTimer(){
-  $('tsheet').classList.remove('flash');
-  $('tover').hidden = false; tTick(); renderTimerBtns();
-}
-function tSet(sec){ T_RUN = false; clearInterval(T_IV); T_IV = null; T_LEFT = sec; $('tsheet').classList.remove('flash'); tTick(); renderTimerBtns(); }
-function tToggle(){
-  try { if (!ACTX) ACTX = new (window.AudioContext || window.webkitAudioContext)(); ACTX.resume && ACTX.resume(); } catch(e){}
-  if (T_RUN) { T_LEFT = Math.max(0, (T_END - Date.now()) / 1000); T_RUN = false; clearInterval(T_IV); T_IV = null; }
-  else { if (T_LEFT <= 0) T_LEFT = 90; T_END = Date.now() + T_LEFT * 1000; T_RUN = true; $('tsheet').classList.remove('flash'); T_IV = setInterval(tTick, 250); }
-  tTick(); renderTimerBtns();
-}
-function tAdd(d){ if (T_RUN) T_END += d * 1000; else T_LEFT = Math.max(0, T_LEFT + d); tTick(); }
 
 // =====================================================================
 // NUTRICIÓN
@@ -743,11 +697,6 @@ document.addEventListener('click', async e => {
     RUNS.push({id: Date.now(), date: $('rdate').value || today(), type: $('rtype').value, km, min, notes: $('rnotes').value.trim()}); store('fm-run', RUNS); return renderAll(false);
   }
   if (act === 'delrun') { RUNS = RUNS.filter(r => String(r.id) !== ds.id); store('fm-run', RUNS); return renderAll(false); }
-  if (act === 'timer') return openTimer();
-  if (act === 'tclose') { $('tover').hidden = true; return; }
-  if (act === 'tset') return tSet(+ds.s);
-  if (act === 'tgo') return tToggle();
-  if (act === 'tadd') return tAdd(+ds.s);
   if (act === 'meal') {
     const d = today(), st = MLOG[d] = MLOG[d] || {}; st[ds.k] = st[ds.k] === ds.v ? undefined : ds.v; store('fm-meals', MLOG); return renderAll(false);
   }
