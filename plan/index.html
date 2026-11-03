@@ -2719,7 +2719,7 @@ function renderCalc(){
     <p class="msg${CMSG[1]?' err':''}" id="cmsg">${cesc(CMSG[0])}</p>
   </div></section>
   ${CRES ? resultHTML(CRES.r, CMEALS[CRES.m]) : ''}
-  <p class="foot">Estimación aproximada · <button class="lnk" id="editkey">cambiar clave</button></p>`;
+  <p class="foot">Estimación aproximada · v3 · <button class="lnk" id="editkey">cambiar clave</button></p>`;
 }
 async function shrinkImg(file){
   const url = URL.createObjectURL(file);
