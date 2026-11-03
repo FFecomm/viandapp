@@ -159,24 +159,25 @@ label.btn.up{display:inline-flex;align-self:flex-start;align-items:center;gap:8p
 #upd[hidden]{display:none}
 #upd button{border:0;background:#fff;color:var(--accent);font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;cursor:pointer}
 main{padding-bottom:110px}
-.sl{display:flex;flex-direction:column;gap:6px;margin:6px 0 4px}
-.sl-row{display:grid;grid-template-columns:26px 1fr 84px 22px;align-items:center;gap:8px;padding:6px 8px;background:var(--bg);border:1px solid var(--line);border-radius:4px}
-.sl-row.ok{border-color:#2f6b3d;background:#122017}
-.sn{font:400 18px Anton,sans-serif;color:var(--muted);text-align:center}
-.sl-row.ok .sn{color:#4fbf6a}
-.sr{font:700 16px "Barlow Condensed",sans-serif;letter-spacing:.03em;color:var(--accent)}
-.sr em{font-style:normal;color:var(--muted);font-weight:600}
-.su{color:var(--muted);font:700 13px "Barlow Condensed",sans-serif}
-.kgi{width:100%;min-width:0;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px 6px;font:600 17px Barlow,sans-serif;text-align:center}
-.kgi::placeholder{color:#5d5d63;font-weight:500}
-.kgi:focus{outline:2px solid var(--accent);outline-offset:0}
-.sl-prev{margin:0;font-size:13px;color:var(--muted)}
-.rd-row{padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;gap:6px}
-.rd-l{margin:0;font:700 15px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.03em}
-.rd-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}
-.rd-c{display:flex;flex-direction:column;gap:3px;align-items:stretch}
-.rd-c span{font:700 11px "Barlow Condensed",sans-serif;color:var(--muted);letter-spacing:.1em;text-align:center}
-.rd-c.ok .kgi{border-color:#2f6b3d;background:#122017}
+
+.ad{margin-top:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.ad.done{border-color:#2f6b3d}
+.ad-top{display:flex;align-items:center;gap:10px;padding:6px 6px 6px 12px;min-height:48px}
+.ad-top span{flex:1;font-size:14px;color:var(--muted)}
+.ad-top b{color:var(--ink)}
+.ad-l{flex:0 1 auto !important;max-width:45%;font:700 14px "Barlow Condensed",sans-serif !important;color:var(--ink) !important;text-transform:uppercase;letter-spacing:.03em}
+.ad-ok{color:#4fbf6a !important}
+.ad-btn{flex:0 0 auto;width:40px;height:40px;border:0;border-radius:4px;background:var(--accent);color:#fff;font:400 26px/1 Anton,sans-serif;cursor:pointer}
+.ad.done .ad-btn{background:var(--chip);color:var(--ink);font-size:18px}
+.ad.open .ad-btn{background:var(--chip);color:var(--ink)}
+.ad-ed{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;padding:4px 10px 10px}
+.ad-ed button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:4px;font:700 18px "Barlow Condensed",sans-serif;cursor:pointer}
+.ad-v{display:flex;align-items:center;justify-content:center;gap:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:4px 8px}
+.ad-v input{width:100%;min-width:0;background:none;border:0;color:var(--ink);font:400 30px Anton,sans-serif;text-align:center;padding:4px 0}
+.ad-v input:focus{outline:none}
+.ad-v span{color:var(--muted);font:700 14px "Barlow Condensed",sans-serif}
+.ad-save{display:block;width:calc(100% - 20px);margin:0 10px 10px;border:0;border-radius:4px;background:var(--accent);color:#fff;font:400 20px Anton,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:11px 0;cursor:pointer}
+.ad .lnk{display:block;margin:0 auto 10px}
 </style>
 </head>
 <body>
@@ -189,7 +190,7 @@ main{padding-bottom:110px}
 <main id="main"></main>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.03-8";
+const APP_VERSION = "2026.11.03-9";
 const BASE_DATA = [{"name": "Semana 9 y 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "OTM 12':"}, {"t": "MIN 1: 8 CAL ROW"}, {"t": "MIN 2: 6 BURPEES BOX JUMP 60 CM"}, {"t": "MIN 3: 10 MTS SLED PUSH 140 KG"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "2 km suave"}], [{"t": "trabajo fuerte:"}, {"t": "3x 800 mts (3'45\")"}, {"t": "rest 2' entre set"}], [{"t": "2x 1 km (4' 38\" - 4' 45\")"}, {"t": "rest 2' entre set"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "CADA 8 MINUTOS X 3 SET"}, {"t": "* 2.0 MILL CAL BIKE ( NO SOLTAR AGARRE)"}, {"t": "* 500 MTS SKI ERG"}, {"t": "* HASTA COMPLETAR LOS 8 MIN CAMINATAS"}, {"t": "EN ESTOCADAS CON COREBAG O DB 20KG"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "4 set"}, {"t": "400 mts cinta run ritmo 13.5"}, {"t": "5 min bici fija carga moderada alta"}, {"t": "rest 2' entre set"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
@@ -264,33 +265,28 @@ function blockPlan(b, title){
   return {type: 'sets', key: exName(name), name, sets, used};
 }
 function prevEntry(key){ return (LOGS[key] || []).find(h => h.date !== today()); }
-function todayVal(key, i){ const h = (LOGS[key] || []).find(h => h.date === today()); return h && h.kg[i] ? h.kg[i] : ''; }
-function unitOf(reps){ return /mts|\bm\b|km|cal|seg|min|"/i.test(reps || '') ? 'tiempo' : 'kg'; }
-function kgInput(key, i, ph, unit){
-  const v = todayVal(key, i);
-  return `<input class="kgi" inputmode="${unit === 'kg' ? 'decimal' : 'text'}" data-lk="${esc(key)}" data-li="${i}" value="${esc(v)}" placeholder="${esc(ph || unit)}" aria-label="${unit === 'kg' ? 'Peso en kg' : 'Tiempo'} serie ${i + 1}">`;
+function todayEntry(key){ return (LOGS[key] || []).find(h => h.date === today()); }
+function bestKg(h){ if (!h) return ''; const n = (h.kg || []).map(x => parseFloat(String(x).replace(',', '.'))).filter(x => !isNaN(x)); return n.length ? Math.max(...n) : ''; }
+function kgFmt(v){ return v === '' || v == null ? '' : String(Math.round(v * 100) / 100).replace('.', ','); }
+let OPEN_KEY = null;
+function addHTML(key, label){
+  const pv = prevEntry(key), td = todayEntry(key), last = bestKg(pv), hoy = bestKg(td);
+  const open = OPEN_KEY === key;
+  const info = td ? `<span class="ad-ok">✓ Hoy: <b>${kgFmt(hoy)} kg</b></span>` : pv ? `<span>Última: <b>${kgFmt(last)} kg</b> · ${fmtD(pv.date)}</span>` : `<span>Sin registros</span>`;
+  return `<div class="ad${open ? ' open' : ''}${td ? ' done' : ''}" data-ak="${esc(key)}">
+    <div class="ad-top">${label ? `<span class="ad-l">${esc(label)}</span>` : ''}${info}<button class="ad-btn" data-act="adtoggle" data-k="${esc(key)}" aria-label="${open ? 'Cerrar' : 'Cargar peso'}">${open ? '×' : td ? '✎' : '+'}</button></div>
+    ${open ? `<div class="ad-ed"><button data-act="kgstep" data-s="-2.5">−2,5</button><label class="ad-v"><input inputmode="decimal" class="ad-in" value="${kgFmt(td ? hoy : last)}" placeholder="0" aria-label="Peso en kg"><span>kg</span></label><button data-act="kgstep" data-s="2.5">+2,5</button></div>
+      <button class="ad-save" data-act="kgsave" data-k="${esc(key)}">Guardar</button>${td ? ` <button class="lnk" data-act="kgdel" data-k="${esc(key)}">borrar el de hoy</button>` : ''}` : ''}
+  </div>`;
 }
 function logPlanHTML(pl){
-  if (pl.type === 'sets') {
-    const pv = prevEntry(pl.key), unit = unitOf(pl.sets[0].reps);
-    return `<div class="sl">${pl.sets.map((s, i) => { const v = todayVal(pl.key, i);
-      return `<div class="sl-row${v ? ' ok' : ''}"><span class="sn">${i + 1}</span><span class="sr">${esc(s.reps)}${/^\d+$/.test(s.reps) ? (s.reps === '1' ? ' rep' : ' reps') : ''}${s.hint ? ` <em>${esc(s.hint)}</em>` : ''}</span>${kgInput(pl.key, i, pv && pv.kg[i], unit)}<span class="su">${unit === 'kg' ? 'kg' : ''}</span></div>`; }).join('')}
-      ${pv ? `<p class="sl-prev">Anterior (${fmtD(pv.date)}): ${pv.kg.filter(Boolean).map(esc).join(' · ') || '—'}</p>` : ''}</div>`;
-  }
-  if (pl.type === 'rounds') {
-    return `<div class="sl"><p class="sl-prev">${esc(pl.head)} · peso por ronda</p>${pl.rows.map(r => { const pv = prevEntry(r.key);
-      return `<div class="rd-row"><p class="rd-l">${esc(r.label)}</p><div class="rd-in">${Array.from({length: pl.n}, (_, i) => `<label class="rd-c${todayVal(r.key, i) ? ' ok' : ''}"><span>R${i + 1}</span>${kgInput(r.key, i, pv && pv.kg[i], 'kg')}</label>`).join('')}</div></div>`; }).join('')}</div>`;
-  }
-  const pv = prevEntry(pl.key), v = todayVal(pl.key, 0);
-  return `<div class="sl"><div class="sl-row${v ? ' ok' : ''}"><span class="sn">✎</span><span class="sr">Peso usado</span>${kgInput(pl.key, 0, pv && pv.kg[0], 'kg')}<span class="su">kg</span></div>${pv ? `<p class="sl-prev">Anterior (${fmtD(pv.date)}): ${esc(pv.kg[0] || '—')}</p>` : ''}</div>`;
+  if (pl.type === 'rounds') return pl.rows.map(r => addHTML(r.key, r.label)).join('');
+  return addHTML(pl.key, '');
 }
-function saveSet(key, i, v){
-  const list = LOGS[key] = LOGS[key] || [];
-  let h = list.find(x => x.date === today());
-  if (!h) { h = {date: today(), kg: []}; list.unshift(h); }
-  h.kg[i] = v.trim().replace(',', '.');
-  if (!h.kg.some(Boolean)) LOGS[key] = list.filter(x => x !== h);
-  store('fm-logs2', LOGS);
+function saveKg(key, v){
+  const list = (LOGS[key] || []).filter(x => x.date !== today());
+  if (v !== '') list.unshift({date: today(), kg: [String(v)]});
+  LOGS[key] = list; store('fm-logs2', LOGS);
 }
 function renderWeek(){
   const w = DATA[W], day = w.days[D];
@@ -304,9 +300,8 @@ function renderWeek(){
     const blocks = s.blocks.map(b => {
       const pl = blockPlan(b, s.title);
       const vid = it => `<a class="v" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video<small>${it.v.includes('/shorts/') ? 'SHORT' : 'YOUTUBE'}</small></a>`;
-      if (!pl) return `<div class="block">` + b.map((it, k) => it.v ? vid(it) : `<p class="${k === 0 && !isSets(it.t) ? 'first' : (isSets(it.t) ? 'sets' : '')}">${esc(it.t)}</p>`).join('') + `</div>`;
-      const rest = b.map((it, k) => pl.used.has(k) ? '' : it.v ? vid(it) : `<p class="${isSets(it.t) ? 'sets' : 'alt'}">${esc(it.t)}</p>`).join('');
-      return `<div class="block">${pl.type !== 'rounds' ? `<p class="first">${esc(pl.name)}</p>` : ''}${logPlanHTML(pl)}${rest}</div>`;
+      const body = b.map((it, k) => it.v ? vid(it) : `<p class="${k === 0 && !isSets(it.t) ? 'first' : (isSets(it.t) ? 'sets' : '')}">${esc(it.t)}</p>`).join('');
+      return `<div class="block">${body}${pl ? logPlanHTML(pl) : ''}</div>`;
     }).join('');
     return `<section class="sec"><h2>${esc(s.title || 'Bloque')}${nv ? `<span class="n">${nv} VIDEO${nv > 1 ? 'S' : ''}</span>` : ''}</h2>${blocks}</section>`;
   }).join('')
@@ -748,6 +743,10 @@ document.addEventListener('click', async e => {
   if (ds.d !== undefined) { D = +ds.d; return renderAll(); }
   if (ds.tv) { TV = ds.tv; saveUI(); return renderAll(); }
   const act = ds.act; if (!act) return;
+  if (act === 'adtoggle') { OPEN_KEY = OPEN_KEY === ds.k ? null : ds.k; renderMain(); const el = document.querySelector('.ad.open .ad-in'); if (el) { el.focus(); el.select && el.select(); } return; }
+  if (act === 'kgstep') { const inp = b.closest('.ad').querySelector('.ad-in'); const v = Math.max(0, (parseFloat(inp.value.replace(',', '.')) || 0) + (+ds.s)); inp.value = kgFmt(v); return; }
+  if (act === 'kgsave') { const inp = b.closest('.ad').querySelector('.ad-in'); const v = parseFloat(inp.value.replace(',', '.')); if (isNaN(v)) return inp.focus(); saveKg(ds.k, v); OPEN_KEY = null; return renderMain(); }
+  if (act === 'kgdel') { saveKg(ds.k, ''); OPEN_KEY = null; return renderMain(); }
   if (act === 'done') { DONE.push({w: DATA[W].name, d: D, date: today()}); store('fm-done', DONE); return renderAll(); }
   if (act === 'undone') { const i = DONE.map(x => x.w + x.d).lastIndexOf(DATA[W].name + D); if (i >= 0) DONE.splice(i, 1); store('fm-done', DONE); return renderAll(false); }
   if (act === 'addrun') {
@@ -792,10 +791,8 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('input', e => {
   if (e.target.id === 'cdesc') CDESC = e.target.value;
-  const lk = e.target.dataset && e.target.dataset.lk;
-  if (lk != null) { saveSet(lk, +e.target.dataset.li, e.target.value); const row = e.target.closest('.sl-row, .rd-c'); row && row.classList.toggle('ok', !!e.target.value.trim()); }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('kgi')) { const all = [...document.querySelectorAll('.kgi')], i = all.indexOf(e.target); (all[i + 1] || e.target).focus(); e.preventDefault(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ad-in')) { e.preventDefault(); const sv = e.target.closest('.ad').querySelector('[data-act="kgsave"]'); sv && sv.click(); } });
 document.addEventListener('change', async e => {
   if (e.target.id === 'xfile') { const f = e.target.files && e.target.files[0]; if (f) importExcel(f); return; }
   if (e.target.dataset && e.target.dataset.shop) {
