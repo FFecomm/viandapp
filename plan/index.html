@@ -110,2623 +110,475 @@ button.v{width:100%;border:0;cursor:pointer;text-align:left}
 .fill{height:100%;background:var(--accent);border-radius:4px}
 .fill.ok{background:#4fbf6a}
 .tip ul{margin:0;padding-left:20px}
+.go{display:block;width:100%;border:0;background:var(--accent);color:#fff;font:400 22px Anton,Impact,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:13px 0;cursor:pointer;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)}
+.go:disabled{opacity:.5;cursor:wait}
+main>.go{margin-top:4px}
+.done-ok{margin:0;color:#4fbf6a;font:700 16px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;text-align:center}
+.days button.done span::after{content:" ✓";color:#4fbf6a}
+.days button.hoy{box-shadow:inset 0 -3px 0 var(--accent)}
+.days button.hoy[aria-pressed="true"]{box-shadow:none}
+.log{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.log p{margin:0}
+.lg-last{font-size:14px;color:var(--ink)}
+.lg-last span{color:var(--muted)}
+.lg-today{font-size:14px;color:#4fbf6a}
+.lg-today b{color:var(--ink)}
+.lg-row{display:flex;gap:6px}
+.lg-row input{flex:1;min-width:0;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:9px 10px;font:15px Barlow,sans-serif}
+.lg-row button{border:0;background:var(--ink);color:var(--bg);font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:0 14px;border-radius:4px;cursor:pointer}
+.cf label{display:flex;flex-direction:column;gap:6px;font:700 13px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cf input[type=date],.cf input[type=number],.cf input[type=text],.cf select{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:10px;font:16px Barlow,sans-serif;text-transform:none;letter-spacing:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label.btn.up{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;border:1px dashed var(--muted);padding:11px 14px;border-radius:4px;cursor:pointer;font:700 15px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.msg{margin:0;color:var(--muted);font-size:14px}
+.msg.err{color:#ff8a78}
+.wk{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
+.wk>div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.wkb{height:90px;width:100%;display:flex;align-items:flex-end;background:var(--chip);border-radius:4px;overflow:hidden}
+.wkb i{display:block;width:100%;background:var(--accent);min-height:2px}
+.wk b{font:400 20px Anton,sans-serif}
+.wk span{font-size:12px;color:var(--muted)}
+.chk{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.chk button{flex:1;border:1px solid var(--line);background:var(--chip);color:var(--muted);font:700 13px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:9px 4px;border-radius:4px;cursor:pointer}
+.chk button[data-v="plan"][aria-pressed="true"]{background:#1f3a26;border-color:#4fbf6a;color:#bff0c9}
+.chk button[data-v="otra"][aria-pressed="true"]{background:#3a2f1a;border-color:#e0a441;color:#ffe1a8}
+.chk button[data-v="skip"][aria-pressed="true"]{background:#3a1d1a;border-color:var(--accent);color:#ffc2b8}
+.calcd{color:#4fbf6a;font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.adj{background:#2a1a12;border:1px solid var(--accent);padding:10px 12px;font-size:14px;line-height:1.45}
+.adj span{color:var(--muted)}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:#8d8d93;font:11px Barlow,sans-serif}
+.block.row{flex-direction:row;justify-content:space-between;align-items:center}
+.shop{flex-direction:row !important;align-items:flex-start;gap:12px;cursor:pointer}
+.shop input{margin-top:4px;width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto}
+.shop small{color:var(--muted);font-size:13px}
+.shop.got b{text-decoration:line-through;color:var(--muted)}
+#tfab{position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;min-width:58px;height:58px;padding:0 14px;border-radius:29px;border:0;background:var(--ink);color:var(--bg);font:400 24px Anton,sans-serif;letter-spacing:.04em;box-shadow:0 8px 24px rgba(0,0,0,.6);cursor:pointer}
+#tfab.on{background:var(--accent);color:#fff}
+#tover{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);display:flex;align-items:flex-end;justify-content:center}
+#tover[hidden]{display:none}
+#tsheet{width:100%;max-width:560px;background:var(--surface);border-top:5px solid var(--accent);padding:18px 16px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+#tsheet .tt{display:flex;justify-content:space-between;align-items:center;font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#tbig{font:400 92px/1 Anton,Impact,sans-serif;text-align:center;font-variant-numeric:tabular-nums}
+#tsheet.flash #tbig{color:var(--accent);animation:fl .5s ease-in-out 6 alternate}
+@keyframes fl{to{opacity:.25}}
+.tp{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.tp button,.ta button{border:1px solid var(--line);background:var(--chip);color:var(--ink);font:700 15px "Barlow Condensed",sans-serif;letter-spacing:.06em;padding:10px 0;border-radius:4px;cursor:pointer}
+.ta{display:grid;grid-template-columns:1fr 2fr 1fr;gap:6px}
+.ta .go{clip-path:none;border-radius:4px}
+#upd{position:fixed;left:12px;right:12px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:35;background:var(--accent);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.6);max-width:536px;margin:0 auto}
+#upd[hidden]{display:none}
+#upd button{border:0;background:#fff;color:var(--accent);font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;cursor:pointer}
+main{padding-bottom:110px}
 </style>
 </head>
 <body>
-
-
 <div class="top">
-  <div class="mode" id="mode" role="tablist"><button data-m="t">Entreno</button><button data-m="n">Nutrición</button></div>
+  <div class="mode" role="tablist" id="mode"><button data-m="t">Entreno</button><button data-m="n">Nutrición</button></div>
   <h1><b id="ttl">Plan de entrenamiento</b> <span>// Felipe Majul</span></h1>
   <div class="seg" id="weeks" role="tablist"></div>
   <div class="days" id="days" role="tablist"></div>
 </div>
 <main id="main"></main>
+<button id="tfab" data-act="timer" aria-label="Temporizador de descanso">⏱</button>
+<div id="tover" hidden><div id="tsheet">
+  <div class="tt"><span>Descanso</span><button class="lnk" data-act="tclose">Cerrar</button></div>
+  <div id="tbig">1:30</div>
+  <div class="tp"><button data-act="tset" data-s="45">0:45</button><button data-act="tset" data-s="60">1:00</button><button data-act="tset" data-s="90">1:30</button><button data-act="tset" data-s="120">2:00</button><button data-act="tset" data-s="180">3:00</button></div>
+  <div class="ta"><button data-act="tadd" data-s="-15">−15 s</button><button class="go" id="tstart" data-act="tgo">Iniciar</button><button data-act="tadd" data-s="15">+15 s</button></div>
+</div></div>
+<div id="upd" hidden></div>
 <script>
-const DATA = [
- {
-  "name": "Semana 1 y 2",
-  "days": [
-   {
-    "name": "DIA 1",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "20 russian twist medball"
-        },
-        {
-         "t": "30\" seg plank sobre medball"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "BACK SQUAT BANDED"
-        },
-        {
-         "t": "4 set x 12 rep"
-        },
-        {
-         "t": "Peso: 60Kg"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/HKHNqEKzwe4"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS + PLIOMETRIA",
-      "blocks": [
-       [
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "6/6 bulgarian squat jump"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/W2yWyT6AEWk"
-        },
-        {
-         "t": "5 box jump 60 cm"
-        },
-        {
-         "t": "4 pasadas vallas"
-        }
-       ],
-       [
-        {
-         "t": "wall sit hold db db"
-        },
-        {
-         "t": "4x30\""
-        },
-        {
-         "v": "https://www.youtube.com/shorts/py7cBYBFDT4"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "Biceps banded"
-        },
-        {
-         "t": "4x 30 repp"
-        }
-       ],
-       [
-        {
-         "t": "Biceps con mancuernas"
-        },
-        {
-         "t": "4x12 alt"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "3 a 4 set"
-        },
-        {
-         "t": "10 peso muerto barra hexago 60kg"
-        },
-        {
-         "t": "rest 15\""
-        },
-        {
-         "t": "10 slam ball 9kg"
-        },
-        {
-         "t": "rest 15\""
-        },
-        {
-         "t": "8 suicide run sprint ( 7m + 7m )"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 2",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 Rondas"
-        },
-        {
-         "t": "15 k2e Rodillas al pecho colgado"
-        },
-        {
-         "t": "10/10 vups one leg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "PRESS STRICT"
-        },
-        {
-         "t": "4 set x 4 a 6 rep con 40kg"
-        },
-        {
-         "t": "sin empujar con rodillas y piernas"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "Hang power snatch recepcion 90° dumbells 15kg"
-        },
-        {
-         "t": "4x6/6"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=JXNPBnzBCt0"
-        }
-       ],
-       [
-        {
-         "t": "Split jerk tras nuca alt. 35kg"
-        },
-        {
-         "t": "4x6/6"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/mRVha0MIGjQ"
-        }
-       ],
-       [
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "12 Vuelos laterales mancuernas"
-        },
-        {
-         "t": "10 press tras nuca sentada con mancuernas"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "Push up diamant"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/jM_nyUZGCak"
-        },
-        {
-         "t": "3x12"
-        }
-       ],
-       [
-        {
-         "t": "Triceps tras nuca polea"
-        },
-        {
-         "t": "4x12"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "1 km warm up"
-        }
-       ],
-       [
-        {
-         "t": "2x 500 mts al 75%"
-        },
-        {
-         "t": "rest 2'30\" entre set"
-        }
-       ],
-       [
-        {
-         "t": "4x200 mts al 70%"
-        },
-        {
-         "t": "micro descanso de 1'30\""
-        }
-       ],
-       [
-        {
-         "t": "2 km suaves al 70%"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 3",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 Rondas"
-        },
-        {
-         "t": "10 buen dia con kb"
-        },
-        {
-         "t": "1 min plancha"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "PESO MUERTO"
-        },
-        {
-         "t": "2x8 con 60kg"
-        },
-        {
-         "t": "2x5 con 80kg a 90kg"
-        },
-        {
-         "t": "rest 2' entre set"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "Hip thrust one leg jump"
-        },
-        {
-         "t": "3x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/D5ahLcKVxMY"
-        }
-       ],
-       [
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "20 mts sled pull traccion isquiotibial"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/z-I6VSLpMik"
-        },
-        {
-         "t": "15\" banded skipping ( repiteo con banded en cadera )"
-        }
-       ],
-       [
-        {
-         "t": "Hang muscle clean box"
-        },
-        {
-         "t": "4x6/6"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/9F50VZ88iuo"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "Dominadas"
-        },
-        {
-         "t": "4x?"
-        }
-       ],
-       [
-        {
-         "t": "Pullover on the floor db"
-        },
-        {
-         "t": "4x10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/NuqoPT92_yc"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "15 12 9"
-        },
-        {
-         "t": "Power snatch 30kg"
-        },
-        {
-         "t": "Cal row"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 4",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 rondas"
-        },
-        {
-         "t": "1 min plancha con peso sacro lumbar"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "FRONT SQUAT"
-        },
-        {
-         "t": "4x3"
-        },
-        {
-         "t": "Peso: 60kg a 70kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "Clean pull deficit"
-        },
-        {
-         "t": "4x2 con 80kg"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/vuudrJmKIkI"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PECHO",
-      "blocks": [
-       [
-        {
-         "t": "BANCA PRESS PLANO"
-        },
-        {
-         "t": "12 10 10"
-        }
-       ],
-       [
-        {
-         "t": "FONDOS DIPS"
-        },
-        {
-         "t": "4X?"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PLIOMETRIA",
-      "blocks": [
-       [
-        {
-         "t": "SEATED VERT JUMP"
-        },
-        {
-         "t": "4X5"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/ckOWNYFPHHk"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "cal bike"
-        },
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "20 seg solo brazos"
-        },
-        {
-         "t": "20 seg solo piernas"
-        },
-        {
-         "t": "20 seg sprint completos"
-        }
-       ]
-      ]
-     }
-    ]
-   }
-  ]
- },
- {
-  "name": "Semana 3 y 4",
-  "days": [
-   {
-    "name": "DIA 1",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "1 min plank con 40kg peso en sacrolumbar"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "BACK SQUAT"
-        },
-        {
-         "t": "2x6 con 80kg"
-        },
-        {
-         "t": "2x4 con 90kg"
-        },
-        {
-         "t": "2x2 con 100 KG"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS + PLIOMETRIA",
-      "blocks": [
-       [
-        {
-         "t": "subsuelo"
-        },
-        {
-         "t": "3 Set (combinar)"
-        },
-        {
-         "t": "8 Hang squat clean 50Kg"
-        },
-        {
-         "t": "6 box jump"
-        },
-        {
-         "t": "15\" banded skipping"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/hcw0rD4nufA"
-        }
-       ],
-       [
-        {
-         "t": "3 Set (combinar)"
-        },
-        {
-         "t": "10 squat stance narrow"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/1JncZUvSOIM"
-        },
-        {
-         "t": "5 broad jump continuos"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/5Oq8KeqqPLw"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "3 Set (combinar)"
-        },
-        {
-         "t": "1 serie de biceps 21"
-        },
-        {
-         "t": "12 triceps fondo en box peso en rodillas"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "4 set"
-        },
-        {
-         "t": "12 Peso muerto 70kg"
-        },
-        {
-         "t": "rest 10\""
-        },
-        {
-         "t": "8/8 ladmine split jerk"
-        },
-        {
-         "t": "rest 10\""
-        },
-        {
-         "t": "5 mts / 5 mts skipping lateral"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/OzBI0WvooN4"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 2",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 set"
-        },
-        {
-         "t": "20 russian twist globet kb 12kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "SPLIT JERK TRAS NUCA"
-        },
-        {
-         "t": "4 set"
-        },
-        {
-         "t": "6/6 con 40kgo 50kg   ( velocidad y tecnica)"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/IHvrJgmTTF0"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "Press Z"
-        },
-        {
-         "t": "12 10 10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/us_DqJIm9II"
-        }
-       ],
-       [
-        {
-         "t": "vuelos laterales plate 10kg"
-        },
-        {
-         "t": "4x12"
-        }
-       ],
-       [
-        {
-         "t": "press tras nuca sentado"
-        },
-        {
-         "t": "12 10 10 8"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/FghebqCF_o8"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "3 Set (combinar)"
-        },
-        {
-         "t": "20 biceps barbell 20kg"
-        },
-        {
-         "t": "12 triceps soga tras nuca"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "5 min warm up"
-        },
-        {
-         "t": "rest 5'"
-        },
-        {
-         "t": "fartlek 3x ( 200 mts + 200 mts )"
-        },
-        {
-         "t": "rest 2'"
-        }
-       ],
-       [
-        {
-         "t": "4x400 mts"
-        },
-        {
-         "t": "rest 2' entre set"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 3",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 Set"
-        },
-        {
-         "t": "15 goodmorning barbell"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "Peso muerto"
-        },
-        {
-         "t": "4 Set"
-        },
-        {
-         "t": "2 rep 100kg a 110kg"
-        },
-        {
-         "t": "rest 2"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "Hip thrust velocidad en la salida reposo abajo"
-        },
-        {
-         "t": "4x 6 a 8 Rep - peso: 110kg a 120kg"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/iTLHwaacB5E"
-        }
-       ],
-       [
-        {
-         "t": "Tamtrum banded fitball seated"
-        },
-        {
-         "t": "4x15\""
-        },
-        {
-         "v": "https://youtube.com/shorts/Tgl5ItfH-Go?si=CW3AkOPR4jRyu2DX"
-        }
-       ],
-       [
-        {
-         "t": "Camilla femoral"
-        },
-        {
-         "t": "4x12"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "dominadas"
-        },
-        {
-         "t": "6 - 3 - 3 -1"
-        }
-       ],
-       [
-        {
-         "t": "pendlay row toca suelo barra peso: 50kg a 60kg"
-        },
-        {
-         "t": "10 8 8 6"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/2Na7p4rybMs"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "2 min on x 1 min off x 4 rondas"
-        },
-        {
-         "t": "10 burpees"
-        },
-        {
-         "t": "10 slam ball 9kg"
-        },
-        {
-         "t": "5 box jump"
-        },
-        {
-         "t": "6/6 split jerk mancuerna 17.5kg a 20kg"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 4",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "3 rondas"
-        },
-        {
-         "t": "10 rep"
-        },
-        {
-         "t": "pie a la barra"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "FRONT SQUAT"
-        },
-        {
-         "t": "4X2"
-        },
-        {
-         "t": "Peso: 80kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "hang snatch pull"
-        },
-        {
-         "t": "4x3 con 60kg a 70kg"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=rRU9RzYi6Qw"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PECHO",
-      "blocks": [
-       [
-        {
-         "t": "Press pecho db db 25kg"
-        },
-        {
-         "t": "3x8"
-        }
-       ],
-       [
-        {
-         "t": "aperturas planas"
-        },
-        {
-         "t": "4x10"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PLIOMETRIA",
-      "blocks": [
-       [
-        {
-         "t": "3 set x 4 pasadas"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/9dRUaQTQWjo"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "15 12 9"
-        },
-        {
-         "t": "power snatch 40kg"
-        },
-        {
-         "t": "20 mts empuje de box o trineo 150kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "10 min entrada en calor"
-        }
-       ],
-       [
-        {
-         "t": "testear 10 km"
-        },
-        {
-         "t": "sub 50'"
-        }
-       ]
-      ]
-     }
-    ]
-   }
-  ]
- },
- {
-  "name": "Semana 5 y 6",
-  "days": [
-   {
-    "name": "DIA 1",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "1 MIN PLANCHA"
-        },
-        {
-         "t": "10 SLAM BALL DE RODILLAS"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "BACK SQUAT"
-        },
-        {
-         "t": "5 con 80kg"
-        },
-        {
-         "t": "3 con 90kg"
-        },
-        {
-         "t": "2x1 con 100kg a 110kg"
-        },
-        {
-         "t": "1 con 110kg a 120kg"
-        },
-        {
-         "t": "rest 1'30\" entre set"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TRANSFERENCIA",
-      "blocks": [
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "6/6  HANG SPLIT BOX 40kg a 50kg"
-        },
-        {
-         "t": "20\" BANDED SKIPPING"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/ud85IwhZZKo"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/hcw0rD4nufA"
-        }
-       ],
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "10 LANDMINE THRUSTER 2 a 3 discos de 10kg"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=9f0TrDK9hFY"
-        },
-        {
-         "t": "20\" LATERAL STEP JUMP ONE LEG"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/Lo9o-6LlvEI"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "CHIN UP"
-        },
-        {
-         "t": "4X?"
-        }
-       ],
-       [
-        {
-         "t": "TRICEPS POLEA TRAS NUCA"
-        },
-        {
-         "t": "4X15"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "4 RONDAS"
-        },
-        {
-         "t": "20 WALLBALL 9KG"
-        },
-        {
-         "t": "10 HANG POWER SNATCH 40KG"
-        },
-        {
-         "t": "8 DEADLIFT DOBLE KB JUMP"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/zv6EMmGmDeA"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 2",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "10/10 PRESS PALOFF BANDED"
-        },
-        {
-         "t": "20 V- UPS"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "PUSH JERK"
-        },
-        {
-         "t": "8 8 6 6 4"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=VrHNJXoSyXw"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "Press Z"
-        },
-        {
-         "t": "10 8 8 6"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/us_DqJIm9II"
-        }
-       ],
-       [
-        {
-         "t": "VUELOS LATERALES DE RODILLAS db db"
-        },
-        {
-         "t": "4x10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/v7TzVbVvH30"
-        }
-       ],
-       [
-        {
-         "t": "3 Set"
-        },
-        {
-         "t": "8/8 SPLIT JERK DB ONE ARM"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/Ds7cdd_GO5E"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "TRICEPS FONDOS ENTRE BOX o FONDOS"
-        },
-        {
-         "t": "3x12"
-        }
-       ],
-       [
-        {
-         "t": "BICEPS 21 (7+7+7)"
-        },
-        {
-         "t": "3 Set"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "5 min warm up (ENTRADA EN CALOR)"
-        },
-        {
-         "t": "rest 5'"
-        }
-       ],
-       [
-        {
-         "t": "3 set x 3 km"
-        },
-        {
-         "t": "zona 3"
-        },
-        {
-         "t": "rest 3' entre set"
-        }
-       ],
-       [
-        {
-         "t": "4x200"
-        },
-        {
-         "t": "rest 1' entre set (micro descanso)"
-        },
-        {
-         "t": "cansancio aerobico"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 3",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "20 SIT KICKS"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/i_xTGGMmbHg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "OBEJTIVO: PESO MUERTO"
-        },
-        {
-         "t": "BUSCAR 1 REP MAXIMA CUIDAR ESPALDA Y TECNICA"
-        }
-       ],
-       [
-        {
-         "t": "3 - 2 - 1 - 1 - 1"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "HIP THRUST ONE LEG JUMP"
-        },
-        {
-         "t": "4x 8/8"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/EbUQftM0fxA"
-        }
-       ],
-       [
-        {
-         "t": "CAMILLA FEMORAL"
-        },
-        {
-         "t": "4x12"
-        }
-       ],
-       [
-        {
-         "t": "ROMANIAN DEADLIFT ONE LEG AND PRESS"
-        },
-        {
-         "t": "4x10 alt"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/0OvEW44Yd7A"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "Remo polea alta"
-        },
-        {
-         "t": "4X10"
-        }
-       ],
-       [
-        {
-         "t": "Pullover polea"
-        },
-        {
-         "t": "4x12"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/RtL11I6oX48"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "3er piso"
-        },
-        {
-         "t": "3 rondas"
-        },
-        {
-         "t": "400 mts run cinta de correr"
-        },
-        {
-         "t": "8 hang power clean 50kg"
-        },
-        {
-         "t": "20 k2e ( rodillas al pecho colgado)"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 4",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "15 SIT UP MEDBALL OH"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "FRONT SQUAT DEAD STOP"
-        },
-        {
-         "t": "5 5 3 3"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=XReZGnsgE7M"
-        },
-        {
-         "t": "Vas trabajar y necesitar de mucha movilidad"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "RM DE SALTO"
-        },
-        {
-         "t": "objetivo : 70 cm  o mas"
-        },
-        {
-         "t": "box jump"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/OMf31ggpnb0"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "Banco pecho press"
-        },
-        {
-         "t": "12 10 8 6"
-        }
-       ],
-       [
-        {
-         "t": "press inclinado barra"
-        },
-        {
-         "t": "12 10 8 8"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/a64mtMHyPfY"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "barbell jump calf"
-        },
-        {
-         "t": "4x15\""
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=Dnfx3nFb56k"
-        }
-       ],
-       [
-        {
-         "t": "antebrazo polea baja"
-        },
-        {
-         "t": "4x12"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "3 rondas"
-        },
-        {
-         "t": "15 cal bike"
-        },
-        {
-         "t": "8/8 hang snatch db 17.5kg"
-        },
-        {
-         "t": "15 mts empujar trineo o box (5 discos de 20kg )"
-        }
-       ]
-      ]
-     }
-    ]
-   }
-  ]
- },
- {
-  "name": "Semana 7 y 8",
-  "days": [
-   {
-    "name": "DÍA 1",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "Copenhagen Plank → 3x30 seg/lado"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/Rwap0_j5i5A"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "BACK SQUAT PINNER"
-        },
-        {
-         "t": "5X5 al 85%"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/6XuLcOLdVqQ"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PLIOMETRIA",
-      "blocks": [
-       [
-        {
-         "t": "3 SET"
-        },
-        {
-         "t": "8 BOX JUMP"
-        },
-        {
-         "t": "3 BROAD JUMP"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/5Oq8KeqqPLw"
-        }
-       ],
-       [
-        {
-         "t": "HANG POWER CLEAN DESDE BOX"
-        },
-        {
-         "t": "5x3 con 60kg - 70kg"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/EIES2oibclU"
-        }
-       ],
-       [
-        {
-         "t": "BULGARIAN SQUAT DB DB"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/VLyt8xraMLA"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "BICEPS",
-      "blocks": [
-       [
-        {
-         "t": "Curl banco inclinado 45°"
-        },
-        {
-         "t": "4x12 alt"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/4LQ0p0ni39Y"
-        }
-       ],
-       [
-        {
-         "t": "Biceps polea alta"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/oIiBT4KS9lI"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "WARM UP 10'"
-        }
-       ],
-       [
-        {
-         "t": "4x400 zona 4"
-        },
-        {
-         "t": "rest 2"
-        }
-       ],
-       [
-        {
-         "t": "3x100 zona 5"
-        },
-        {
-         "t": "rest 2"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DÍA 2",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "V ups -3 x 20"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/-ipF-Xl5eY4"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "LANDMINE SPLIT JERK"
-        },
-        {
-         "t": "4x8/8"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/uP1hbZgXVFU"
-        },
-        {
-         "t": "Peso: disco de 10kg o 15kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS PIERNAS",
-      "blocks": [
-       [
-        {
-         "t": "Press arnold de rodillas"
-        },
-        {
-         "t": "4x10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/z3uuSdgPCPk"
-        }
-       ],
-       [
-        {
-         "t": "Vuelos frontales db db  15kg"
-        },
-        {
-         "t": "4x10"
-        }
-       ],
-       [
-        {
-         "t": "face pull"
-        },
-        {
-         "t": "4x15"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/lbt7obncwVs"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TRICEPS",
-      "blocks": [
-       [
-        {
-         "t": "Triceps frances db 25kg"
-        },
-        {
-         "t": "3x15"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/mfXokM_VnMY"
-        }
-       ],
-       [
-        {
-         "t": "Triceps soga 1 mano"
-        },
-        {
-         "t": "4x12/12"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/hip11n3QXzU"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "HYROX",
-      "blocks": [
-       [
-        {
-         "t": "FOR TIME"
-        },
-        {
-         "t": "(4 PASADAS ) 20 MTS TRINEO 120KG"
-        },
-        {
-         "t": "1000 MTS SKI"
-        },
-        {
-         "t": "60 MTS BURPEES BROAD JUMP"
-        },
-        {
-         "t": "1000 MTS ROW"
-        },
-        {
-         "t": "60 MTS FAMMER DOBLE DUMBELLS 25KG"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DÍA 3",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "Abs declinado  - 3x15"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/PYOn2mz4w4Q"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "PESO MUERTO BANDED"
-        },
-        {
-         "t": "4x12"
-        },
-        {
-         "t": "peso: 80kg o mas"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/n-5yL3PqC50"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS GLUTEO",
-      "blocks": [
-       [
-        {
-         "t": "Camilla femoral 1 pierna"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/wL8H0zlc4lo"
-        }
-       ],
-       [
-        {
-         "t": "patada de gluteo maquina  o pólea"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/HlrLyKsrV78"
-        }
-       ],
-       [
-        {
-         "t": "hip thrust  1 pierna"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/XZ52CZnPKq4"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ESPALDA",
-      "blocks": [
-       [
-        {
-         "t": "Remo polea baja a 1 mano"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/n4v_BwenvWc"
-        }
-       ],
-       [
-        {
-         "t": "Pullover db 17.5kg"
-        },
-        {
-         "t": "3x12"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/2ZbSfGQZhR4"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "OTM 12'"
-        },
-        {
-         "t": "MIN 1:   6 POWER SNATCH TOUCH AND GO 40KG"
-        },
-        {
-         "t": "MIN 2:   12 CAL BIKE SPRINT"
-        },
-        {
-         "t": "MIN 3:   3 WALL WALK"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DIA 4",
-    "sections": [
-     {
-      "title": "CORE",
-      "blocks": [
-       [
-        {
-         "t": "Press paloff polea 3x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/CpEltc6kgnM"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "FRONT SQUAT"
-        },
-        {
-         "t": "5x5 al 80%"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/iGQCel1_5eM"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PLIOMETRIA",
-      "blocks": [
-       [
-        {
-         "t": "Bulgarian squat jump"
-        },
-        {
-         "t": "4x10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/W2yWyT6AEWk"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "Pecho plano mancuernas 25KG"
-        },
-        {
-         "t": "4x8"
-        }
-       ],
-       [
-        {
-         "t": "aperturas inclinadas db db 12.5kg"
-        },
-        {
-         "t": "3x12"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "3x30\"/30\""
-        },
-        {
-         "t": "calf raises high"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/1TS3P8j3aHA"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "4 set"
-        },
-        {
-         "t": "8 box jump 60 cm"
-        },
-        {
-         "t": "5 mts + 5 mts ( suicide run)"
-        },
-        {
-         "t": "6/6 hang split jerk db 17,5kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "testar 10 km"
-        },
-        {
-         "t": "sub 51'"
-        }
-       ]
-      ]
-     }
-    ]
-   }
-  ]
- },
- {
-  "name": "Semana 9 y 10",
-  "days": [
-   {
-    "name": "DÍA 1",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "PRESS PALOF BANDED"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"
-        },
-        {
-         "t": "3x20 lado"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "BACK SQUAT"
-        },
-        {
-         "t": "5 al 75%"
-        },
-        {
-         "t": "3 al 80%"
-        },
-        {
-         "t": "3 al 85%"
-        },
-        {
-         "t": "1 al 87%"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PLIO + TRANSFERENCIA",
-      "blocks": [
-       [
-        {
-         "t": "3 set ( super serie)"
-        },
-        {
-         "t": "LANDMINE THRUSTER 10 rep"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=FlfhcM9isDA"
-        },
-        {
-         "t": "BROAD JUMP OVER VALLAS 5 pasadas"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/fTChbtnLR3w"
-        }
-       ],
-       [
-        {
-         "t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"
-        }
-       ],
-       [
-        {
-         "t": "PRENSA 45°"
-        },
-        {
-         "t": "12 10 8 6"
-        },
-        {
-         "t": "Peso: 120kg a 140kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TREN SUPERIOR",
-      "blocks": [
-       [
-        {
-         "t": "CHIN UP 4x?"
-        },
-        {
-         "v": "https://www.youtube.com/results?search_query=chin+up+exercise"
-        }
-       ],
-       [
-        {
-         "t": "BICEPS 21 X 4"
-        },
-        {
-         "v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACOND. FISICO",
-      "blocks": [
-       [
-        {
-         "t": "OTM 12':"
-        },
-        {
-         "t": "MIN 1: 8 CAL ROW"
-        },
-        {
-         "t": "MIN 2: 6 BURPEES BOX JUMP 60 CM"
-        },
-        {
-         "t": "MIN 3: 10 MTS SLED PUSH 140 KG"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DÍA 2",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "PLANK DRAG"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/2a9sgCeaWhI"
-        },
-        {
-         "t": "3x20"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA DE EMPUJE",
-      "blocks": [
-       [
-        {
-         "t": "PUSH JERK"
-        },
-        {
-         "t": "5 5 3 3 1"
-        },
-        {
-         "t": "Peso: 60kg"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/z_Ub47S1XI4"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "PRESS TRAS NUCA SENTADO DB DB 20KG"
-        },
-        {
-         "t": "12 10 10 8"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/HihTS8_ohe0"
-        }
-       ],
-       [
-        {
-         "t": "HIGH HANG PULL DB 20KG"
-        },
-        {
-         "t": "3x 12 por lado"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA HYROX",
-      "blocks": [
-       [
-        {
-         "t": "SLED PULL"
-        },
-        {
-         "t": "4x10 mts"
-        },
-        {
-         "t": "Peso: 80kg"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "TRICEPS",
-      "blocks": [
-       [
-        {
-         "t": "FONDOS DIPS c/lastre"
-        },
-        {
-         "t": "4x?"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/s5BLhbKWD3E"
-        }
-       ],
-       [
-        {
-         "t": "TRICEPS BARRA W"
-        },
-        {
-         "t": "4x 10 a 12 rep"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/sAZcbERXSNg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "2 km suave"
-        }
-       ],
-       [
-        {
-         "t": "trabajo fuerte:"
-        },
-        {
-         "t": "3x 800 mts (3'45\")"
-        },
-        {
-         "t": "rest 2' entre set"
-        }
-       ],
-       [
-        {
-         "t": "2x 1 km (4' 38\" - 4' 45\")"
-        },
-        {
-         "t": "rest 2' entre set"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DÍA 3",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "SIDE BEND KB"
-        },
-        {
-         "t": "3X10/10"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/K4nE02-FywI"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "PESO MUERTO"
-        },
-        {
-         "t": "5 con 100kg"
-        },
-        {
-         "t": "3 con 120kg"
-        },
-        {
-         "t": "3x1 con 130 a 140kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ACCESORIOS",
-      "blocks": [
-       [
-        {
-         "t": "4 SET"
-        },
-        {
-         "t": "8 SUMO DEADLIFT 100KG"
-        },
-        {
-         "t": "8/8 BACK REVERSE LUNGES 60KG"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/jolYORaNnxM"
-        }
-       ],
-       [
-        {
-         "t": "SUPINE MARCH KICK HAMSTRING"
-        },
-        {
-         "t": "4x15\" segúndos sobre box de espuma"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "ESPALDA",
-      "blocks": [
-       [
-        {
-         "t": "REMO HAMMER MAQUINA"
-        },
-        {
-         "t": "12 10 10 8"
-        }
-       ],
-       [
-        {
-         "t": "REMO POLEA BAJA PESADO"
-        },
-        {
-         "t": "12 10 10 8"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"
-        }
-       ],
-       [
-        {
-         "t": "POLEA DORSAL ATRÁS"
-        },
-        {
-         "t": "15 12 10 10"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "HYROX",
-      "blocks": [
-       [
-        {
-         "t": "CADA 8 MINUTOS X 3 SET"
-        },
-        {
-         "t": "* 2.0 MILL CAL BIKE ( NO SOLTAR AGARRE)"
-        },
-        {
-         "t": "* 500 MTS SKI ERG"
-        },
-        {
-         "t": "* HASTA COMPLETAR LOS 8 MIN CAMINATAS"
-        },
-        {
-         "t": "EN ESTOCADAS CON COREBAG O DB 20KG"
-        }
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "name": "DÍA 4",
-    "sections": [
-     {
-      "title": "ZONA MEDIA",
-      "blocks": [
-       [
-        {
-         "t": "PRESS PALOF BANDED"
-        },
-        {
-         "t": "3X20"
-        },
-        {
-         "v": "https://www.youtube.com/watch?v=suXbr509tFQ"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "FUERZA",
-      "blocks": [
-       [
-        {
-         "t": "PECHO PLANO"
-        },
-        {
-         "t": "10 con 70kg"
-        },
-        {
-         "t": "8 con 80kg"
-        },
-        {
-         "t": "6 con 90kg"
-        },
-        {
-         "t": "2x2 con 95kg a 100kg"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "PECHO",
-      "blocks": [
-       [
-        {
-         "t": "CRUCE PECHO POLEA"
-        },
-        {
-         "t": "4x12"
-        }
-       ],
-       [
-        {
-         "t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"
-        },
-        {
-         "t": "4x 8 a 12 rep"
-        }
-       ]
-      ]
-     },
-     {
-      "title": "OLY",
-      "blocks": [
-       [
-        {
-         "t": "HANG POWER CLEAN"
-        },
-        {
-         "t": "4X3"
-        },
-        {
-         "v": "https://www.youtube.com/shorts/6PZj3fqVBaM"
-        }
-       ],
-       [
-        {
-         "t": "ERG ROW técnico"
-        },
-        {
-         "t": "4 SET X 500 MTS"
-        },
-        {
-         "t": "REST 2' ENTRE"
-        }
-       ],
-       [
-        {
-         "t": "NOTA:"
-        },
-        {
-         "t": "ELITE: SUB 2'04\""
-        },
-        {
-         "t": "PRO: SUB 2'14\""
-        }
-       ]
-      ]
-     },
-     {
-      "title": "RUN",
-      "blocks": [
-       [
-        {
-         "t": "4 set"
-        },
-        {
-         "t": "400 mts cinta run ritmo 13.5"
-        },
-        {
-         "t": "5 min bici fija carga moderada alta"
-        },
-        {
-         "t": "rest 2' entre set"
-        }
-       ]
-      ]
-     }
-    ]
-   }
-  ]
- }
-];
-let W = 0, D = 0;
-try { const s = JSON.parse(localStorage.getItem('fm-pos')||'{}'); if (Number.isInteger(s.w)) W = s.w; if (Number.isInteger(s.d)) D = s.d; } catch(e){}
-W = Math.min(W, DATA.length-1); D = Math.min(D, 3);
+const APP_VERSION = "2026.11.03-5";
+const BASE_DATA = [{"name": "Semana 1 y 2", "days": [{"name": "DIA 1", "sections": [{"title": "CORE", "blocks": [[{"t": "3 set"}, {"t": "20 russian twist medball"}, {"t": "30\" seg plank sobre medball"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT BANDED"}, {"t": "4 set x 12 rep"}, {"t": "Peso: 60Kg"}, {"v": "https://www.youtube.com/shorts/HKHNqEKzwe4"}]]}, {"title": "ACCESORIOS + PLIOMETRIA", "blocks": [[{"t": "3 set"}, {"t": "6/6 bulgarian squat jump"}, {"v": "https://www.youtube.com/shorts/W2yWyT6AEWk"}, {"t": "5 box jump 60 cm"}, {"t": "4 pasadas vallas"}], [{"t": "wall sit hold db db"}, {"t": "4x30\""}, {"v": "https://www.youtube.com/shorts/py7cBYBFDT4"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "Biceps banded"}, {"t": "4x 30 repp"}], [{"t": "Biceps con mancuernas"}, {"t": "4x12 alt"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "3 a 4 set"}, {"t": "10 peso muerto barra hexago 60kg"}, {"t": "rest 15\""}, {"t": "10 slam ball 9kg"}, {"t": "rest 15\""}, {"t": "8 suicide run sprint ( 7m + 7m )"}]]}]}, {"name": "DIA 2", "sections": [{"title": "CORE", "blocks": [[{"t": "3 Rondas"}, {"t": "15 k2e Rodillas al pecho colgado"}, {"t": "10/10 vups one leg"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PRESS STRICT"}, {"t": "4 set x 4 a 6 rep con 40kg"}, {"t": "sin empujar con rodillas y piernas"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "Hang power snatch recepcion 90° dumbells 15kg"}, {"t": "4x6/6"}, {"v": "https://www.youtube.com/watch?v=JXNPBnzBCt0"}], [{"t": "Split jerk tras nuca alt. 35kg"}, {"t": "4x6/6"}, {"v": "https://www.youtube.com/shorts/mRVha0MIGjQ"}], [{"t": "3 set"}, {"t": "12 Vuelos laterales mancuernas"}, {"t": "10 press tras nuca sentada con mancuernas"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "Push up diamant"}, {"v": "https://www.youtube.com/shorts/jM_nyUZGCak"}, {"t": "3x12"}], [{"t": "Triceps tras nuca polea"}, {"t": "4x12"}]]}, {"title": "RUN", "blocks": [[{"t": "1 km warm up"}], [{"t": "2x 500 mts al 75%"}, {"t": "rest 2'30\" entre set"}], [{"t": "4x200 mts al 70%"}, {"t": "micro descanso de 1'30\""}], [{"t": "2 km suaves al 70%"}]]}]}, {"name": "DIA 3", "sections": [{"title": "CORE", "blocks": [[{"t": "3 Rondas"}, {"t": "10 buen dia con kb"}, {"t": "1 min plancha"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "2x8 con 60kg"}, {"t": "2x5 con 80kg a 90kg"}, {"t": "rest 2' entre set"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "Hip thrust one leg jump"}, {"t": "3x10/10"}, {"v": "https://www.youtube.com/shorts/D5ahLcKVxMY"}], [{"t": "3 set"}, {"t": "20 mts sled pull traccion isquiotibial"}, {"v": "https://www.youtube.com/shorts/z-I6VSLpMik"}, {"t": "15\" banded skipping ( repiteo con banded en cadera )"}], [{"t": "Hang muscle clean box"}, {"t": "4x6/6"}, {"v": "https://www.youtube.com/shorts/9F50VZ88iuo"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "Dominadas"}, {"t": "4x?"}], [{"t": "Pullover on the floor db"}, {"t": "4x10"}, {"v": "https://www.youtube.com/shorts/NuqoPT92_yc"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "15 12 9"}, {"t": "Power snatch 30kg"}, {"t": "Cal row"}]]}]}, {"name": "DIA 4", "sections": [{"title": "CORE", "blocks": [[{"t": "3 rondas"}, {"t": "1 min plancha con peso sacro lumbar"}]]}, {"title": "FUERZA", "blocks": [[{"t": "FRONT SQUAT"}, {"t": "4x3"}, {"t": "Peso: 60kg a 70kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "Clean pull deficit"}, {"t": "4x2 con 80kg"}, {"v": "https://www.youtube.com/shorts/vuudrJmKIkI"}]]}, {"title": "PECHO", "blocks": [[{"t": "BANCA PRESS PLANO"}, {"t": "12 10 10"}], [{"t": "FONDOS DIPS"}, {"t": "4X?"}]]}, {"title": "PLIOMETRIA", "blocks": [[{"t": "SEATED VERT JUMP"}, {"t": "4X5"}, {"v": "https://www.youtube.com/shorts/ckOWNYFPHHk"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "cal bike"}, {"t": "3 set"}, {"t": "20 seg solo brazos"}, {"t": "20 seg solo piernas"}, {"t": "20 seg sprint completos"}]]}]}]}, {"name": "Semana 3 y 4", "days": [{"name": "DIA 1", "sections": [{"title": "CORE", "blocks": [[{"t": "3 set"}, {"t": "1 min plank con 40kg peso en sacrolumbar"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "2x6 con 80kg"}, {"t": "2x4 con 90kg"}, {"t": "2x2 con 100 KG"}]]}, {"title": "ACCESORIOS + PLIOMETRIA", "blocks": [[{"t": "subsuelo"}, {"t": "3 Set (combinar)"}, {"t": "8 Hang squat clean 50Kg"}, {"t": "6 box jump"}, {"t": "15\" banded skipping"}, {"v": "https://www.youtube.com/shorts/hcw0rD4nufA"}], [{"t": "3 Set (combinar)"}, {"t": "10 squat stance narrow"}, {"v": "https://www.youtube.com/shorts/1JncZUvSOIM"}, {"t": "5 broad jump continuos"}, {"v": "https://www.youtube.com/shorts/5Oq8KeqqPLw"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "3 Set (combinar)"}, {"t": "1 serie de biceps 21"}, {"t": "12 triceps fondo en box peso en rodillas"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "4 set"}, {"t": "12 Peso muerto 70kg"}, {"t": "rest 10\""}, {"t": "8/8 ladmine split jerk"}, {"t": "rest 10\""}, {"t": "5 mts / 5 mts skipping lateral"}, {"v": "https://www.youtube.com/shorts/OzBI0WvooN4"}]]}]}, {"name": "DIA 2", "sections": [{"title": "CORE", "blocks": [[{"t": "3 set"}, {"t": "20 russian twist globet kb 12kg"}]]}, {"title": "FUERZA", "blocks": [[{"t": "SPLIT JERK TRAS NUCA"}, {"t": "4 set"}, {"t": "6/6 con 40kgo 50kg   ( velocidad y tecnica)"}, {"v": "https://www.youtube.com/shorts/IHvrJgmTTF0"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "Press Z"}, {"t": "12 10 10"}, {"v": "https://www.youtube.com/shorts/us_DqJIm9II"}], [{"t": "vuelos laterales plate 10kg"}, {"t": "4x12"}], [{"t": "press tras nuca sentado"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/FghebqCF_o8"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "3 Set (combinar)"}, {"t": "20 biceps barbell 20kg"}, {"t": "12 triceps soga tras nuca"}]]}, {"title": "RUN", "blocks": [[{"t": "5 min warm up"}, {"t": "rest 5'"}, {"t": "fartlek 3x ( 200 mts + 200 mts )"}, {"t": "rest 2'"}], [{"t": "4x400 mts"}, {"t": "rest 2' entre set"}]]}]}, {"name": "DIA 3", "sections": [{"title": "CORE", "blocks": [[{"t": "3 Set"}, {"t": "15 goodmorning barbell"}]]}, {"title": "FUERZA", "blocks": [[{"t": "Peso muerto"}, {"t": "4 Set"}, {"t": "2 rep 100kg a 110kg"}, {"t": "rest 2"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "Hip thrust velocidad en la salida reposo abajo"}, {"t": "4x 6 a 8 Rep - peso: 110kg a 120kg"}, {"v": "https://www.youtube.com/shorts/iTLHwaacB5E"}], [{"t": "Tamtrum banded fitball seated"}, {"t": "4x15\""}, {"v": "https://youtube.com/shorts/Tgl5ItfH-Go?si=CW3AkOPR4jRyu2DX"}], [{"t": "Camilla femoral"}, {"t": "4x12"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "dominadas"}, {"t": "6 - 3 - 3 -1"}], [{"t": "pendlay row toca suelo barra peso: 50kg a 60kg"}, {"t": "10 8 8 6"}, {"v": "https://www.youtube.com/shorts/2Na7p4rybMs"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "2 min on x 1 min off x 4 rondas"}, {"t": "10 burpees"}, {"t": "10 slam ball 9kg"}, {"t": "5 box jump"}, {"t": "6/6 split jerk mancuerna 17.5kg a 20kg"}]]}]}, {"name": "DIA 4", "sections": [{"title": "CORE", "blocks": [[{"t": "3 rondas"}, {"t": "10 rep"}, {"t": "pie a la barra"}]]}, {"title": "FUERZA", "blocks": [[{"t": "FRONT SQUAT"}, {"t": "4X2"}, {"t": "Peso: 80kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "hang snatch pull"}, {"t": "4x3 con 60kg a 70kg"}, {"v": "https://www.youtube.com/watch?v=rRU9RzYi6Qw"}]]}, {"title": "PECHO", "blocks": [[{"t": "Press pecho db db 25kg"}, {"t": "3x8"}], [{"t": "aperturas planas"}, {"t": "4x10"}]]}, {"title": "PLIOMETRIA", "blocks": [[{"t": "3 set x 4 pasadas"}, {"v": "https://www.youtube.com/shorts/9dRUaQTQWjo"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "15 12 9"}, {"t": "power snatch 40kg"}, {"t": "20 mts empuje de box o trineo 150kg"}]]}, {"title": "RUN", "blocks": [[{"t": "10 min entrada en calor"}], [{"t": "testear 10 km"}, {"t": "sub 50'"}]]}]}]}, {"name": "Semana 5 y 6", "days": [{"name": "DIA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "3 SET"}, {"t": "1 MIN PLANCHA"}, {"t": "10 SLAM BALL DE RODILLAS"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 con 80kg"}, {"t": "3 con 90kg"}, {"t": "2x1 con 100kg a 110kg"}, {"t": "1 con 110kg a 120kg"}, {"t": "rest 1'30\" entre set"}]]}, {"title": "TRANSFERENCIA", "blocks": [[{"t": "3 SET"}, {"t": "6/6  HANG SPLIT BOX 40kg a 50kg"}, {"t": "20\" BANDED SKIPPING"}, {"v": "https://www.youtube.com/shorts/ud85IwhZZKo"}, {"v": "https://www.youtube.com/shorts/hcw0rD4nufA"}], [{"t": "3 SET"}, {"t": "10 LANDMINE THRUSTER 2 a 3 discos de 10kg"}, {"v": "https://www.youtube.com/watch?v=9f0TrDK9hFY"}, {"t": "20\" LATERAL STEP JUMP ONE LEG"}, {"v": "https://www.youtube.com/shorts/Lo9o-6LlvEI"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP"}, {"t": "4X?"}], [{"t": "TRICEPS POLEA TRAS NUCA"}, {"t": "4X15"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "4 RONDAS"}, {"t": "20 WALLBALL 9KG"}, {"t": "10 HANG POWER SNATCH 40KG"}, {"t": "8 DEADLIFT DOBLE KB JUMP"}, {"v": "https://www.youtube.com/shorts/zv6EMmGmDeA"}]]}]}, {"name": "DIA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "3 SET"}, {"t": "10/10 PRESS PALOFF BANDED"}, {"t": "20 V- UPS"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PUSH JERK"}, {"t": "8 8 6 6 4"}, {"v": "https://www.youtube.com/watch?v=VrHNJXoSyXw"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "Press Z"}, {"t": "10 8 8 6"}, {"v": "https://www.youtube.com/shorts/us_DqJIm9II"}], [{"t": "VUELOS LATERALES DE RODILLAS db db"}, {"t": "4x10"}, {"v": "https://www.youtube.com/shorts/v7TzVbVvH30"}], [{"t": "3 Set"}, {"t": "8/8 SPLIT JERK DB ONE ARM"}, {"v": "https://www.youtube.com/shorts/Ds7cdd_GO5E"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "TRICEPS FONDOS ENTRE BOX o FONDOS"}, {"t": "3x12"}], [{"t": "BICEPS 21 (7+7+7)"}, {"t": "3 Set"}]]}, {"title": "RUN", "blocks": [[{"t": "5 min warm up (ENTRADA EN CALOR)"}, {"t": "rest 5'"}], [{"t": "3 set x 3 km"}, {"t": "zona 3"}, {"t": "rest 3' entre set"}], [{"t": "4x200"}, {"t": "rest 1' entre set (micro descanso)"}, {"t": "cansancio aerobico"}]]}]}, {"name": "DIA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "3 SET"}, {"t": "20 SIT KICKS"}, {"v": "https://www.youtube.com/shorts/i_xTGGMmbHg"}]]}, {"title": "FUERZA", "blocks": [[{"t": "OBEJTIVO: PESO MUERTO"}, {"t": "BUSCAR 1 REP MAXIMA CUIDAR ESPALDA Y TECNICA"}], [{"t": "3 - 2 - 1 - 1 - 1"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "HIP THRUST ONE LEG JUMP"}, {"t": "4x 8/8"}, {"v": "https://www.youtube.com/shorts/EbUQftM0fxA"}], [{"t": "CAMILLA FEMORAL"}, {"t": "4x12"}], [{"t": "ROMANIAN DEADLIFT ONE LEG AND PRESS"}, {"t": "4x10 alt"}, {"v": "https://www.youtube.com/shorts/0OvEW44Yd7A"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "Remo polea alta"}, {"t": "4X10"}], [{"t": "Pullover polea"}, {"t": "4x12"}, {"v": "https://www.youtube.com/shorts/RtL11I6oX48"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "3er piso"}, {"t": "3 rondas"}, {"t": "400 mts run cinta de correr"}, {"t": "8 hang power clean 50kg"}, {"t": "20 k2e ( rodillas al pecho colgado)"}]]}]}, {"name": "DIA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "3 SET"}, {"t": "15 SIT UP MEDBALL OH"}]]}, {"title": "FUERZA", "blocks": [[{"t": "FRONT SQUAT DEAD STOP"}, {"t": "5 5 3 3"}, {"v": "https://www.youtube.com/watch?v=XReZGnsgE7M"}, {"t": "Vas trabajar y necesitar de mucha movilidad"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "RM DE SALTO"}, {"t": "objetivo : 70 cm  o mas"}, {"t": "box jump"}, {"v": "https://www.youtube.com/shorts/OMf31ggpnb0"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "Banco pecho press"}, {"t": "12 10 8 6"}], [{"t": "press inclinado barra"}, {"t": "12 10 8 8"}, {"v": "https://www.youtube.com/shorts/a64mtMHyPfY"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "barbell jump calf"}, {"t": "4x15\""}, {"v": "https://www.youtube.com/watch?v=Dnfx3nFb56k"}], [{"t": "antebrazo polea baja"}, {"t": "4x12"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "3 rondas"}, {"t": "15 cal bike"}, {"t": "8/8 hang snatch db 17.5kg"}, {"t": "15 mts empujar trineo o box (5 discos de 20kg )"}]]}]}]}, {"name": "Semana 7 y 8", "days": [{"name": "DÍA 1", "sections": [{"title": "CORE", "blocks": [[{"t": "Copenhagen Plank → 3x30 seg/lado"}, {"v": "https://www.youtube.com/shorts/Rwap0_j5i5A"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT PINNER"}, {"t": "5X5 al 85%"}, {"v": "https://www.youtube.com/shorts/6XuLcOLdVqQ"}]]}, {"title": "PLIOMETRIA", "blocks": [[{"t": "3 SET"}, {"t": "8 BOX JUMP"}, {"t": "3 BROAD JUMP"}, {"v": "https://www.youtube.com/shorts/5Oq8KeqqPLw"}], [{"t": "HANG POWER CLEAN DESDE BOX"}, {"t": "5x3 con 60kg - 70kg"}, {"v": "https://www.youtube.com/shorts/EIES2oibclU"}], [{"t": "BULGARIAN SQUAT DB DB"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/VLyt8xraMLA"}]]}, {"title": "BICEPS", "blocks": [[{"t": "Curl banco inclinado 45°"}, {"t": "4x12 alt"}, {"v": "https://www.youtube.com/shorts/4LQ0p0ni39Y"}], [{"t": "Biceps polea alta"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/oIiBT4KS9lI"}]]}, {"title": "RUN", "blocks": [[{"t": "WARM UP 10'"}], [{"t": "4x400 zona 4"}, {"t": "rest 2"}], [{"t": "3x100 zona 5"}, {"t": "rest 2"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "CORE", "blocks": [[{"t": "V ups -3 x 20"}, {"v": "https://www.youtube.com/shorts/-ipF-Xl5eY4"}]]}, {"title": "FUERZA", "blocks": [[{"t": "LANDMINE SPLIT JERK"}, {"t": "4x8/8"}, {"v": "https://www.youtube.com/shorts/uP1hbZgXVFU"}, {"t": "Peso: disco de 10kg o 15kg"}]]}, {"title": "ACCESORIOS PIERNAS", "blocks": [[{"t": "Press arnold de rodillas"}, {"t": "4x10"}, {"v": "https://www.youtube.com/shorts/z3uuSdgPCPk"}], [{"t": "Vuelos frontales db db  15kg"}, {"t": "4x10"}], [{"t": "face pull"}, {"t": "4x15"}, {"v": "https://www.youtube.com/shorts/lbt7obncwVs"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "Triceps frances db 25kg"}, {"t": "3x15"}, {"v": "https://www.youtube.com/shorts/mfXokM_VnMY"}], [{"t": "Triceps soga 1 mano"}, {"t": "4x12/12"}, {"v": "https://www.youtube.com/shorts/hip11n3QXzU"}]]}, {"title": "HYROX", "blocks": [[{"t": "FOR TIME"}, {"t": "(4 PASADAS ) 20 MTS TRINEO 120KG"}, {"t": "1000 MTS SKI"}, {"t": "60 MTS BURPEES BROAD JUMP"}, {"t": "1000 MTS ROW"}, {"t": "60 MTS FAMMER DOBLE DUMBELLS 25KG"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "CORE", "blocks": [[{"t": "Abs declinado  - 3x15"}, {"v": "https://www.youtube.com/shorts/PYOn2mz4w4Q"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO BANDED"}, {"t": "4x12"}, {"t": "peso: 80kg o mas"}, {"v": "https://www.youtube.com/shorts/n-5yL3PqC50"}]]}, {"title": "ACCESORIOS GLUTEO", "blocks": [[{"t": "Camilla femoral 1 pierna"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/wL8H0zlc4lo"}], [{"t": "patada de gluteo maquina  o pólea"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/HlrLyKsrV78"}], [{"t": "hip thrust  1 pierna"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/XZ52CZnPKq4"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "Remo polea baja a 1 mano"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/n4v_BwenvWc"}], [{"t": "Pullover db 17.5kg"}, {"t": "3x12"}, {"v": "https://www.youtube.com/shorts/2ZbSfGQZhR4"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "OTM 12'"}, {"t": "MIN 1:   6 POWER SNATCH TOUCH AND GO 40KG"}, {"t": "MIN 2:   12 CAL BIKE SPRINT"}, {"t": "MIN 3:   3 WALL WALK"}]]}]}, {"name": "DIA 4", "sections": [{"title": "CORE", "blocks": [[{"t": "Press paloff polea 3x10/10"}, {"v": "https://www.youtube.com/shorts/CpEltc6kgnM"}]]}, {"title": "FUERZA", "blocks": [[{"t": "FRONT SQUAT"}, {"t": "5x5 al 80%"}, {"v": "https://www.youtube.com/shorts/iGQCel1_5eM"}]]}, {"title": "PLIOMETRIA", "blocks": [[{"t": "Bulgarian squat jump"}, {"t": "4x10/10"}, {"v": "https://www.youtube.com/shorts/W2yWyT6AEWk"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "Pecho plano mancuernas 25KG"}, {"t": "4x8"}], [{"t": "aperturas inclinadas db db 12.5kg"}, {"t": "3x12"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "3x30\"/30\""}, {"t": "calf raises high"}, {"v": "https://www.youtube.com/shorts/1TS3P8j3aHA"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "4 set"}, {"t": "8 box jump 60 cm"}, {"t": "5 mts + 5 mts ( suicide run)"}, {"t": "6/6 hang split jerk db 17,5kg"}]]}, {"title": "RUN", "blocks": [[{"t": "testar 10 km"}, {"t": "sub 51'"}]]}]}]}, {"name": "Semana 9 y 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "OTM 12':"}, {"t": "MIN 1: 8 CAL ROW"}, {"t": "MIN 2: 6 BURPEES BOX JUMP 60 CM"}, {"t": "MIN 3: 10 MTS SLED PUSH 140 KG"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "2 km suave"}], [{"t": "trabajo fuerte:"}, {"t": "3x 800 mts (3'45\")"}, {"t": "rest 2' entre set"}], [{"t": "2x 1 km (4' 38\" - 4' 45\")"}, {"t": "rest 2' entre set"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "CADA 8 MINUTOS X 3 SET"}, {"t": "* 2.0 MILL CAL BIKE ( NO SOLTAR AGARRE)"}, {"t": "* 500 MTS SKI ERG"}, {"t": "* HASTA COMPLETAR LOS 8 MIN CAMINATAS"}, {"t": "EN ESTOCADAS CON COREBAG O DB 20KG"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "4 set"}, {"t": "400 mts cinta run ritmo 13.5"}, {"t": "5 min bici fija carga moderada alta"}, {"t": "rest 2' entre set"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
 const isSets = t => /^(\d[\d\s/x×a-]*(set|rep|rondas|rep|kg|alt|mts|min|seg|km)?\s*[\d/x×"' ]*)$/i.test(t.trim()) || /^\d[\d\s\-\/]*$/.test(t.trim()) || /^rest\b/i.test(t) || /^(\d+(x|\s)\s*)?(set|rondas)/i.test(t);
-function save(){ try{ localStorage.setItem('fm-pos', JSON.stringify({w:W,d:D})); }catch(e){} }
-function esc(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function render(){
-  $('weeks').innerHTML = DATA.map((w,i)=>`<button role="tab" aria-pressed="${i===W}" data-w="${i}">${esc(w.name)}</button>`).join('');
-  const day = DATA[W].days;
-  $('days').innerHTML = day.map((d,i)=>`<button role="tab" aria-pressed="${i===D}" data-d="${i}"><span>${esc(d.name.replace(/D[IÍ]A/i,'Día'))}</span></button>`).join('');
-  const secs = day[D].sections;
-  $('main').innerHTML = secs.map(s => {
-    const nv = s.blocks.flat().filter(i=>i.v).length;
-    const blocks = s.blocks.map(b => `<div class="block">` + b.map((it,k) => it.v
-      ? `<a class="v" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video<small>${it.v.includes('/shorts/')?'SHORT':'YOUTUBE'}</small></a>`
-      : `<p class="${k===0 && !isSets(it.t) ? 'first' : (isSets(it.t)?'sets':'')}">${esc(it.t)}</p>`).join('') + `</div>`).join('');
-    return `<section class="sec"><h2>${esc(s.title||'Bloque')}${nv?`<span class="n">${nv} VIDEO${nv>1?'S':''}</span>`:''}</h2>${blocks}</section>`;
-  }).join('') + `<p class="foot">${DATA[W].name} · ${day[D].name.trim()}</p>`;
-  window.scrollTo({top:0});
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// ---------- almacenamiento (solo en este dispositivo) ----------
+function load(k, def){ try { const v = localStorage.getItem(k); return v == null ? def : JSON.parse(v); } catch(e){ return def; } }
+function store(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+function pad(n){ return String(n).padStart(2, '0'); }
+function today(){ const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function parseD(s){ const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
+function fmtD(s){ const d = parseD(s); return `${pad(d.getDate())}/${pad(d.getMonth()+1)}`; }
+function weekStart(s){ const d = parseD(s); const wd = (d.getDay() + 6) % 7; d.setDate(d.getDate() - wd); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function addDays(s, n){ const d = parseD(s); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`; }
+function r5(x){ return Math.round(x / 5) * 5; }
+function norm(s){ return String(s).toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim(); }
+
+let EXTRA = load('fm-extra-weeks', []);
+function allWeeks(){ const names = new Set(BASE_DATA.map(w => w.name)); return BASE_DATA.concat(EXTRA.filter(w => !names.has(w.name))); }
+let DATA = allWeeks();
+
+// ---------- estado de navegación ----------
+const ui = load('fm-ui', {});
+let MODE = ui.m || 't';            // t = entreno, n = nutrición
+let TV = ui.tv || 'week';          // week | run | import
+let NT = ui.nt || 'plan';          // plan | prog | calc | shop | eq
+let W = 0, D = 0;
+const DONE = load('fm-done', []);  // [{w, d, date}]
+(function pickToday(){
+  const last = DONE[DONE.length - 1];
+  if (last) {
+    const wi = DATA.findIndex(w => w.name === last.w);
+    if (wi >= 0) { if (last.d < 3) { W = wi; D = last.d + 1; } else if (wi + 1 < DATA.length) { W = wi + 1; D = 0; } else { W = wi; D = 3; } }
+  } else { W = Math.max(0, DATA.length - 1); D = 0; }
+})();
+const TODAY_POS = {w: W, d: D};
+function saveUI(){ store('fm-ui', {m: MODE, tv: TV, nt: NT}); }
+
+// =====================================================================
+// ENTRENAMIENTO
+// =====================================================================
+let LOGS = load('fm-logs', {});    // {EJERCICIO: [{date, t, w}]}
+function exKey(block){
+  const it = block.find(x => x.t && !isSets(x.t) && !/^\d/.test(x.t.trim()));
+  return it ? norm(it.t) : null;
 }
-document.addEventListener('click', e => {
-  const b = e.target.closest('button[data-w],button[data-d]'); if(!b) return;
-  if (b.dataset.w!==undefined) { W = +b.dataset.w; } else { D = +b.dataset.d; }
-  save(); render();
-});
+function logHTML(key){
+  const hist = (LOGS[key] || []);
+  const td = today(), todays = hist.find(h => h.date === td), prev = hist.filter(h => h.date !== td).slice(0, 2);
+  return `<div class="log">
+    ${prev.length ? `<p class="lg-last">Última: <b>${esc(prev[0].t)}</b> · ${fmtD(prev[0].date)}${prev[1] ? ` <span>· antes: ${esc(prev[1].t)} (${fmtD(prev[1].date)})</span>` : ''}</p>` : (todays ? '' : `<p class="lg-last"><span>Todavía no anotaste este ejercicio</span></p>`)}
+    ${todays ? `<p class="lg-today">Hoy: <b>${esc(todays.t)}</b> <button class="lnk" data-act="unlog" data-ex="${esc(key)}">borrar</button></p>`
+             : `<div class="lg-row"><input type="text" placeholder="Hoy: ej. 5x5 con 85 kg" data-exin="${esc(key)}" enterkeyhint="done"><button data-act="log" data-ex="${esc(key)}">Anotar</button></div>`}
+  </div>`;
+}
+function renderWeek(){
+  const w = DATA[W], day = w.days[D];
+  const isDone = DONE.some(x => x.w === w.name && x.d === D);
+  const isToday = TODAY_POS.w === W && TODAY_POS.d === D;
+  $('main').innerHTML = (isToday && !isDone ? `<div class="sum"><span><b>Hoy te toca</b> ${esc(w.name)} · ${esc(day.name.replace(/D[IÍ]A/i,'Día'))}</span></div>` : '')
+   + day.sections.map(s => {
+    const nv = s.blocks.flat().filter(i => i.v).length;
+    const blocks = s.blocks.map(b => {
+      const key = exKey(b);
+      return `<div class="block">` + b.map((it, k) => it.v
+        ? `<a class="v" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video<small>${it.v.includes('/shorts/') ? 'SHORT' : 'YOUTUBE'}</small></a>`
+        : `<p class="${k === 0 && !isSets(it.t) ? 'first' : (isSets(it.t) ? 'sets' : '')}">${esc(it.t)}</p>`).join('')
+        + (key ? logHTML(key) : '') + `</div>`;
+    }).join('');
+    return `<section class="sec"><h2>${esc(s.title || 'Bloque')}${nv ? `<span class="n">${nv} VIDEO${nv > 1 ? 'S' : ''}</span>` : ''}</h2>${blocks}</section>`;
+  }).join('')
+  + (isDone ? `<p class="done-ok">✓ Día completado · <button class="lnk" data-act="undone">deshacer</button></p>`
+            : `<button class="go" data-act="done">✓ Terminé este día</button>`)
+  + `<p class="foot">${esc(w.name)} · ${esc(day.name.trim())}</p>`;
+}
 
-const NUT = [{"t": "9:30", "n": "Desayuno", "m": "<b>3 huevos + 3 claras</b> revueltos, <b>2 tostadas</b> integrales y <b>1 fruta</b>", "a": ["2 huevos + <b>60 g</b> de jamón + <b>40 g</b> de port salut light, 1 tostada integral y 1 fruta"]}, {"t": "13:00", "n": "Gimnasio", "g": 1}, {"t": "14:30", "n": "Almuerzo", "m": "<b>200 g</b> de pollo o carne magra, <b>250 g</b> de arroz (o 235 g de fideos, o 400 g de papa), ensalada grande y ½ palta chica", "a": [], "s": 1}, {"t": "18:00", "n": "Merienda", "m": "<b>2 huevos</b> + <b>60 g</b> de jamón + <b>40 g</b> de port salut light y <b>1 fruta</b>", "a": ["2 huevos + 4 claras con <b>40 g</b> de port salut light y 1 fruta"]}, {"t": "21:30", "n": "Cena", "m": "<b>200 g</b> de carne magra o pollo (o 260 g de merluza), <b>235 g</b> de papa al horno o hervida (o 145 g de arroz), ensalada grande y 1 cda de aceite de oliva", "a": [], "s": 1}];
-const NTYPES = [["plan","Plan"],["calc","Calculadora"],["eq","Cambios"]];
-let MODE = 't', NT = 'plan';
-try { const s = JSON.parse(localStorage.getItem('fm-nut')||'{}'); if (s.m) MODE = s.m; if (s.t==='eq'||s.t==='calc') NT = s.t; } catch(e){}
-function saveN(){ try{ localStorage.setItem('fm-nut', JSON.stringify({m:MODE,t:NT})); }catch(e){} }
-const EQ = [
- ["Proteína (en cocido)", ["Alimento","Porción"], [
-  ["Pollo (pechuga)","200 g"],["Carne magra (lomo, peceto, nalga, cuadril)","200 g"],
-  ["Carne molida especial*","220 g"],["Atún al natural","230 g (2 latas)"],["Merluza u otro pescado","260 g"]],
-  "* Con carne molida, poné la mitad del aceite o la palta."],
- ["Carbohidratos (en cocido)", ["Alimento","Almuerzo","Cena"], [
-  ["Arroz","250 g","145 g"],["Fideos","235 g","135 g"],["Papa","400 g","235 g"],["Batata","350 g","200 g"]], ""],
- ["Grasa", ["Esto","Equivale a"], [
-  ["½ palta chica (70 g)","1 cda de aceite de oliva o 20 g de frutos secos"]], ""],
- ["Desayuno y merienda", ["Esto","Equivale a"], [
-  ["1 tostada integral","2 galletas de arroz o 20 g de granola"],["1 fruta","1 banana chica o 2 mandarinas"],["1 huevo","2 claras o 30 g de jamón"]], ""]
-];
-const RULES = [
- "<b>Es igual todos los días:</b> entrenes, descanses o corras el fondo.",
- "<b>Pesos en cocido.</b> Pesá las primeras semanas hasta que te salga a ojo.",
- "<b>Ensalada libre</b> en almuerzo y cena: lechuga, tomate, rúcula, zanahoria, pepino, repollo, cebolla, brócoli, zapallito, berenjena, chauchas, espinaca, morrón.",
- "<b>Libres siempre:</b> mate amargo, café, té, agua, edulcorante, limón, vinagre, mostaza y especias.",
- "<b>Todos los días:</b> 3–4 litros de agua, 8.000–10.000 pasos y dormir 7–9 horas.",
- "<b>Fondo de más de 75 min:</b> llevá 1 gel o 3 dátiles por hora para correr.",
- "<b>1 comida libre por semana.</b> Alcohol al mínimo.",
- "<b>Pesate</b> 3–4 mañanas por semana en ayunas. Si 2 semanas seguidas bajás menos de 0,5 kg por semana, sacá ¼ del arroz o la papa de la cena. Si bajás más de 1 kg por semana o caen las cargas, sumá ¼ al almuerzo."
-];
+// ---------- running ----------
+let RUNS = load('fm-run', []);     // [{id, date, type, km, min, notes}]
+function paceStr(min, km){ if (!min || !km) return '—'; const p = min / km, m = Math.floor(p), s = Math.round((p - m) * 60); return `${m}:${pad(s === 60 ? 0 : s)} /km`; }
+function parseMin(s){ s = String(s || '').trim(); if (!s) return 0; if (s.includes(':')) { const [a, b] = s.split(':').map(Number); return (a || 0) + (b || 0) / 60; } return Number(s.replace(',', '.')) || 0; }
+function renderRun(){
+  const ws = weekStart(today());
+  const weekKm = RUNS.filter(r => weekStart(r.date) === ws).reduce((a, r) => a + r.km, 0);
+  const last4 = [0, 1, 2, 3].map(i => { const k = addDays(ws, -7 * i); return {k, km: RUNS.filter(r => weekStart(r.date) === k).reduce((a, r) => a + r.km, 0)}; }).reverse();
+  const max = Math.max(10, ...last4.map(x => x.km));
+  $('main').innerHTML = `<div class="sum"><span><b>${weekKm.toFixed(1).replace('.', ',')} km</b> esta semana</span><span>${RUNS.filter(r => weekStart(r.date) === ws).length} salidas</span></div>
+  <section class="sec cf"><h2>Anotar salida</h2><div class="tip">
+    <div class="grid2"><label>Fecha<input type="date" id="rdate" value="${today()}"></label>
+      <label>Tipo<select id="rtype"><option>Pasadas</option><option>Fondo</option><option>Suave</option><option>Otra</option></select></label>
+      <label>Kilómetros<input type="text" inputmode="decimal" id="rkm" placeholder="Ej: 6,4"></label>
+      <label>Tiempo total<input type="text" inputmode="decimal" id="rmin" placeholder="Ej: 34:30"></label></div>
+    <label>Notas<input type="text" id="rnotes" placeholder="Ej: 3x800 a 3'45&quot;, 2x1 km a 4'40&quot;"></label>
+    <button class="go" data-act="addrun">Guardar salida</button>
+    <p class="msg" id="rmsg"></p>
+  </div></section>
+  <section class="sec"><h2>Últimas 4 semanas</h2><div class="tip"><div class="wk">${last4.map(x => `<div><div class="wkb"><i style="height:${Math.round(x.km / max * 100)}%"></i></div><b>${x.km.toFixed(0)}</b><span>${fmtD(x.k)}</span></div>`).join('')}</div><p class="alt">Kilómetros por semana (lunes a domingo).</p></div></section>
+  <section class="sec"><h2>Historial</h2>${RUNS.length ? RUNS.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 30).map(r => `<div class="block"><p class="first">${esc(r.type)} · ${String(r.km).replace('.', ',')} km</p><p class="sets">${fmtD(r.date)} · ${r.min ? Math.floor(r.min) + ':' + pad(Math.round((r.min % 1) * 60)) : '—'} · ${paceStr(r.min, r.km)}</p>${r.notes ? `<p class="alt">${esc(r.notes)}</p>` : ''}<p><button class="lnk" data-act="delrun" data-id="${r.id}">borrar</button></p></div>`).join('') : `<div class="tip"><p class="alt">Todavía no anotaste salidas.</p></div>`}</section>`;
+}
 
-const CMEALS = {
-  desayuno:{label:"Desayuno",kcal:480,p:35,c:45,g:17}, almuerzo:{label:"Almuerzo",kcal:800,p:65,c:80,g:18},
-  merienda:{label:"Merienda",kcal:370,p:33,c:20,g:18}, cena:{label:"Cena",kcal:700,p:65,c:50,g:22}
-};
+// ---------- importar Excel ----------
+const HEADS = {"CORE":"CORE","ZONA MEDIA":"ZONA MEDIA","FUERZA":"FUERZA","FUERZA DE EMPUJE":"FUERZA DE EMPUJE","TRANSFERENCIA":"TRANSFERENCIA","PLIOMETRIA":"PLIOMETRIA","PLYO + TRANSFERENCIA":"PLIO + TRANSFERENCIA","PLIO + TRANSFERENCIA":"PLIO + TRANSFERENCIA","ACCESORIOS":"ACCESORIOS","ACCESORIOS + PLIOMETRIA":"ACCESORIOS + PLIOMETRIA","PECHO":"PECHO","TREN SUPERIOR":"TREN SUPERIOR","ACOND. FISICO":"ACOND. FISICO","ACONDI FISICO":"ACOND. FISICO","ACONDICIONAMIENTO FISICO":"ACOND. FISICO","BICEPS":"BICEPS","TRICEPS":"TRICEPS","ESPALDA":"ESPALDA","HYROX":"HYROX","TRABAJO ESPECIFICO HYROX":"HYROX","FUERZA ESPECIFICA HYROX":"FUERZA HYROX","OLY":"OLY","RUN":"RUN","RUNING":"RUN","RUNNING":"RUN"};
+function headOf(n){
+  if (HEADS[n]) return HEADS[n];
+  if (/\d/.test(n) || n.split(' ').length > 4) return null;
+  return /^(ACCESORIOS|FUERZA|ACOND|TREN |ZONA |TRABAJO ESPEC|PLIO|PLYO)/.test(n) ? n : null;
+}
+function cleanUrl(u){ u = String(u).replace(/&amp;/g, "&"); try { const x = new URL(u); [...x.searchParams.keys()].filter(k => k.startsWith('utm_')).forEach(k => x.searchParams.delete(k)); return x.toString(); } catch(e){ return u; } }
+function parseWorkbook(wb){
+  const out = [];
+  wb.SheetNames.forEach(sn => {
+    const ws = wb.Sheets[sn]; if (!ws || !ws['!ref']) return;
+    const rg = XLSX.utils.decode_range(ws['!ref']), cell = (r, c) => ws[XLSX.utils.encode_cell({r, c})];
+    const days = [];
+    for (let c = rg.s.c; c <= rg.e.c; c++) {
+      const h = cell(rg.s.r, c), hv = h && h.v != null ? String(h.v).trim() : '';
+      if (!/^D[IÍ]A/i.test(hv)) continue;
+      const secs = []; let blk = [];
+      const close = () => { if (blk.length && secs.length) secs[secs.length - 1].blocks.push(blk); blk = []; };
+      for (let r = rg.s.r + 1; r <= rg.e.r; r++) {
+        const x = cell(r, c), s = x && x.v != null ? String(x.v).replace(/\s+/g, ' ').trim() : '';
+        if (!s || /^-{2,}$/.test(s)) { close(); continue; }
+        const hd = headOf(norm(s)); if (hd) { close(); secs.push({title: hd, blocks: []}); continue; }
+        if (/^mira video/i.test(s)) continue;
+        if (!secs.length) secs.push({title: 'BLOQUE', blocks: []});
+        if (/^https?:\/\//i.test(s)) blk.push({v: cleanUrl((x.l && x.l.Target) || s)}); else blk.push({t: s});
+      }
+      close();
+      if (secs.length) days.push({name: 'DÍA ' + (days.length + 1), sections: secs});
+    }
+    if (days.length) out.push({name: sn.replace(/\s+/g, ' ').trim(), days});
+  });
+  return out;
+}
+let IMPORT_MSG = ['', false];
+function renderImport(){
+  $('main').innerHTML = `<section class="sec cf"><h2>Cargar rutina nueva</h2><div class="tip">
+    <p>Elegí el Excel actualizado de tu rutina. Se agregan solo las semanas nuevas; las que ya tenés no se tocan.</p>
+    <label class="btn up" for="xfile">📄 Elegir Excel</label><input id="xfile" type="file" accept=".xlsx,.xls" hidden>
+    <p class="msg${IMPORT_MSG[1] ? ' err' : ''}">${IMPORT_MSG[0]}</p>
+  </div></section>
+  ${EXTRA.length ? `<section class="sec"><h2>Semanas cargadas desde la app</h2>${EXTRA.map((w, i) => `<div class="block"><p class="first">${esc(w.name)}</p><p><button class="lnk" data-act="delweek" data-i="${i}">quitar</button></p></div>`).join('')}</section>` : ''}`;
+}
+async function importExcel(file){
+  IMPORT_MSG = ['Leyendo el Excel…', false]; renderImport();
+  try {
+    if (!window.XLSX) await new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+    const wb = XLSX.read(await file.arrayBuffer(), {type: 'array'});
+    const weeks = parseWorkbook(wb), have = new Set(DATA.map(w => w.name));
+    const fresh = weeks.filter(w => !have.has(w.name));
+    if (!weeks.length) throw new Error('No encontré semanas en ese Excel. ¿Tiene la fila de arriba con DÍA 1, DÍA 2…?');
+    if (!fresh.length) { IMPORT_MSG = ['Ese Excel no tiene semanas nuevas: ya están todas cargadas.', false]; }
+    else { EXTRA = EXTRA.concat(fresh); store('fm-extra-weeks', EXTRA); DATA = allWeeks(); IMPORT_MSG = ['Listo. Agregué: ' + fresh.map(w => esc(w.name)).join(', '), false]; }
+  } catch (e) { IMPORT_MSG = [(e && e.message && !/Script error/.test(e.message)) ? esc(e.message) : 'No pude leer el Excel. Revisá tu conexión y probá de nuevo.', true]; }
+  renderImport(); renderTop();
+}
+
+// ---------- temporizador ----------
+let T_END = 0, T_LEFT = 90, T_RUN = false, T_IV = null, ACTX = null;
+function tFmt(s){ s = Math.max(0, Math.ceil(s)); return `${Math.floor(s / 60)}:${pad(s % 60)}`; }
+function beep(){
+  try { if (!ACTX) return; const t0 = ACTX.currentTime; [0, .35, .7].forEach(o => { const g = ACTX.createGain(), os = ACTX.createOscillator(); os.frequency.value = 880; os.connect(g); g.connect(ACTX.destination); g.gain.setValueAtTime(.0001, t0 + o); g.gain.exponentialRampToValueAtTime(.5, t0 + o + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + o + .25); os.start(t0 + o); os.stop(t0 + o + .3); }); } catch(e){}
+  try { navigator.vibrate && navigator.vibrate([300, 120, 300, 120, 300]); } catch(e){}
+}
+function tTick(){
+  const left = T_RUN ? (T_END - Date.now()) / 1000 : T_LEFT;
+  $('tfab').textContent = T_RUN ? tFmt(left) : '⏱';
+  $('tfab').classList.toggle('on', T_RUN);
+  const big = $('tbig'); if (big) big.textContent = tFmt(left);
+  if (T_RUN && left <= 0) { T_RUN = false; T_LEFT = 0; clearInterval(T_IV); T_IV = null; beep(); $('tfab').textContent = '⏱'; $('tfab').classList.remove('on'); if ($('tbig')) { $('tbig').textContent = '¡YA!'; $('tsheet').classList.add('flash'); } renderTimerBtns(); }
+}
+function renderTimerBtns(){ const b = $('tstart'); if (b) b.textContent = T_RUN ? 'Pausa' : 'Iniciar'; }
+function openTimer(){
+  $('tsheet').classList.remove('flash');
+  $('tover').hidden = false; tTick(); renderTimerBtns();
+}
+function tSet(sec){ T_RUN = false; clearInterval(T_IV); T_IV = null; T_LEFT = sec; $('tsheet').classList.remove('flash'); tTick(); renderTimerBtns(); }
+function tToggle(){
+  try { if (!ACTX) ACTX = new (window.AudioContext || window.webkitAudioContext)(); ACTX.resume && ACTX.resume(); } catch(e){}
+  if (T_RUN) { T_LEFT = Math.max(0, (T_END - Date.now()) / 1000); T_RUN = false; clearInterval(T_IV); T_IV = null; }
+  else { if (T_LEFT <= 0) T_LEFT = 90; T_END = Date.now() + T_LEFT * 1000; T_RUN = true; $('tsheet').classList.remove('flash'); T_IV = setInterval(tTick, 250); }
+  tTick(); renderTimerBtns();
+}
+function tAdd(d){ if (T_RUN) T_END += d * 1000; else T_LEFT = Math.max(0, T_LEFT + d); tTick(); }
+
+// =====================================================================
+// NUTRICIÓN
+// =====================================================================
+let ADJ = load('fm-adj', {alm: 0, cena: 0, hist: []});
+function factors(){ return {alm: 1 + 0.25 * ADJ.alm, cena: Math.max(0.5, 1 - 0.25 * ADJ.cena)}; }
+function targets(){
+  const f = factors();
+  return {
+    desayuno: {label: "Desayuno", kcal: 480, p: 35, c: 45, g: 17},
+    almuerzo: {label: "Almuerzo", kcal: Math.round(800 + 70 * (f.alm - 1) * 4), p: 65, c: Math.round(10 + 70 * f.alm), g: 18},
+    merienda: {label: "Merienda", kcal: 370, p: 33, c: 20, g: 18},
+    cena:     {label: "Cena", kcal: Math.round(700 + 40 * (f.cena - 1) * 4), p: 65, c: Math.round(10 + 40 * f.cena), g: 22}
+  };
+}
+function planMeals(){
+  const f = factors();
+  return [
+    {k: 'desayuno', t: '9:30', n: 'Desayuno', m: '<b>3 huevos + 3 claras</b> revueltos, <b>2 tostadas</b> integrales y <b>1 fruta</b>',
+     a: ['2 huevos + <b>60 g</b> de jamón + <b>40 g</b> de port salut light, 1 tostada integral y 1 fruta']},
+    {g: 1, t: '13:00'},
+    {k: 'almuerzo', t: '14:30', n: 'Almuerzo', m: `<b>200 g</b> de pollo o carne magra, <b>${r5(250 * f.alm)} g</b> de arroz (o ${r5(235 * f.alm)} g de fideos, o ${r5(400 * f.alm)} g de papa), ensalada grande y ½ palta chica`, a: [], s: 1},
+    {k: 'merienda', t: '18:00', n: 'Merienda', m: '<b>2 huevos</b> + <b>60 g</b> de jamón + <b>40 g</b> de port salut light y <b>1 fruta</b>',
+     a: ['2 huevos + 4 claras con <b>40 g</b> de port salut light y 1 fruta']},
+    {k: 'cena', t: '21:30', n: 'Cena', m: `<b>200 g</b> de carne magra o pollo (o 260 g de merluza), <b>${r5(235 * f.cena)} g</b> de papa al horno o hervida (o ${r5(145 * f.cena)} g de arroz), ensalada grande y 1 cda de aceite de oliva`, a: [], s: 1}
+  ];
+}
+const MKEYS = ['desayuno', 'almuerzo', 'merienda', 'cena'];
+let MLOG = load('fm-meals', {});     // {fecha: {desayuno: 'plan'|'otra'|'skip'}}
+let CLOG = load('fm-calclog', {});   // {fecha: [{meal, plato, gramos, kcal, p}]}
+function dayProtein(date){
+  const T = targets(), st = MLOG[date] || {}, calc = CLOG[date] || [];
+  let p = 0, unknown = false;
+  MKEYS.forEach(k => {
+    const c = calc.filter(x => x.meal === k);
+    if (c.length) p += c.reduce((a, x) => a + x.p, 0);
+    else if (st[k] === 'plan') p += T[k].p;
+    else if (st[k] === 'otra') unknown = true;
+  });
+  return {p: Math.round(p), unknown};
+}
+function adherence(){
+  const td = today(), ws = weekStart(td);
+  let ok = 0, tot = 0;
+  for (let d = ws; d <= td; d = addDays(d, 1)) {
+    const st = MLOG[d] || {}, calc = CLOG[d] || [];
+    if (d !== td && !calc.length && !MKEYS.some(k => st[k])) continue;
+    MKEYS.forEach(k => {
+      const marked = st[k] || (calc.some(x => x.meal === k) ? 'calc' : null);
+      if (d === td && !marked) return;
+      tot++; if (marked === 'plan' || marked === 'calc') ok++;
+    });
+  }
+  return tot ? Math.round(ok / tot * 100) : null;
+}
+function mealChecks(k){
+  const st = (MLOG[today()] || {})[k], hasCalc = (CLOG[today()] || []).some(x => x.meal === k);
+  const opt = (v, l) => `<button data-act="meal" data-k="${k}" data-v="${v}" aria-pressed="${st === v}">${l}</button>`;
+  return `<div class="chk">${hasCalc ? `<span class="calcd">✓ Calculado con la calculadora</span>` : opt('plan', '✓ Lo del plan') + opt('otra', 'Otra cosa') + opt('skip', 'Salteé')}</div>`;
+}
+function adjBanner(){
+  const last = ADJ.hist[ADJ.hist.length - 1];
+  if (!ADJ.alm && !ADJ.cena) return '';
+  return `<div class="adj"><b>Ajuste activo:</b> ${ADJ.cena ? `cena con ${ADJ.cena * 25}% menos de carbohidratos` : ''}${ADJ.cena && ADJ.alm ? ' · ' : ''}${ADJ.alm ? `almuerzo con ${ADJ.alm * 25}% más de carbohidratos` : ''}.${last ? ` <span>${esc(last.msg)} (${fmtD(last.date)})</span>` : ''} <button class="lnk" data-act="undoadj">deshacer</button></div>`;
+}
+function renderPlan(){
+  const ad = adherence(), dp = dayProtein(today());
+  $('main').innerHTML = `<div class="sum"><span><b>~${2350 + (targets().almuerzo.kcal - 800) + (targets().cena.kcal - 700)} kcal</b></span><span><b>200 g</b> proteína</span><span>Igual todos los días</span></div>
+  <div class="sum"><span>Hoy: <b>${dp.p}${dp.unknown ? '+?' : ''} / 200 g</b> proteína</span><span>Semana: <b>${ad == null ? '—' : ad + '%'}</b> cumplido</span></div>
+  ${adjBanner()}
+  <button class="v" data-nt="calc">🍽️ ¿Comés algo que no está en la dieta?<small>CALCULAR</small></button>`
+  + planMeals().map(x => x.g
+    ? `<section class="sec g"><h2><span class="t">${x.t}</span> · Gimnasio</h2></section>`
+    : `<section class="sec meal"><h2><span class="t">${x.t}</span> ${x.n}</h2><div class="block"><p class="main">${x.m}</p>${x.a.map(a => `<p class="alt o">${a}</p>`).join('')}${x.s ? `<p class="alt">¿Querés cambiar algo? Mirá la pestaña <b>Cambios</b>.</p>` : ''}${mealChecks(x.k)}</div></section>`).join('')
+  + `<p class="foot">Pesos en cocido · ensalada libre · tocá cómo te fue en cada comida</p>`;
+}
+
+// ---------- progreso: peso, cintura y ajuste automático ----------
+let WEIGHTS = load('fm-weights', []);   // [{date, kg, waist}]
+function weeklyAvgs(){
+  const g = {};
+  WEIGHTS.forEach(x => { const k = weekStart(x.date); (g[k] = g[k] || []).push(x.kg); });
+  return Object.keys(g).sort().map(k => ({k, n: g[k].length, avg: g[k].reduce((a, b) => a + b, 0) / g[k].length}));
+}
+function evaluateAdj(){
+  const cur = weekStart(today());
+  const wk = weeklyAvgs().filter(x => x.k < cur && x.n >= 2);
+  if (wk.length < 2) return null;
+  const since = ADJ.hist.length ? ADJ.hist[ADJ.hist.length - 1].date : '0000-00-00';
+  const deltas = [];
+  for (let i = 1; i < wk.length; i++) {
+    const gap = Math.round((parseD(wk[i].k) - parseD(wk[i - 1].k)) / 6048e5) || 1;
+    deltas.push({k: wk[i].k, rate: (wk[i].avg - wk[i - 1].avg) / gap});
+  }
+  const after = deltas.filter(d => d.k >= since);
+  const last = after[after.length - 1];
+  if (last && last.rate < -1 && ADJ.alm < 2) {
+    ADJ.alm++; ADJ.hist.push({date: today(), type: 'alm', msg: `Bajaste ${Math.abs(last.rate).toFixed(1).replace('.', ',')} kg en una semana: más carbohidratos en el almuerzo`}); store('fm-adj', ADJ); return ADJ.hist[ADJ.hist.length - 1].msg;
+  }
+  if (after.length >= 2 && after.slice(-2).every(d => d.rate > -0.5) && ADJ.cena < 2) {
+    ADJ.cena++; ADJ.hist.push({date: today(), type: 'cena', msg: '2 semanas bajando menos de 0,5 kg: menos carbohidratos en la cena'}); store('fm-adj', ADJ); return ADJ.hist[ADJ.hist.length - 1].msg;
+  }
+  return null;
+}
+function chartSVG(){
+  if (WEIGHTS.length < 2) return `<p class="alt">El gráfico aparece cuando tengas al menos 2 pesajes.</p>`;
+  const pts = WEIGHTS.slice().sort((a, b) => a.date.localeCompare(b.date));
+  const avgs = weeklyAvgs();
+  const mid = a => parseD(a.k).getTime() + 3 * 864e5;
+  const times = pts.map(p => parseD(p.date).getTime()).concat(avgs.map(mid));
+  const t0 = Math.min(...times), t1 = Math.max(Math.max(...times), t0 + 864e5 * 6);
+  const vals = pts.map(p => p.kg).concat(avgs.map(a => a.avg));
+  const lo = Math.floor(Math.min(...vals) - 0.5), hi = Math.ceil(Math.max(...vals) + 0.5);
+  const Wd = 340, H = 180, L = 34, R = 8, T = 10, B = 24;
+  const X = t => L + (t - t0) / (t1 - t0) * (Wd - L - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  const step = Math.max(1, Math.round((hi - lo) / 4));
+  let grid = ''; for (let v = lo; v <= hi; v += step) grid += `<line x1="${L}" x2="${Wd - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#2a2a2e"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
+  const line = avgs.map(a => `${X(mid(a)).toFixed(1)},${Y(a.avg).toFixed(1)}`).join(' ');
+  const xl = [pts[0].date, pts[pts.length - 1].date].map((d, i) => `<text x="${i ? Wd - R : L}" y="${H - 6}" text-anchor="${i ? 'end' : 'start'}">${fmtD(d)}</text>`).join('');
+  return `<svg viewBox="0 0 ${Wd} ${H}" class="chart" role="img" aria-label="Peso a lo largo del tiempo">${grid}${xl}
+    ${pts.map(p => `<circle cx="${X(parseD(p.date).getTime()).toFixed(1)}" cy="${Y(p.kg).toFixed(1)}" r="3" fill="#8d8d93"/>`).join('')}
+    ${avgs.length > 1 ? `<polyline points="${line}" fill="none" stroke="#ff3b1f" stroke-width="3" stroke-linejoin="round"/>` : ''}
+    ${avgs.map(a => `<circle cx="${X(mid(a)).toFixed(1)}" cy="${Y(a.avg).toFixed(1)}" r="4.5" fill="#ff3b1f"/>`).join('')}
+  </svg><p class="alt"><b style="color:var(--accent)">●</b> promedio semanal · <b style="color:var(--muted)">●</b> cada pesaje</p>`;
+}
+let PROG_MSG = ['', false];
+function renderProg(){
+  const avgs = weeklyAvgs(), ad = adherence();
+  const rows = avgs.slice().reverse().slice(0, 8).map((a, i, arr) => {
+    const prev = arr[i + 1], d = prev ? a.avg - prev.avg : null;
+    return `<tr><td>${fmtD(a.k)}</td><td>${a.avg.toFixed(1).replace('.', ',')} kg</td><td>${d == null ? '—' : (d > 0 ? '+' : '') + d.toFixed(1).replace('.', ',')}</td><td>${a.n}</td></tr>`;
+  }).join('');
+  const lastW = WEIGHTS.slice().sort((a, b) => b.date.localeCompare(a.date)).find(x => x.waist);
+  $('main').innerHTML = `<section class="sec cf"><h2>Anotar pesaje</h2><div class="tip">
+    <p class="alt">Pesate en ayunas, después de ir al baño, 3–4 mañanas por semana.</p>
+    <div class="grid2"><label>Fecha<input type="date" id="wdate" value="${today()}"></label>
+      <label>Peso (kg)<input type="text" inputmode="decimal" id="wkg" placeholder="Ej: 93,4"></label>
+      <label>Cintura (cm, opcional)<input type="text" inputmode="decimal" id="wwaist" placeholder="${lastW ? lastW.waist : 'Ej: 92'}"></label></div>
+    <button class="go" data-act="addw">Guardar</button>
+    <p class="msg${PROG_MSG[1] ? ' err' : ''}">${esc(PROG_MSG[0])}</p>
+  </div></section>
+  ${adjBanner()}
+  <section class="sec"><h2>Tu peso</h2><div class="tip">${chartSVG()}</div></section>
+  <section class="sec"><h2>Por semana</h2>${rows ? `<table class="eq"><tr><th>Semana del</th><th>Promedio</th><th>Cambio</th><th>Pesajes</th></tr>${rows}</table>` : `<div class="tip"><p class="alt">Todavía no hay pesajes.</p></div>`}
+    <div class="tip"><p class="alt">Meta: bajar 0,6–0,8 kg por semana. La app ajusta la dieta sola cuando cierra cada semana. Cumplimiento de esta semana: <b>${ad == null ? '—' : ad + '%'}</b>.</p>
+    ${lastW ? `<p class="alt">Última cintura: <b>${String(lastW.waist).replace('.', ',')} cm</b> (${fmtD(lastW.date)})</p>` : ''}</div></section>
+  <section class="sec"><h2>¿Caen tus cargas?</h2><div class="tip"><p class="alt">Si notás que bajan los pesos en el gimnasio o los ritmos al correr, sumá carbohidratos en el almuerzo.</p>
+    <button class="lnk" data-act="weak">Sí, me siento flojo: sumar ¼ de carbohidratos al almuerzo</button></div></section>
+  ${WEIGHTS.length ? `<section class="sec"><h2>Pesajes</h2>${WEIGHTS.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 20).map(x => `<div class="block row"><p>${fmtD(x.date)} · <b>${String(x.kg).replace('.', ',')} kg</b>${x.waist ? ` · ${String(x.waist).replace('.', ',')} cm` : ''}</p><button class="lnk" data-act="delw" data-date="${x.date}">borrar</button></div>`).join('')}</section>` : ''}`;
+}
+
+// ---------- calculadora (OpenRouter) ----------
 const OR_MODEL = "anthropic/claude-haiku-5.5";
 let CM = (h => h < 12 ? "desayuno" : h < 17 ? "almuerzo" : h < 20 ? "merienda" : "cena")(new Date().getHours());
-let CDESC = "", CIMG = null, CRES = null, CBUSY = false, CMSG = ["", false], CEDITKEY = false;
+let CDESC = "", CIMG = null, CRES = null, CBUSY = false, CMSG = ["", false], CEDITKEY = false, CADDED = false;
 function orKey(){ try { return localStorage.getItem('fm-or-key') || ''; } catch(e){ return ''; } }
 function setKey(k){ try { k ? localStorage.setItem('fm-or-key', k) : localStorage.removeItem('fm-or-key'); } catch(e){} }
-function cesc(x){ return String(x ?? "").replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function cbar(label, val, goal, unit){
-  const pct = Math.max(0, Math.min(100, goal ? val/goal*100 : 0)), ok = val >= goal*.85 && val <= goal*1.15;
-  return `<div class="bar"><div class="bt"><span>${label}</span><span>${Math.round(val)} / ${goal} ${unit}</span></div><div class="track"><div class="fill${ok?' ok':''}" style="width:${pct}%"></div></div></div>`;
+  const pct = Math.max(0, Math.min(100, goal ? val / goal * 100 : 0)), ok = val >= goal * .85 && val <= goal * 1.15;
+  return `<div class="bar"><div class="bt"><span>${label}</span><span>${Math.round(val)} / ${goal} ${unit}</span></div><div class="track"><div class="fill${ok ? ' ok' : ''}" style="width:${pct}%"></div></div></div>`;
 }
-function resultHTML(r, t){
-  const g = Math.round(Number(r.gramos)||0), p = r.por100||{}, m = k => (Number(p[k])||0)*g/100;
-  const ag = (r.agregar||[]).filter(Boolean);
-  return `<section class="sec"><h2>${cesc(r.plato||'Tu plato')}</h2><div class="tip"><div class="big">${g}<small>gramos</small></div><div class="porc">${cesc(r.porcion_texto||'')}</div>${r.consejo?`<p class="alt">${cesc(r.consejo)}</p>`:''}</div></section>
-  <section class="sec"><h2>Cómo te cubre el ${cesc(t.label.toLowerCase())}</h2><div class="tip">${cbar('Calorías',m('kcal'),t.kcal,'kcal')}${cbar('Proteína',m('p'),t.p,'g')}${cbar('Carbohidratos',m('c'),t.c,'g')}${cbar('Grasa',m('g'),t.g,'g')}<p class="alt">Solo el plato, sin los agregados.</p></div></section>
-  ${ag.length?`<section class="sec"><h2>Sumale</h2><div class="tip"><ul>${ag.map(a=>`<li>${cesc(a)}</li>`).join('')}</ul></div></section>`:''}
-  <section class="sec"><h2>Lo que calculé</h2><div class="tip"><ul>${(r.ingredientes||[]).map(i=>`<li>${cesc(i)}</li>`).join('')}</ul><p class="alt">Cada 100 g: ${Math.round(p.kcal||0)} kcal · ${Math.round(p.p||0)} g proteína · ${Math.round(p.c||0)} g carbos · ${Math.round(p.g||0)} g grasa · confianza ${cesc(r.confianza||'media')}</p></div></section>`;
+function calcMacros(r){ const g = Math.round(Number(r.gramos) || 0), p = r.por100 || {}; return {g, kcal: (Number(p.kcal) || 0) * g / 100, p: (Number(p.p) || 0) * g / 100, c: (Number(p.c) || 0) * g / 100, gr: (Number(p.g) || 0) * g / 100}; }
+function resultHTML(r, t, mealKey){
+  const m = calcMacros(r), p = r.por100 || {}, ag = (r.agregar || []).filter(Boolean);
+  return `<section class="sec"><h2>${esc(r.plato || 'Tu plato')}</h2><div class="tip"><div class="big">${m.g}<small>gramos</small></div><div class="porc">${esc(r.porcion_texto || '')}</div>${r.consejo ? `<p class="alt">${esc(r.consejo)}</p>` : ''}
+    ${CADDED ? `<p class="done-ok">✓ Sumado a tu ${esc(t.label.toLowerCase())} de hoy</p>` : `<button class="go" data-act="addcalc">Sumar a mi ${esc(t.label.toLowerCase())} de hoy</button>`}</div></section>
+  <section class="sec"><h2>Cómo te cubre el ${esc(t.label.toLowerCase())}</h2><div class="tip">${cbar('Calorías', m.kcal, t.kcal, 'kcal')}${cbar('Proteína', m.p, t.p, 'g')}${cbar('Carbohidratos', m.c, t.c, 'g')}${cbar('Grasa', m.gr, t.g, 'g')}<p class="alt">Solo el plato, sin los agregados.</p></div></section>
+  ${ag.length ? `<section class="sec"><h2>Sumale</h2><div class="tip"><ul>${ag.map(a => `<li>${esc(a)}</li>`).join('')}</ul></div></section>` : ''}
+  <section class="sec"><h2>Lo que calculé</h2><div class="tip"><ul>${(r.ingredientes || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul><p class="alt">Cada 100 g: ${Math.round(p.kcal || 0)} kcal · ${Math.round(p.p || 0)} g proteína · ${Math.round(p.c || 0)} g carbos · ${Math.round(p.g || 0)} g grasa · confianza ${esc(r.confianza || 'media')}</p></div></section>`;
 }
 function renderCalc(){
-  const key = orKey();
+  const key = orKey(), T = targets();
   if (!key || CEDITKEY) {
     $('main').innerHTML = `<section class="sec cf"><h2>Conectar OpenRouter</h2><div class="tip">
       <p>Pegá tu clave de OpenRouter. <b>Se guarda solo en este celular</b>, no en GitHub.</p>
       <p class="alt">Conviene crear una clave nueva solo para esta app, con un límite de gasto de US$1 o 2.</p>
       <input type="password" id="orkey" placeholder="sk-or-..." autocomplete="off">
-      <button class="go" id="savekey">Guardar</button>
-      ${key?`<button class="lnk" id="cancelkey">Cancelar</button>`:''}
-      <p class="msg${CMSG[1]?' err':''}" id="cmsg">${cesc(CMSG[0])}</p></div></section>`;
+      <button class="go" data-act="savekey">Guardar</button>
+      ${key ? `<button class="lnk" data-act="cancelkey">Cancelar</button>` : ''}
+      <p class="msg${CMSG[1] ? ' err' : ''}">${esc(CMSG[0])}</p></div></section>`;
     return;
   }
-  const t = CMEALS[CM];
+  const t = T[CM];
   $('main').innerHTML = `<section class="sec cf"><h2>Calculadora de platos</h2><div class="tip">
     <p class="alt">Para comidas que no están en la dieta. Escribí qué vas a comer o sacale una foto, y te digo cuánto comer.</p>
     <label class="h">¿Qué comida es?</label>
-    <div class="mseg">${Object.entries(CMEALS).map(([k,m])=>`<button aria-pressed="${k===CM}" data-cm="${k}">${m.label}</button>`).join('')}</div>
+    <div class="mseg">${MKEYS.map(k => `<button aria-pressed="${k === CM}" data-act="cm" data-k="${k}">${T[k].label}</button>`).join('')}</div>
     <div class="tg">Objetivo: <b>~${t.kcal} kcal</b> · <b>${t.p} g</b> proteína · ${t.c} g carbos · ${t.g} g grasa</div>
     <label class="h" for="cdesc">¿Qué vas a comer?</label>
-    <textarea id="cdesc" placeholder="Ej: zapallito relleno con carne molida, cebolla, morrón y queso. Cada zapallito pesa unos 200 g.">${cesc(CDESC)}</textarea>
+    <textarea id="cdesc" placeholder="Ej: zapallito relleno con carne molida, cebolla, morrón y queso. Cada zapallito pesa unos 200 g.">${esc(CDESC)}</textarea>
     <label class="h">Foto del plato (opcional)</label>
     <div class="ph"><label class="btn" for="cfile">📷 Sacar o subir foto</label><input id="cfile" type="file" accept="image/*" capture="environment">
-      <div class="th" id="cth" style="display:${CIMG?'block':'none'}"><img id="cthimg" alt="Foto del plato" src="${CIMG||''}"><button id="crm" aria-label="Quitar foto">×</button></div></div>
-    <button class="go" id="cgo"${CBUSY?' disabled':''}>${CBUSY?'Calculando…':'Calcular'}</button>
-    <p class="msg${CMSG[1]?' err':''}" id="cmsg">${cesc(CMSG[0])}</p>
+      <div class="th" style="display:${CIMG ? 'block' : 'none'}"><img alt="Foto del plato" src="${CIMG || ''}"><button data-act="crm" aria-label="Quitar foto">×</button></div></div>
+    <button class="go" data-act="cgo"${CBUSY ? ' disabled' : ''}>${CBUSY ? 'Calculando…' : 'Calcular'}</button>
+    <p class="msg${CMSG[1] ? ' err' : ''}">${esc(CMSG[0])}</p>
   </div></section>
-  ${CRES ? resultHTML(CRES.r, CMEALS[CRES.m]) : ''}
-  <p class="foot">Estimación aproximada · v3 · <button class="lnk" id="editkey">cambiar clave</button></p>`;
+  ${CRES ? resultHTML(CRES.r, T[CRES.m], CRES.m) : ''}
+  <p class="foot">Estimación aproximada · v${APP_VERSION} · <button class="lnk" data-act="editkey">cambiar clave</button></p>`;
 }
 async function shrinkImg(file){
   const url = URL.createObjectURL(file);
   try {
     const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
-    const sc = Math.min(1, 1024/Math.max(img.width, img.height)), c = document.createElement('canvas');
-    c.width = Math.round(img.width*sc); c.height = Math.round(img.height*sc);
+    const sc = Math.min(1, 1024 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+    c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
     c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
     return c.toDataURL('image/jpeg', 0.85);
   } finally { URL.revokeObjectURL(url); }
@@ -2748,16 +600,16 @@ Respondé SOLO con JSON válido, sin texto extra:
 }
 async function runCalc(){
   if (CBUSY) return;
-  CDESC = ($('cdesc')||{}).value?.trim() || CDESC;
+  const ta = $('cdesc'); if (ta) CDESC = ta.value.trim();
   if (!CDESC && !CIMG) { CMSG = ["Escribí qué vas a comer o sacale una foto.", true]; renderCalc(); return; }
   CBUSY = true; CMSG = ["", false]; renderCalc();
-  const t = CMEALS[CM], content = [{type:"text", text: calcPrompt(CDESC, t, !!CIMG)}];
-  if (CIMG) content.push({type:"image_url", image_url:{url: CIMG}});
+  const t = targets()[CM], content = [{type: "text", text: calcPrompt(CDESC, t, !!CIMG)}];
+  if (CIMG) content.push({type: "image_url", image_url: {url: CIMG}});
   try {
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {"Authorization": "Bearer " + orKey(), "Content-Type": "application/json", "X-Title": "Plan Felipe"},
-      body: JSON.stringify({model: OR_MODEL, max_tokens: 2000, reasoning: {enabled: false}, messages: [{role:"system", content:"Respondé únicamente con un objeto JSON válido. Nada de texto antes o después."},{role:"user", content}]})
+      body: JSON.stringify({model: OR_MODEL, max_tokens: 2000, reasoning: {enabled: false}, messages: [{role: "system", content: "Respondé únicamente con un objeto JSON válido. Nada de texto antes o después."}, {role: "user", content}]})
     });
     const data = await res.json().catch(() => ({}));
     if (res.status === 401) throw new Error("La clave no funciona. Tocá \"cambiar clave\" y pegala de nuevo.");
@@ -2772,69 +624,192 @@ async function runCalc(){
     txt = String(txt).replace(/```(json)?/gi, "").trim();
     const a = txt.indexOf('{'), z = txt.lastIndexOf('}');
     if (a < 0 || z <= a) throw new Error(txt ? "La IA respondió algo que no entiendo: \"" + txt.slice(0, 140) + "\"" : "La IA no devolvió texto (" + (ch.finish_reason || "sin motivo") + "). Probá de nuevo.");
-    let r;
-    try { r = JSON.parse(txt.slice(a, z + 1)); }
-    catch (pe) { throw new Error("La respuesta vino incompleta: \"" + txt.slice(0, 140) + "\""); }
+    let r; try { r = JSON.parse(txt.slice(a, z + 1)); } catch (pe) { throw new Error("La respuesta vino incompleta: \"" + txt.slice(0, 140) + "\""); }
     r.gramos = Number(String(r.gramos ?? "").replace(/[^0-9.]/g, "")) || 0;
     if (!r.gramos) throw new Error("No pude calcular la porción. Describí mejor el plato.");
-    CRES = {r, m: CM}; CMSG = ["", false];
+    CRES = {r, m: CM}; CADDED = false; CMSG = ["", false];
   } catch (e) {
     CMSG = [(e && e.message) ? (e.message === "Failed to fetch" ? "No hay conexión con OpenRouter. Revisá internet y probá de nuevo." : e.message) : "Algo falló. Probá de nuevo.", true];
-  } finally { CBUSY = false; renderCalc(); if (CRES && !CMSG[1]) { const h = document.querySelectorAll('#main .sec')[1]; h && h.scrollIntoView({behavior:'smooth'}); } }
-}
-document.addEventListener('click', async e => {
-  if (MODE !== 'n' || NT !== 'calc') return;
-  const cm = e.target.closest('button[data-cm]');
-  if (cm) { CDESC = ($('cdesc')||{}).value ?? CDESC; CM = cm.dataset.cm; renderCalc(); return; }
-  if (e.target.id === 'cgo') return runCalc();
-  if (e.target.id === 'crm') { CIMG = null; renderCalc(); return; }
-  if (e.target.id === 'editkey') { CEDITKEY = true; CMSG = ["", false]; renderCalc(); return; }
-  if (e.target.id === 'cancelkey') { CEDITKEY = false; renderCalc(); return; }
-  if (e.target.id === 'savekey') {
-    const k = ($('orkey').value || '').trim();
-    if (!/^sk-or-/.test(k)) { CMSG = ["Esa no parece una clave de OpenRouter (empieza con sk-or-).", true]; renderCalc(); return; }
-    setKey(k); CEDITKEY = false; CMSG = ["Listo, clave guardada en este celular.", false]; renderCalc();
+  } finally {
+    CBUSY = false; renderCalc();
+    if (CRES && !CMSG[1]) { const h = document.querySelectorAll('#main .sec')[1]; h && h.scrollIntoView({behavior: 'smooth'}); }
   }
+}
+
+// ---------- lista de compras ----------
+let SHOP = load('fm-shop', {});
+function shopItems(){
+  const f = factors(), wk = n => Math.round(n * 7);
+  const kg = g => g >= 1000 ? (g / 1000).toFixed(1).replace('.', ',') + ' kg' : r5(g) + ' g';
+  return [
+    ['Proteínas', [
+      ['Pechuga de pollo', kg(wk(270)), '200 g cocido por día en el almuerzo (≈270 g crudo)'],
+      ['Carne magra (lomo, peceto, nalga, cuadril)', kg(wk(270)), '200 g cocido por día en la cena (≈270 g crudo)'],
+      ['Huevos', '35 + claras', '5 huevos por día; las claras pueden ser de botella (≈700 ml) o 21 huevos más'],
+      ['Jamón cocido natural', kg(wk(60)), '60 g por día en la merienda'],
+      ['Queso port salut light', kg(wk(40)), '40 g por día en la merienda']]],
+    ['Carbohidratos', [
+      ['Arroz', kg(wk(250 * f.alm / 2.8)), `crudo, para el almuerzo (${r5(250 * f.alm)} g cocido por día)`],
+      ['Papa', kg(wk(235 * f.cena * 1.05)), `para la cena (${r5(235 * f.cena)} g cocida por día)`],
+      ['Pan integral', '14 rebanadas', '2 por día en el desayuno (≈1 paquete)'],
+      ['Fruta', '14 unidades', '2 por día: desayuno y merienda']]],
+    ['Grasas y verduras', [
+      ['Palta', '4 unidades', '½ por día en el almuerzo'],
+      ['Aceite de oliva', '≈110 ml', '1 cda por día en la cena'],
+      ['Verduras para ensalada', '14 platos', 'lechuga, tomate, zanahoria, pepino, rúcula, cebolla, brócoli, zapallito…']]]
+  ];
+}
+function renderShop(){
+  const wk = weekStart(today()), got = SHOP[wk] || {};
+  $('main').innerHTML = `<div class="sum"><span>Semana del <b>${fmtD(wk)}</b></span><span>Para 7 días de plan</span></div>`
+  + shopItems().map(([g, items]) => `<section class="sec"><h2>${g}</h2>${items.map(([n, q, note]) => {
+      const id = norm(n); return `<label class="block shop${got[id] ? ' got' : ''}"><input type="checkbox" data-shop="${esc(id)}"${got[id] ? ' checked' : ''}><span><b>${esc(n)}</b> · ${esc(q)}<br><small>${esc(note)}</small></span></label>`; }).join('')}</section>`).join('')
+  + `<p class="foot">Las cantidades siguen tu ajuste actual · <button class="lnk" data-act="shopreset">desmarcar todo</button></p>`;
+}
+
+// ---------- cambios / equivalencias ----------
+function renderEq(){
+  const f = factors();
+  const EQ = [
+    ["Proteína (en cocido)", ["Alimento", "Porción"], [["Pollo (pechuga)", "200 g"], ["Carne magra (lomo, peceto, nalga, cuadril)", "200 g"], ["Carne molida especial*", "220 g"], ["Atún al natural", "230 g (2 latas)"], ["Merluza u otro pescado", "260 g"]], "* Con carne molida, poné la mitad del aceite o la palta."],
+    ["Carbohidratos (en cocido)", ["Alimento", "Almuerzo", "Cena"], [["Arroz", r5(250 * f.alm) + " g", r5(145 * f.cena) + " g"], ["Fideos", r5(235 * f.alm) + " g", r5(135 * f.cena) + " g"], ["Papa", r5(400 * f.alm) + " g", r5(235 * f.cena) + " g"], ["Batata", r5(350 * f.alm) + " g", r5(200 * f.cena) + " g"]], (ADJ.alm || ADJ.cena) ? "Incluye tu ajuste actual." : ""],
+    ["Grasa", ["Esto", "Equivale a"], [["½ palta chica (70 g)", "1 cda de aceite de oliva o 20 g de frutos secos"]], ""],
+    ["Desayuno y merienda", ["Esto", "Equivale a"], [["1 tostada integral", "2 galletas de arroz o 20 g de granola"], ["1 fruta", "1 banana chica o 2 mandarinas"], ["1 huevo", "2 claras o 30 g de jamón"]], ""]
+  ];
+  const RULES = [
+    "<b>Es igual todos los días:</b> entrenes, descanses o corras el fondo.",
+    "<b>Pesos en cocido.</b> Pesá las primeras semanas hasta que te salga a ojo.",
+    "<b>Ensalada libre</b> en almuerzo y cena: lechuga, tomate, rúcula, zanahoria, pepino, repollo, cebolla, brócoli, zapallito, berenjena, chauchas, espinaca, morrón.",
+    "<b>Libres siempre:</b> mate amargo, café, té, agua, edulcorante, limón, vinagre, mostaza y especias.",
+    "<b>Todos los días:</b> 3–4 litros de agua, 8.000–10.000 pasos y dormir 7–9 horas.",
+    "<b>Fondo de más de 75 min:</b> llevá 1 gel o 3 dátiles por hora para correr.",
+    "<b>1 comida libre por semana.</b> Alcohol al mínimo.",
+    "<b>Pesate</b> en la pestaña Progreso. La app ajusta los carbohidratos sola según cómo bajes."
+  ];
+  $('main').innerHTML = EQ.map(([title, head, rows, note]) => `<section class="sec"><h2>${title}</h2><table class="eq"><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</table>${note ? `<div class="tip"><p class="alt">${note}</p></div>` : ''}</section>`).join('')
+    + `<section class="sec"><h2>Reglas</h2><div class="tip">${RULES.map(r => `<p>${r}</p>`).join('')}</div></section>`
+    + `<p class="foot">Cambiá un alimento por otro de la misma tabla</p>`;
+}
+
+// =====================================================================
+// NAVEGACIÓN Y EVENTOS
+// =====================================================================
+const NTABS = [['plan', 'Plan'], ['prog', 'Progreso'], ['calc', 'Calculadora'], ['shop', 'Compras'], ['eq', 'Cambios']];
+function renderTop(){
+  document.querySelectorAll('#mode button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === MODE)));
+  $('ttl').textContent = MODE === 'n' ? 'Plan de nutrición' : 'Plan de entrenamiento';
+  const dd = $('days');
+  if (MODE === 'n') {
+    $('weeks').innerHTML = NTABS.map(([k, l]) => `<button role="tab" aria-pressed="${k === NT}" data-nt="${k}">${l}</button>`).join('');
+    dd.className = 'days hide'; dd.innerHTML = '';
+  } else {
+    $('weeks').innerHTML = DATA.map((w, i) => `<button role="tab" aria-pressed="${TV === 'week' && i === W}" data-w="${i}">${esc(w.name)}</button>`).join('')
+      + `<button role="tab" aria-pressed="${TV === 'run'}" data-tv="run">🏃 Running</button><button role="tab" aria-pressed="${TV === 'import'}" data-tv="import">+ Excel</button>`;
+    if (TV === 'week') {
+      const wn = DATA[W].name;
+      dd.className = 'days';
+      dd.innerHTML = DATA[W].days.map((d, i) => `<button role="tab" aria-pressed="${i === D}" data-d="${i}" class="${DONE.some(x => x.w === wn && x.d === i) ? 'done' : ''}${TODAY_POS.w === W && TODAY_POS.d === i ? ' hoy' : ''}"><span>${esc(d.name.replace(/D[IÍ]A/i, 'Día'))}</span></button>`).join('');
+    } else { dd.className = 'days hide'; dd.innerHTML = ''; }
+  }
+  const sel = $('weeks').querySelector('[aria-pressed="true"]'); sel && sel.scrollIntoView({inline: 'center', block: 'nearest'});
+}
+function renderMain(){
+  if (MODE === 'n') ({plan: renderPlan, prog: renderProg, calc: renderCalc, shop: renderShop, eq: renderEq}[NT] || renderPlan)();
+  else ({week: renderWeek, run: renderRun, import: renderImport}[TV] || renderWeek)();
+}
+function renderAll(scroll){ renderTop(); renderMain(); if (scroll !== false) window.scrollTo({top: 0}); }
+
+document.addEventListener('click', async e => {
+  const b = e.target.closest('button, [data-act]'); if (!b) return;
+  const ds = b.dataset;
+  if (ds.m) { MODE = ds.m; saveUI(); return renderAll(); }
+  if (ds.nt) { NT = ds.nt; saveUI(); return renderAll(); }
+  if (ds.w !== undefined) { TV = 'week'; W = +ds.w; D = Math.min(D, DATA[W].days.length - 1); saveUI(); return renderAll(); }
+  if (ds.d !== undefined) { D = +ds.d; return renderAll(); }
+  if (ds.tv) { TV = ds.tv; saveUI(); return renderAll(); }
+  const act = ds.act; if (!act) return;
+  if (act === 'log') {
+    const inp = document.querySelector(`input[data-exin="${CSS.escape(ds.ex)}"]`); const v = inp && inp.value.trim(); if (!v) return inp && inp.focus();
+    (LOGS[ds.ex] = LOGS[ds.ex] || []).unshift({date: today(), t: v, w: DATA[W].name}); store('fm-logs', LOGS); return renderAll(false);
+  }
+  if (act === 'unlog') { LOGS[ds.ex] = (LOGS[ds.ex] || []).filter(h => h.date !== today()); store('fm-logs', LOGS); return renderAll(false); }
+  if (act === 'done') { DONE.push({w: DATA[W].name, d: D, date: today()}); store('fm-done', DONE); return renderAll(); }
+  if (act === 'undone') { const i = DONE.map(x => x.w + x.d).lastIndexOf(DATA[W].name + D); if (i >= 0) DONE.splice(i, 1); store('fm-done', DONE); return renderAll(false); }
+  if (act === 'addrun') {
+    const km = Number(String($('rkm').value).replace(',', '.')), min = parseMin($('rmin').value);
+    if (!km) { $('rmsg').textContent = 'Poné los kilómetros.'; $('rmsg').className = 'msg err'; return; }
+    RUNS.push({id: Date.now(), date: $('rdate').value || today(), type: $('rtype').value, km, min, notes: $('rnotes').value.trim()}); store('fm-run', RUNS); return renderAll(false);
+  }
+  if (act === 'delrun') { RUNS = RUNS.filter(r => String(r.id) !== ds.id); store('fm-run', RUNS); return renderAll(false); }
+  if (act === 'delweek') { const w = EXTRA[+ds.i]; EXTRA.splice(+ds.i, 1); store('fm-extra-weeks', EXTRA); DATA = allWeeks(); W = Math.min(W, DATA.length - 1); IMPORT_MSG = [w ? 'Quité ' + esc(w.name) : '', false]; return renderAll(false); }
+  if (act === 'timer') return openTimer();
+  if (act === 'tclose') { $('tover').hidden = true; return; }
+  if (act === 'tset') return tSet(+ds.s);
+  if (act === 'tgo') return tToggle();
+  if (act === 'tadd') return tAdd(+ds.s);
+  if (act === 'meal') {
+    const d = today(), st = MLOG[d] = MLOG[d] || {}; st[ds.k] = st[ds.k] === ds.v ? undefined : ds.v; store('fm-meals', MLOG); return renderAll(false);
+  }
+  if (act === 'undoadj') {
+    const last = ADJ.hist.pop();
+    if (last) ADJ[last.type] = Math.max(0, ADJ[last.type] - 1); else { ADJ.alm = 0; ADJ.cena = 0; }
+    store('fm-adj', ADJ); return renderAll(false);
+  }
+  if (act === 'weak') { if (ADJ.alm < 2) { ADJ.alm++; ADJ.hist.push({date: today(), type: 'alm', msg: 'Te sentiste flojo: más carbohidratos en el almuerzo'}); store('fm-adj', ADJ); PROG_MSG = ['Listo: el almuerzo ahora lleva ¼ más de carbohidratos.', false]; } else PROG_MSG = ['Ya tenés el máximo de carbohidratos en el almuerzo. Si seguís flojo, revisá el sueño.', false]; return renderAll(false); }
+  if (act === 'addw') {
+    const kg = Number(String($('wkg').value).replace(',', '.')), waist = Number(String($('wwaist').value).replace(',', '.')) || null, date = $('wdate').value || today();
+    if (!kg || kg < 40 || kg > 200) { PROG_MSG = ['Poné tu peso en kg, por ejemplo 93,4.', true]; return renderAll(false); }
+    WEIGHTS = WEIGHTS.filter(x => x.date !== date); WEIGHTS.push({date, kg, waist}); store('fm-weights', WEIGHTS);
+    const ch = evaluateAdj(); PROG_MSG = [ch ? 'Guardado. Ajusté tu dieta: ' + ch + '.' : 'Guardado.', false]; return renderAll(false);
+  }
+  if (act === 'delw') { WEIGHTS = WEIGHTS.filter(x => x.date !== ds.date); store('fm-weights', WEIGHTS); PROG_MSG = ['', false]; return renderAll(false); }
+  if (act === 'cm') { const ta = $('cdesc'); if (ta) CDESC = ta.value; CM = ds.k; return renderCalc(); }
+  if (act === 'cgo') return runCalc();
+  if (act === 'crm') { CIMG = null; return renderCalc(); }
+  if (act === 'editkey') { CEDITKEY = true; CMSG = ['', false]; return renderCalc(); }
+  if (act === 'cancelkey') { CEDITKEY = false; return renderCalc(); }
+  if (act === 'savekey') {
+    const k = ($('orkey').value || '').trim();
+    if (!/^sk-or-/.test(k)) { CMSG = ['Esa no parece una clave de OpenRouter (empieza con sk-or-).', true]; return renderCalc(); }
+    setKey(k); CEDITKEY = false; CMSG = ['Listo, clave guardada en este celular.', false]; return renderCalc();
+  }
+  if (act === 'addcalc' && CRES) {
+    const m = calcMacros(CRES.r), d = today();
+    (CLOG[d] = CLOG[d] || []).push({meal: CRES.m, plato: CRES.r.plato || 'Plato', gramos: m.g, kcal: Math.round(m.kcal), p: Math.round(m.p)}); store('fm-calclog', CLOG);
+    CADDED = true; return renderCalc();
+  }
+  if (act === 'shopreset') { delete SHOP[weekStart(today())]; store('fm-shop', SHOP); return renderAll(false); }
+  if (act === 'update') { location.replace(location.pathname + '?v=' + encodeURIComponent(ds.v)); }
 });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset && e.target.dataset.exin) { const b = e.target.parentNode.querySelector('button'); b && b.click(); } });
 document.addEventListener('input', e => { if (e.target.id === 'cdesc') CDESC = e.target.value; });
 document.addEventListener('change', async e => {
-  if (e.target.id !== 'cfile') return;
-  const f = e.target.files && e.target.files[0]; if (!f) return;
-  CDESC = ($('cdesc')||{}).value ?? CDESC;
-  try { CIMG = await shrinkImg(f); } catch(err) { CMSG = ["No pude leer la foto.", true]; }
-  renderCalc();
-});
-function renderNut(){
-  $('weeks').innerHTML = NTYPES.map(([k,l])=>`<button role="tab" aria-pressed="${k===NT}" data-nt="${k}">${l}</button>`).join('');
-  const dd = $('days'); dd.className = 'days hide'; dd.innerHTML = '';
-  if (NT==='calc') { renderCalc(); window.scrollTo({top:0}); return; }
-  if (NT==='eq') {
-    $('main').innerHTML = EQ.map(([title,head,rows,note]) => `<section class="sec"><h2>${title}</h2><table class="eq"><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table>${note?`<div class="tip"><p class="alt">${note}</p></div>`:''}</section>`).join('')
-      + `<section class="sec"><h2>Reglas</h2><div class="tip">${RULES.map(r=>`<p>${r}</p>`).join('')}</div></section>`
-      + `<p class="foot">Cambiá un alimento por otro de la misma tabla</p>`;
-  } else {
-    $('main').innerHTML = `<div class="sum"><span><b>~2.350 kcal</b></span><span><b>200 g</b> proteína</span><span>Igual todos los días</span></div><button class="v" data-nt="calc">🍽️ ¿Comés algo que no está en la dieta?<small>CALCULAR</small></button>`
-      + NUT.map(x => x.g
-        ? `<section class="sec g"><h2><span class="t">${x.t}</span> · Gimnasio</h2></section>`
-        : `<section class="sec meal"><h2><span class="t">${x.t}</span> ${x.n}</h2><div class="block"><p class="main">${x.m}</p>${x.a.map(a=>`<p class="alt o">${a}</p>`).join('')}${x.s?`<p class="alt">¿Querés cambiar algo? Mirá la pestaña <b>Cambios</b>.</p>`:''}</div></section>`).join('')
-      + `<p class="foot">Pesos en cocido · ensalada libre</p>`;
+  if (e.target.id === 'xfile') { const f = e.target.files && e.target.files[0]; if (f) importExcel(f); return; }
+  if (e.target.dataset && e.target.dataset.shop) {
+    const wk = weekStart(today()), s = SHOP[wk] = SHOP[wk] || {}; s[e.target.dataset.shop] = e.target.checked; store('fm-shop', SHOP);
+    e.target.closest('.shop').classList.toggle('got', e.target.checked); return;
   }
-  window.scrollTo({top:0});
-}
-function renderAll(){
-  document.querySelectorAll('#mode button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.m===MODE)));
-  $('ttl').textContent = MODE==='n' ? 'Plan de nutrición' : 'Plan de entrenamiento';
-  if (MODE==='n') renderNut(); else { $('days').className='days'; render(); }
-}
-document.addEventListener('click', e => {
-  const b = e.target.closest('button[data-m],button[data-nt]'); if(!b) return;
-  if (b.dataset.m) MODE = b.dataset.m; else NT = b.dataset.nt;
-  saveN(); renderAll();
+  if (e.target.id === 'cfile') {
+    const f = e.target.files && e.target.files[0]; if (!f) return;
+    const ta = $('cdesc'); if (ta) CDESC = ta.value;
+    try { CIMG = await shrinkImg(f); } catch (err) { CMSG = ['No pude leer la foto.', true]; }
+    renderCalc();
+  }
 });
+
+// ---------- aviso de versión nueva ----------
+async function checkUpdate(){
+  try {
+    const r = await fetch('version.json?t=' + Date.now(), {cache: 'no-store'}); if (!r.ok) return;
+    const v = (await r.json()).v;
+    if (v && v !== APP_VERSION) { $('upd').innerHTML = `Hay una versión nueva de la app <button data-act="update" data-v="${esc(v)}">Actualizar</button>`; $('upd').hidden = false; }
+  } catch(e){}
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkUpdate(); });
+
 renderAll();
+checkUpdate();
 </script>
-
-
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script>
 </body>
 </html>
