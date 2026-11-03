@@ -159,6 +159,24 @@ label.btn.up{display:inline-flex;align-self:flex-start;align-items:center;gap:8p
 #upd[hidden]{display:none}
 #upd button{border:0;background:#fff;color:var(--accent);font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;cursor:pointer}
 main{padding-bottom:110px}
+.sl{display:flex;flex-direction:column;gap:6px;margin:6px 0 4px}
+.sl-row{display:grid;grid-template-columns:26px 1fr 84px 22px;align-items:center;gap:8px;padding:6px 8px;background:var(--bg);border:1px solid var(--line);border-radius:4px}
+.sl-row.ok{border-color:#2f6b3d;background:#122017}
+.sn{font:400 18px Anton,sans-serif;color:var(--muted);text-align:center}
+.sl-row.ok .sn{color:#4fbf6a}
+.sr{font:700 16px "Barlow Condensed",sans-serif;letter-spacing:.03em;color:var(--accent)}
+.sr em{font-style:normal;color:var(--muted);font-weight:600}
+.su{color:var(--muted);font:700 13px "Barlow Condensed",sans-serif}
+.kgi{width:100%;min-width:0;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px 6px;font:600 17px Barlow,sans-serif;text-align:center}
+.kgi::placeholder{color:#5d5d63;font-weight:500}
+.kgi:focus{outline:2px solid var(--accent);outline-offset:0}
+.sl-prev{margin:0;font-size:13px;color:var(--muted)}
+.rd-row{padding:8px;background:var(--bg);border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;gap:6px}
+.rd-l{margin:0;font:700 15px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.03em}
+.rd-in{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px}
+.rd-c{display:flex;flex-direction:column;gap:3px;align-items:stretch}
+.rd-c span{font:700 11px "Barlow Condensed",sans-serif;color:var(--muted);letter-spacing:.1em;text-align:center}
+.rd-c.ok .kgi{border-color:#2f6b3d;background:#122017}
 </style>
 </head>
 <body>
@@ -171,7 +189,7 @@ main{padding-bottom:110px}
 <main id="main"></main>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.03-7";
+const APP_VERSION = "2026.11.03-8";
 const BASE_DATA = [{"name": "Semana 9 y 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "OTM 12':"}, {"t": "MIN 1: 8 CAL ROW"}, {"t": "MIN 2: 6 BURPEES BOX JUMP 60 CM"}, {"t": "MIN 3: 10 MTS SLED PUSH 140 KG"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "2 km suave"}], [{"t": "trabajo fuerte:"}, {"t": "3x 800 mts (3'45\")"}, {"t": "rest 2' entre set"}], [{"t": "2x 1 km (4' 38\" - 4' 45\")"}, {"t": "rest 2' entre set"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "CADA 8 MINUTOS X 3 SET"}, {"t": "* 2.0 MILL CAL BIKE ( NO SOLTAR AGARRE)"}, {"t": "* 500 MTS SKI ERG"}, {"t": "* HASTA COMPLETAR LOS 8 MIN CAMINATAS"}, {"t": "EN ESTOCADAS CON COREBAG O DB 20KG"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "4 set"}, {"t": "400 mts cinta run ritmo 13.5"}, {"t": "5 min bici fija carga moderada alta"}, {"t": "rest 2' entre set"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
@@ -214,19 +232,65 @@ function saveUI(){ store('fm-ui', {m: MODE, tv: TV, nt: NT}); }
 // =====================================================================
 // ENTRENAMIENTO
 // =====================================================================
-let LOGS = load('fm-logs', {});    // {EJERCICIO: [{date, t, w}]}
-function exKey(block){
-  const it = block.find(x => x.t && !isSets(x.t) && !/^\d/.test(x.t.trim()));
-  return it ? norm(it.t) : null;
+let LOGS = load('fm-logs2', {});   // {EJERCICIO: [{date, kg: ['80', '85', ...]}]}
+function exName(t){ return norm(t).replace(/^[\d\/\s]+/, '').replace(/\s+\d[\d.,]*\s*KG.*$/, '').trim(); }
+function cleanReps(r){ return String(r).replace(/\b(reps?|repeticiones)\b\.?/gi, '').replace(/\s+/g, ' ').trim(); }
+function parseSetLine(t){
+  t = t.trim(); let m;
+  if ((m = t.match(/^(\d+)\s*(?:sets?)?\s*[x×]\s*(.+)$/i))) { const n = +m[1]; if (n > 0 && n <= 10) { let reps = cleanReps(m[2]), hint = ''; const h = reps.match(/^(\S+)\s+(?:al|con)\s+(.+)$/i); if (h) { reps = h[1]; hint = h[2]; } return Array.from({length: n}, () => ({reps, hint})); } }
+  if ((m = t.match(/^(\d+)\s+(al|con)\s+(.+)$/i))) return [{reps: m[1], hint: m[3]}];
+  if (/^\d+(\s+\d+)+$/.test(t)) return t.split(/\s+/).map(r => ({reps: r}));
+  return null;
 }
-function logHTML(key){
-  const hist = (LOGS[key] || []);
-  const td = today(), todays = hist.find(h => h.date === td), prev = hist.filter(h => h.date !== td).slice(0, 2);
-  return `<div class="log">
-    ${prev.length ? `<p class="lg-last">Última: <b>${esc(prev[0].t)}</b> · ${fmtD(prev[0].date)}${prev[1] ? ` <span>· antes: ${esc(prev[1].t)} (${fmtD(prev[1].date)})</span>` : ''}</p>` : (todays ? '' : `<p class="lg-last"><span>Todavía no anotaste este ejercicio</span></p>`)}
-    ${todays ? `<p class="lg-today">Hoy: <b>${esc(todays.t)}</b> <button class="lnk" data-act="unlog" data-ex="${esc(key)}">borrar</button></p>`
-             : `<div class="lg-row"><input type="text" placeholder="Hoy: ej. 5x5 con 85 kg" data-exin="${esc(key)}" enterkeyhint="done"><button data-act="log" data-ex="${esc(key)}">Anotar</button></div>`}
-  </div>`;
+function blockPlan(b, title){
+  if (/^(ZONA MEDIA|CORE|ACOND|HYROX|RUN)/.test(norm(title || ''))) return null;
+  const txt = b.map((x, i) => ({i, t: x.t})).filter(x => x.t);
+  if (!txt.length) return null;
+  const rm = txt[0].t.match(/^(\d+)\s*(sets?|rondas)\b/i);
+  if (rm) {
+    const n = +rm[1]; if (n < 1 || n > 10) return null;
+    const ex = txt.slice(1).filter(x => /[a-záéíóúñ]{3,}/i.test(x.t) && !/^(peso|nota|rest|mira)/i.test(x.t) && !isSets(x.t));
+    if (!ex.length) return null;
+    return {type: 'rounds', n, used: new Set([txt[0].i, ...ex.map(x => x.i)]), head: txt[0].t, rows: ex.map(x => ({key: exName(x.t), label: x.t}))};
+  }
+  const nm = txt.find(x => !isSets(x.t) && !/^\d/.test(x.t.trim()));
+  if (!nm) return null;
+  const sets = [], used = new Set([nm.i]);
+  txt.forEach(x => { if (x.i === nm.i) return; const r = parseSetLine(x.t); if (r) { sets.push(...r); used.add(x.i); } });
+  let name = nm.t;
+  if (!sets.length) { const m = nm.t.match(/^(.*?)\s*[-–]?\s*(\d+)\s*[x×]\s*([\d\/?]+)\s*$/i); if (m && +m[2] <= 10) { name = m[1]; for (let k = 0; k < +m[2]; k++) sets.push({reps: m[3]}); } }
+  if (sets.some(x => /seg|"|''/i.test(x.reps))) return null;
+  if (!sets.length || sets.length > 12) return {type: 'single', key: exName(name), name, used};
+  return {type: 'sets', key: exName(name), name, sets, used};
+}
+function prevEntry(key){ return (LOGS[key] || []).find(h => h.date !== today()); }
+function todayVal(key, i){ const h = (LOGS[key] || []).find(h => h.date === today()); return h && h.kg[i] ? h.kg[i] : ''; }
+function unitOf(reps){ return /mts|\bm\b|km|cal|seg|min|"/i.test(reps || '') ? 'tiempo' : 'kg'; }
+function kgInput(key, i, ph, unit){
+  const v = todayVal(key, i);
+  return `<input class="kgi" inputmode="${unit === 'kg' ? 'decimal' : 'text'}" data-lk="${esc(key)}" data-li="${i}" value="${esc(v)}" placeholder="${esc(ph || unit)}" aria-label="${unit === 'kg' ? 'Peso en kg' : 'Tiempo'} serie ${i + 1}">`;
+}
+function logPlanHTML(pl){
+  if (pl.type === 'sets') {
+    const pv = prevEntry(pl.key), unit = unitOf(pl.sets[0].reps);
+    return `<div class="sl">${pl.sets.map((s, i) => { const v = todayVal(pl.key, i);
+      return `<div class="sl-row${v ? ' ok' : ''}"><span class="sn">${i + 1}</span><span class="sr">${esc(s.reps)}${/^\d+$/.test(s.reps) ? (s.reps === '1' ? ' rep' : ' reps') : ''}${s.hint ? ` <em>${esc(s.hint)}</em>` : ''}</span>${kgInput(pl.key, i, pv && pv.kg[i], unit)}<span class="su">${unit === 'kg' ? 'kg' : ''}</span></div>`; }).join('')}
+      ${pv ? `<p class="sl-prev">Anterior (${fmtD(pv.date)}): ${pv.kg.filter(Boolean).map(esc).join(' · ') || '—'}</p>` : ''}</div>`;
+  }
+  if (pl.type === 'rounds') {
+    return `<div class="sl"><p class="sl-prev">${esc(pl.head)} · peso por ronda</p>${pl.rows.map(r => { const pv = prevEntry(r.key);
+      return `<div class="rd-row"><p class="rd-l">${esc(r.label)}</p><div class="rd-in">${Array.from({length: pl.n}, (_, i) => `<label class="rd-c${todayVal(r.key, i) ? ' ok' : ''}"><span>R${i + 1}</span>${kgInput(r.key, i, pv && pv.kg[i], 'kg')}</label>`).join('')}</div></div>`; }).join('')}</div>`;
+  }
+  const pv = prevEntry(pl.key), v = todayVal(pl.key, 0);
+  return `<div class="sl"><div class="sl-row${v ? ' ok' : ''}"><span class="sn">✎</span><span class="sr">Peso usado</span>${kgInput(pl.key, 0, pv && pv.kg[0], 'kg')}<span class="su">kg</span></div>${pv ? `<p class="sl-prev">Anterior (${fmtD(pv.date)}): ${esc(pv.kg[0] || '—')}</p>` : ''}</div>`;
+}
+function saveSet(key, i, v){
+  const list = LOGS[key] = LOGS[key] || [];
+  let h = list.find(x => x.date === today());
+  if (!h) { h = {date: today(), kg: []}; list.unshift(h); }
+  h.kg[i] = v.trim().replace(',', '.');
+  if (!h.kg.some(Boolean)) LOGS[key] = list.filter(x => x !== h);
+  store('fm-logs2', LOGS);
 }
 function renderWeek(){
   const w = DATA[W], day = w.days[D];
@@ -238,11 +302,11 @@ function renderWeek(){
    + day.sections.map(s => {
     const nv = s.blocks.flat().filter(i => i.v).length;
     const blocks = s.blocks.map(b => {
-      const key = exKey(b);
-      return `<div class="block">` + b.map((it, k) => it.v
-        ? `<a class="v" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video<small>${it.v.includes('/shorts/') ? 'SHORT' : 'YOUTUBE'}</small></a>`
-        : `<p class="${k === 0 && !isSets(it.t) ? 'first' : (isSets(it.t) ? 'sets' : '')}">${esc(it.t)}</p>`).join('')
-        + (key ? logHTML(key) : '') + `</div>`;
+      const pl = blockPlan(b, s.title);
+      const vid = it => `<a class="v" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video<small>${it.v.includes('/shorts/') ? 'SHORT' : 'YOUTUBE'}</small></a>`;
+      if (!pl) return `<div class="block">` + b.map((it, k) => it.v ? vid(it) : `<p class="${k === 0 && !isSets(it.t) ? 'first' : (isSets(it.t) ? 'sets' : '')}">${esc(it.t)}</p>`).join('') + `</div>`;
+      const rest = b.map((it, k) => pl.used.has(k) ? '' : it.v ? vid(it) : `<p class="${isSets(it.t) ? 'sets' : 'alt'}">${esc(it.t)}</p>`).join('');
+      return `<div class="block">${pl.type !== 'rounds' ? `<p class="first">${esc(pl.name)}</p>` : ''}${logPlanHTML(pl)}${rest}</div>`;
     }).join('');
     return `<section class="sec"><h2>${esc(s.title || 'Bloque')}${nv ? `<span class="n">${nv} VIDEO${nv > 1 ? 'S' : ''}</span>` : ''}</h2>${blocks}</section>`;
   }).join('')
@@ -684,11 +748,6 @@ document.addEventListener('click', async e => {
   if (ds.d !== undefined) { D = +ds.d; return renderAll(); }
   if (ds.tv) { TV = ds.tv; saveUI(); return renderAll(); }
   const act = ds.act; if (!act) return;
-  if (act === 'log') {
-    const inp = document.querySelector(`input[data-exin="${CSS.escape(ds.ex)}"]`); const v = inp && inp.value.trim(); if (!v) return inp && inp.focus();
-    (LOGS[ds.ex] = LOGS[ds.ex] || []).unshift({date: today(), t: v, w: DATA[W].name}); store('fm-logs', LOGS); return renderAll(false);
-  }
-  if (act === 'unlog') { LOGS[ds.ex] = (LOGS[ds.ex] || []).filter(h => h.date !== today()); store('fm-logs', LOGS); return renderAll(false); }
   if (act === 'done') { DONE.push({w: DATA[W].name, d: D, date: today()}); store('fm-done', DONE); return renderAll(); }
   if (act === 'undone') { const i = DONE.map(x => x.w + x.d).lastIndexOf(DATA[W].name + D); if (i >= 0) DONE.splice(i, 1); store('fm-done', DONE); return renderAll(false); }
   if (act === 'addrun') {
@@ -731,8 +790,12 @@ document.addEventListener('click', async e => {
   if (act === 'shopreset') { delete SHOP[weekStart(today())]; store('fm-shop', SHOP); return renderAll(false); }
   if (act === 'update') { location.replace(location.pathname + '?v=' + encodeURIComponent(ds.v)); }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset && e.target.dataset.exin) { const b = e.target.parentNode.querySelector('button'); b && b.click(); } });
-document.addEventListener('input', e => { if (e.target.id === 'cdesc') CDESC = e.target.value; });
+document.addEventListener('input', e => {
+  if (e.target.id === 'cdesc') CDESC = e.target.value;
+  const lk = e.target.dataset && e.target.dataset.lk;
+  if (lk != null) { saveSet(lk, +e.target.dataset.li, e.target.value); const row = e.target.closest('.sl-row, .rd-c'); row && row.classList.toggle('ok', !!e.target.value.trim()); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('kgi')) { const all = [...document.querySelectorAll('.kgi')], i = all.indexOf(e.target); (all[i + 1] || e.target).focus(); e.preventDefault(); } });
 document.addEventListener('change', async e => {
   if (e.target.id === 'xfile') { const f = e.target.files && e.target.files[0]; if (f) importExcel(f); return; }
   if (e.target.dataset && e.target.dataset.shop) {
