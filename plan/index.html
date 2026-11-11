@@ -200,6 +200,27 @@ main{padding-bottom:110px}
 .kit span{color:var(--muted)}
 .kit b{color:var(--ink)}
 .sec.kcal .v{margin-top:4px}
+.sec.rw .tip{gap:12px}
+.sec.rw .kbig b{font-size:52px}
+.rf{padding:4px 10px 10px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line)}
+.rtypes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.rtypes button{border:1px solid var(--line);background:var(--chip);color:var(--ink);font:700 14px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.04em;padding:10px 0;border-radius:4px;cursor:pointer}
+.rtypes button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.rgrid{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px}
+.rgrid label{display:flex;flex-direction:column;gap:4px;font:700 11px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.rgrid input,.rnotes{width:100%;min-width:0;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:10px 8px;font:16px Barlow,sans-serif}
+.rgrid input[type=text]{font:400 22px Anton,sans-serif;text-align:center}
+.rgrid input[type=date]{font-size:14px}
+.rf .go{margin:0}
+.rl{display:flex;flex-direction:column}
+.ri{display:grid;grid-template-columns:44px 1fr 32px;gap:10px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.ri-d{text-align:center;line-height:1}
+.ri-d b{display:block;font:400 22px Anton,sans-serif}
+.ri-d span{font:700 11px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ri-m{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ri-m b{font:700 16px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.03em}
+.ri-m span{font-size:13px;color:var(--muted);white-space:normal}
+.ri .lnk{text-decoration:none;color:var(--muted);font-size:16px;text-align:center}
 </style>
 </head>
 <body>
@@ -211,7 +232,7 @@ main{padding-bottom:110px}
 <main id="main"></main>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.11-2";
+const APP_VERSION = "2026.11.11-3";
 const BASE_DATA = [{"name": "Semana 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}, {"t": "mas pesado q la semana anterior"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}], [{"t": "WOD HIBRIDO"}, {"t": "3 RONDAS"}, {"t": "500 MTS ski"}, {"t": "15 WALLBALL 12 kg"}, {"t": "40 MTS WALKING LUNGES DB 22.5kg"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg - 70kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG o mas"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg - 100kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "warm up 10'"}], [{"t": "trabajo fuerte:"}, {"t": "4x 400 mts"}, {"t": "rest 2' entre set"}], [{"t": "3 set"}, {"t": "1 km anotar tiempos"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}, {"t": "1 con 150kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG a 110kg"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "IR A RC"}], [{"t": "1 KM RUN"}, {"t": "25 MTS SLED PUSH 130KG"}, {"t": "800 MTS RUN"}, {"t": "25 MTS SLED PULL 130KG"}, {"t": "600 MTS RUN"}, {"t": "60 MTS FAMMER CARRY DB KB 32KG"}], [{"t": "TIME OBJETIVO: 19'"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "10 KM REGENERATIV O"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
@@ -339,27 +360,38 @@ function renderWeek(){
 
 // ---------- running ----------
 let RUNS = load('fm-run', []);     // [{id, date, type, km, min, notes}]
+function fmtMin(m){ const t = Math.round(m * 60), h = Math.floor(t / 3600), mi = Math.floor((t % 3600) / 60), se = t % 60; return (h ? h + ':' + pad(mi) : mi) + ':' + pad(se); }
 function paceStr(min, km){ if (!min || !km) return '—'; const p = min / km, m = Math.floor(p), s = Math.round((p - m) * 60); return `${m}:${pad(s === 60 ? 0 : s)} /km`; }
-function parseMin(s){ s = String(s || '').trim(); if (!s) return 0; if (s.includes(':')) { const [a, b] = s.split(':').map(Number); return (a || 0) + (b || 0) / 60; } return Number(s.replace(',', '.')) || 0; }
+function parseMin(s){ s = String(s || '').trim(); if (!s) return 0; if (s.includes(':')) { const p = s.split(':').map(Number); if (p.length === 3) return (p[0] || 0) * 60 + (p[1] || 0) + (p[2] || 0) / 60; return (p[0] || 0) + (p[1] || 0) / 60; } return Number(s.replace(',', '.')) || 0; }
+let RUN_OPEN = false, RUN_MSG = '';
 function renderRun(){
-  const ws = weekStart(today());
-  const weekKm = RUNS.filter(r => weekStart(r.date) === ws).reduce((a, r) => a + r.km, 0);
-  const last4 = [0, 1, 2, 3].map(i => { const k = addDays(ws, -7 * i); return {k, km: RUNS.filter(r => weekStart(r.date) === k).reduce((a, r) => a + r.km, 0)}; }).reverse();
-  const max = Math.max(10, ...last4.map(x => x.km));
-  $('main').innerHTML = `<div class="sum"><span><b>${weekKm.toFixed(1).replace('.', ',')} km</b> esta semana</span><span>${RUNS.filter(r => weekStart(r.date) === ws).length} salidas</span></div>
-  <section class="sec cf"><h2>Anotar salida</h2><div class="tip">
-    <div class="grid2"><label>Fecha<input type="date" id="rdate" value="${today()}"></label>
-      <label>Tipo<select id="rtype"><option>Pasadas</option><option>Fondo</option><option>Suave</option><option>Otra</option></select></label>
-      <label>Kilómetros<input type="text" inputmode="decimal" id="rkm" placeholder="Ej: 6,4"></label>
-      <label>Tiempo total<input type="text" inputmode="decimal" id="rmin" placeholder="Ej: 34:30"></label></div>
-    <label>Notas<input type="text" id="rnotes" placeholder="Ej: 3x800 a 3'45&quot;, 2x1 km a 4'40&quot;"></label>
-    <button class="go" data-act="addrun">Guardar salida</button>
-    <p class="msg" id="rmsg"></p>
+  const td = today(), ws = weekStart(td);
+  const thisW = RUNS.filter(r => weekStart(r.date) === ws), weekKm = thisW.reduce((a, r) => a + r.km, 0);
+  const weeks = [0, 1, 2, 3].map(i => { const k = addDays(ws, -7 * i); const rs = RUNS.filter(r => weekStart(r.date) === k); return {k, km: rs.reduce((a, r) => a + r.km, 0), n: rs.length}; }).reverse();
+  const max = Math.max(10, ...weeks.map(x => x.km));
+  const types = ['Pasadas', 'Fondo', 'Suave', 'Otra'];
+  const form = RUN_OPEN ? `<div class="rf">
+      <div class="rtypes">${types.map((t, i) => `<button data-act="rtype" data-v="${t}" aria-pressed="${i === 0}">${t}</button>`).join('')}</div>
+      <div class="rgrid">
+        <label>Km<input type="text" inputmode="decimal" id="rkm" placeholder="6,4"></label>
+        <label>Tiempo<input type="text" inputmode="numeric" id="rmin" placeholder="34:30"></label>
+        <label>Fecha<input type="date" id="rdate" value="${td}"></label>
+      </div>
+      <input type="text" id="rnotes" class="rnotes" placeholder="Notas (opcional): 4x400 a 1'30&quot;, 3x1 km…">
+      <button class="go" data-act="addrun">Guardar</button>
+      ${RUN_MSG ? `<p class="msg err">${esc(RUN_MSG)}</p>` : ''}
+    </div>` : '';
+  $('main').innerHTML = `
+  <section class="sec rw"><h2>Esta semana<span class="n">${thisW.length} SALIDA${thisW.length === 1 ? '' : 'S'}</span></h2><div class="tip">
+    <div class="kbig"><b>${weekKm.toFixed(1).replace('.', ',')}</b><span>km</span></div>
+    <div class="wk">${weeks.map(x => `<div><div class="wkb"><i style="height:${Math.round(x.km / max * 100)}%"></i></div><b>${x.km ? x.km.toFixed(0) : '–'}</b><span>${x.k === ws ? 'esta' : fmtD(x.k)}</span></div>`).join('')}</div>
   </div></section>
-  <section class="sec"><h2>Últimas 4 semanas</h2><div class="tip"><div class="wk">${last4.map(x => `<div><div class="wkb"><i style="height:${Math.round(x.km / max * 100)}%"></i></div><b>${x.km.toFixed(0)}</b><span>${fmtD(x.k)}</span></div>`).join('')}</div><p class="alt">Kilómetros por semana (lunes a domingo).</p></div></section>
-  <section class="sec"><h2>Historial</h2>${RUNS.length ? RUNS.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 30).map(r => `<div class="block"><p class="first">${esc(r.type)} · ${String(r.km).replace('.', ',')} km</p><p class="sets">${fmtD(r.date)} · ${r.min ? Math.floor(r.min) + ':' + pad(Math.round((r.min % 1) * 60)) : '—'} · ${paceStr(r.min, r.km)}</p>${r.notes ? `<p class="alt">${esc(r.notes)}</p>` : ''}<p><button class="lnk" data-act="delrun" data-id="${r.id}">borrar</button></p></div>`).join('') : `<div class="tip"><p class="alt">Todavía no anotaste salidas.</p></div>`}</section>`;
+  <div class="ad${RUN_OPEN ? ' open' : ''}"><div class="ad-top"><span class="ad-l">Anotar salida</span><span></span><button class="ad-btn" data-act="runtoggle" aria-label="${RUN_OPEN ? 'Cerrar' : 'Anotar salida'}">${RUN_OPEN ? '×' : '+'}</button></div>${form}</div>
+  <section class="sec"><h2>Historial</h2>${RUNS.length ? `<div class="rl">` + RUNS.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 40).map(r => `<div class="ri">
+      <div class="ri-d"><b>${fmtD(r.date).slice(0, 2)}</b><span>${['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][parseD(r.date).getMonth()]}</span></div>
+      <div class="ri-m"><b>${esc(r.type)} · ${String(r.km).replace('.', ',')} km</b><span>${r.min ? fmtMin(r.min) + ' · ' + paceStr(r.min, r.km) : 'sin tiempo'}${r.notes ? ' · ' + esc(r.notes) : ''}</span></div>
+      <button class="lnk" data-act="delrun" data-id="${r.id}">✕</button></div>`).join('') + `</div>` : `<div class="tip"><p class="alt">Todavía no anotaste salidas. Tocá + para la primera.</p></div>`}</section>`;
 }
-
 // ---------- importar Excel ----------
 const HEADS = {"CORE":"CORE","ZONA MEDIA":"ZONA MEDIA","FUERZA":"FUERZA","FUERZA DE EMPUJE":"FUERZA DE EMPUJE","TRANSFERENCIA":"TRANSFERENCIA","PLIOMETRIA":"PLIOMETRIA","PLYO + TRANSFERENCIA":"PLIO + TRANSFERENCIA","PLIO + TRANSFERENCIA":"PLIO + TRANSFERENCIA","ACCESORIOS":"ACCESORIOS","ACCESORIOS + PLIOMETRIA":"ACCESORIOS + PLIOMETRIA","PECHO":"PECHO","TREN SUPERIOR":"TREN SUPERIOR","ACOND. FISICO":"ACOND. FISICO","ACONDI FISICO":"ACOND. FISICO","ACONDICIONAMIENTO FISICO":"ACOND. FISICO","BICEPS":"BICEPS","TRICEPS":"TRICEPS","ESPALDA":"ESPALDA","HYROX":"HYROX","TRABAJO ESPECIFICO HYROX":"HYROX","FUERZA ESPECIFICA HYROX":"FUERZA HYROX","OLY":"OLY","RUN":"RUN","RUNING":"RUN","RUNNING":"RUN"};
 function headOf(n){
@@ -451,10 +483,14 @@ document.addEventListener('click', async e => {
   if (act === 'kgdel') { saveKg(ds.k, []); OPEN_KEY = null; return renderMain(); }
   if (act === 'done') { DONE.push({w: DATA[W].name, d: D, date: today()}); store('fm-done', DONE); return renderAll(); }
   if (act === 'undone') { const i = DONE.map(x => x.w + x.d).lastIndexOf(DATA[W].name + D); if (i >= 0) DONE.splice(i, 1); store('fm-done', DONE); return renderAll(false); }
+  if (act === 'runtoggle') { RUN_OPEN = !RUN_OPEN; RUN_MSG = ''; renderMain(); if (RUN_OPEN) { const i = $('rkm'); i && i.focus(); } return; }
+  if (act === 'rtype') { document.querySelectorAll('.rtypes button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); return; }
   if (act === 'addrun') {
     const km = Number(String($('rkm').value).replace(',', '.')), min = parseMin($('rmin').value);
-    if (!km) { $('rmsg').textContent = 'Poné los kilómetros.'; $('rmsg').className = 'msg err'; return; }
-    RUNS.push({id: Date.now(), date: $('rdate').value || today(), type: $('rtype').value, km, min, notes: $('rnotes').value.trim()}); store('fm-run', RUNS); return renderAll(false);
+    if (!km) { RUN_MSG = 'Poné los kilómetros.'; renderMain(); $('rkm').focus(); return; }
+    const type = (document.querySelector('.rtypes [aria-pressed="true"]') || {}).dataset?.v || 'Otra';
+    RUNS.push({id: Date.now(), date: $('rdate').value || today(), type, km, min, notes: $('rnotes').value.trim()}); store('fm-run', RUNS);
+    RUN_OPEN = false; RUN_MSG = ''; return renderAll(false);
   }
   if (act === 'delrun') { RUNS = RUNS.filter(r => String(r.id) !== ds.id); store('fm-run', RUNS); return renderAll(false); }
   if (act === 'update') {
