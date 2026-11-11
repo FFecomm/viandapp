@@ -204,16 +204,15 @@ main{padding-bottom:110px}
 </head>
 <body>
 <div class="top">
-  <div class="mode" role="tablist" id="mode"><button data-m="t">Entreno</button><button data-m="n">Nutrición</button></div>
-  <h1><b id="ttl">Plan de entrenamiento</b> <span>// Felipe Majul</span></h1>
+  <h1>Plan de entrenamiento <span>// Felipe Majul</span></h1>
   <div class="seg" id="weeks" role="tablist"></div>
   <div class="days" id="days" role="tablist"></div>
 </div>
 <main id="main"></main>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.05-1";
-const BASE_DATA = [{"name": "Semana 9 y 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}]]}, {"title": "ACOND. FISICO", "blocks": [[{"t": "OTM 12':"}, {"t": "MIN 1: 8 CAL ROW"}, {"t": "MIN 2: 6 BURPEES BOX JUMP 60 CM"}, {"t": "MIN 3: 10 MTS SLED PUSH 140 KG"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "2 km suave"}], [{"t": "trabajo fuerte:"}, {"t": "3x 800 mts (3'45\")"}, {"t": "rest 2' entre set"}], [{"t": "2x 1 km (4' 38\" - 4' 45\")"}, {"t": "rest 2' entre set"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "CADA 8 MINUTOS X 3 SET"}, {"t": "* 2.0 MILL CAL BIKE ( NO SOLTAR AGARRE)"}, {"t": "* 500 MTS SKI ERG"}, {"t": "* HASTA COMPLETAR LOS 8 MIN CAMINATAS"}, {"t": "EN ESTOCADAS CON COREBAG O DB 20KG"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "4 set"}, {"t": "400 mts cinta run ritmo 13.5"}, {"t": "5 min bici fija carga moderada alta"}, {"t": "rest 2' entre set"}]]}]}]}];
+const APP_VERSION = "2026.11.11-2";
+const BASE_DATA = [{"name": "Semana 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}, {"t": "mas pesado q la semana anterior"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}], [{"t": "WOD HIBRIDO"}, {"t": "3 RONDAS"}, {"t": "500 MTS ski"}, {"t": "15 WALLBALL 12 kg"}, {"t": "40 MTS WALKING LUNGES DB 22.5kg"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg - 70kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG o mas"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg - 100kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "warm up 10'"}], [{"t": "trabajo fuerte:"}, {"t": "4x 400 mts"}, {"t": "rest 2' entre set"}], [{"t": "3 set"}, {"t": "1 km anotar tiempos"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}, {"t": "1 con 150kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG a 110kg"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "IR A RC"}], [{"t": "1 KM RUN"}, {"t": "25 MTS SLED PUSH 130KG"}, {"t": "800 MTS RUN"}, {"t": "25 MTS SLED PULL 130KG"}, {"t": "600 MTS RUN"}, {"t": "60 MTS FAMMER CARRY DB KB 32KG"}], [{"t": "TIME OBJETIVO: 19'"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "10 KM REGENERATIV O"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
 const isSets = t => /^(\d[\d\s/x×a-]*(set|rep|rondas|rep|kg|alt|mts|min|seg|km)?\s*[\d/x×"' ]*)$/i.test(t.trim()) || /^\d[\d\s\-\/]*$/.test(t.trim()) || /^rest\b/i.test(t) || /^(\d+(x|\s)\s*)?(set|rondas)/i.test(t);
@@ -237,9 +236,7 @@ let DATA = allWeeks();
 
 // ---------- estado de navegación ----------
 const ui = load('fm-ui', {});
-let MODE = ui.m || 't';            // t = entreno, n = nutrición
 let TV = ui.tv || 'week';          // week | run | import
-let NT = ui.nt || 'plan';          // plan | prog | calc | shop | eq
 let W = 0, D = 0;
 const DONE = load('fm-done', []);  // [{w, d, date}]
 (function pickToday(){
@@ -250,7 +247,7 @@ const DONE = load('fm-done', []);  // [{w, d, date}]
   } else { W = Math.max(0, DATA.length - 1); D = 0; }
 })();
 const TODAY_POS = {w: W, d: D};
-function saveUI(){ store('fm-ui', {m: MODE, tv: TV, nt: NT}); }
+function saveUI(){ store('fm-ui', {tv: TV}); }
 
 // =====================================================================
 // ENTRENAMIENTO
@@ -421,408 +418,24 @@ async function importExcel(file){
 }
 
 // =====================================================================
-// NUTRICIÓN
-// =====================================================================
-let ADJ = load('fm-adj', {alm: 0, cena: 0, hist: []});
-function factors(){ return {alm: 1 + 0.25 * ADJ.alm, cena: Math.max(0.5, 1 - 0.25 * ADJ.cena)}; }
-function targets(){
-  const f = factors();
-  return {
-    desayuno: {label: "Desayuno", kcal: 480, p: 35, c: 45, g: 17},
-    almuerzo: {label: "Almuerzo", kcal: Math.round(800 + 70 * (f.alm - 1) * 4), p: 65, c: Math.round(10 + 70 * f.alm), g: 18},
-    merienda: {label: "Merienda", kcal: 370, p: 33, c: 20, g: 18},
-    cena:     {label: "Cena", kcal: Math.round(700 + 40 * (f.cena - 1) * 4), p: 65, c: Math.round(10 + 40 * f.cena), g: 22}
-  };
-}
-function planMeals(){
-  const f = factors();
-  return [
-    {k: 'desayuno', t: '9:30', n: 'Desayuno', m: '<b>3 huevos + 3 claras</b> revueltos, <b>2 tostadas</b> integrales y <b>1 fruta</b>',
-     a: ['2 huevos + <b>60 g</b> de jamón + <b>40 g</b> de port salut light, 1 tostada integral y 1 fruta']},
-    {g: 1, t: '13:00'},
-    {k: 'almuerzo', t: '14:30', n: 'Almuerzo', m: `<b>200 g</b> de pollo o carne magra, <b>${r5(250 * f.alm)} g</b> de arroz (o ${r5(235 * f.alm)} g de fideos, o ${r5(400 * f.alm)} g de papa), ensalada grande y ½ palta chica`, a: [], s: 1},
-    {k: 'merienda', t: '18:00', n: 'Merienda', m: '<b>2 huevos</b> + <b>60 g</b> de jamón + <b>40 g</b> de port salut light y <b>1 fruta</b>',
-     a: ['2 huevos + 4 claras con <b>40 g</b> de port salut light y 1 fruta']},
-    {k: 'cena', t: '21:30', n: 'Cena', m: `<b>200 g</b> de carne magra o pollo (o 260 g de merluza), <b>${r5(235 * f.cena)} g</b> de papa al horno o hervida (o ${r5(145 * f.cena)} g de arroz), ensalada grande y 1 cda de aceite de oliva`, a: [], s: 1}
-  ];
-}
-const MKEYS = ['desayuno', 'almuerzo', 'merienda', 'cena'];
-let MLOG = load('fm-meals', {});     // {fecha: {desayuno: 'plan'|'otra'|'skip'}}
-let CLOG = load('fm-calclog', {});   // {fecha: [{meal, plato, gramos, kcal, p}]}
-function dayTotals(date){
-  const T = targets(), st = MLOG[date] || {}, calc = CLOG[date] || [];
-  let p = 0, kcal = 0, unknown = [], goal = 0;
-  MKEYS.forEach(k => {
-    goal += T[k].kcal;
-    const c = calc.filter(x => x.meal === k);
-    if (c.length) { p += c.reduce((a, x) => a + x.p, 0); kcal += c.reduce((a, x) => a + x.kcal, 0); }
-    else if (st[k] === 'plan') { p += T[k].p; kcal += T[k].kcal; }
-    else if (st[k] === 'otra') unknown.push(T[k].label);
-  });
-  calc.filter(x => !MKEYS.includes(x.meal)).forEach(x => { p += x.p; kcal += x.kcal; });
-  return {p: Math.round(p), kcal: Math.round(kcal), goal, unknown};
-}
-function dayProtein(date){ const t = dayTotals(date); return {p: t.p, unknown: t.unknown.length > 0}; }
-function kcalCard(){
-  const t = dayTotals(today()), pct = Math.min(100, t.goal ? t.kcal / t.goal * 100 : 0), left = t.goal - t.kcal;
-  const T = targets(), st = MLOG[today()] || {}, calc = CLOG[today()] || [];
-  const rows = MKEYS.map(k => {
-    const c = calc.filter(x => x.meal === k);
-    const v = c.length ? c.reduce((a, x) => a + x.kcal, 0) : st[k] === 'plan' ? T[k].kcal : st[k] === 'otra' ? '?' : st[k] === 'skip' ? 0 : null;
-    return `<span class="kr${v === null ? ' off' : ''}">${T[k].label}: <b>${v === null ? '—' : v === '?' ? '?' : Math.round(v)}</b></span>`;
-  }).join('');
-  return `<section class="sec kcal"><h2>Calorías de hoy</h2><div class="tip">
-    <div class="kbig"><b>${t.kcal}</b><span>/ ${t.goal} kcal</span></div>
-    <div class="track"><div class="fill${t.kcal > t.goal * 1.1 ? ' over' : pct >= 85 ? ' ok' : ''}" style="width:${pct}%"></div></div>
-    <p class="alt">${left > 0 ? `Te quedan <b>${left} kcal</b>` : left < -50 ? `Te pasaste por <b>${-left} kcal</b>` : 'Llegaste al objetivo del día'}${t.unknown.length ? ` · ${t.unknown.join(' y ')}: sin contar (usá la calculadora para sumarlo)` : ''}</p>
-    <div class="krow">${rows}${calc.some(x => !MKEYS.includes(x.meal)) ? `<span class="kr">Extras: <b>${Math.round(calc.filter(x => !MKEYS.includes(x.meal)).reduce((a, x) => a + x.kcal, 0))}</b></span>` : ''}</div>
-    ${calc.length ? `<div class="klist">${calc.map((x, i) => `<div class="kit"><span>${esc(x.plato)} · ${x.gramos ? x.gramos + ' g · ' : ''}<b>${Math.round(x.kcal)} kcal</b> · ${Math.round(x.p)} g prot</span><button class="lnk" data-act="delcalc" data-i="${i}">borrar</button></div>`).join('')}</div>` : ''}
-    <button class="v" data-nt="calc" data-cmode="eat">🍔 Registrar algo que comí<small>CARGAR</small></button>
-  </div></section>`;
-}
-function adherence(){
-  const td = today(), ws = weekStart(td);
-  let ok = 0, tot = 0;
-  for (let d = ws; d <= td; d = addDays(d, 1)) {
-    const st = MLOG[d] || {}, calc = CLOG[d] || [];
-    if (d !== td && !calc.length && !MKEYS.some(k => st[k])) continue;
-    MKEYS.forEach(k => {
-      const marked = st[k] || (calc.some(x => x.meal === k) ? 'calc' : null);
-      if (d === td && !marked) return;
-      tot++; if (marked === 'plan' || marked === 'calc') ok++;
-    });
-  }
-  return tot ? Math.round(ok / tot * 100) : null;
-}
-function mealChecks(k){
-  const st = (MLOG[today()] || {})[k], hasCalc = (CLOG[today()] || []).some(x => x.meal === k);
-  const opt = (v, l) => `<button data-act="meal" data-k="${k}" data-v="${v}" aria-pressed="${st === v}">${l}</button>`;
-  return `<div class="chk">${hasCalc ? `<span class="calcd">✓ Calculado con la calculadora</span>` : opt('plan', '✓ Lo del plan') + opt('otra', 'Otra cosa') + opt('skip', 'Salteé')}</div>`;
-}
-function adjBanner(){
-  const last = ADJ.hist[ADJ.hist.length - 1];
-  if (!ADJ.alm && !ADJ.cena) return '';
-  return `<div class="adj"><b>Ajuste activo:</b> ${ADJ.cena ? `cena con ${ADJ.cena * 25}% menos de carbohidratos` : ''}${ADJ.cena && ADJ.alm ? ' · ' : ''}${ADJ.alm ? `almuerzo con ${ADJ.alm * 25}% más de carbohidratos` : ''}.${last ? ` <span>${esc(last.msg)} (${fmtD(last.date)})</span>` : ''} <button class="lnk" data-act="undoadj">deshacer</button></div>`;
-}
-function renderPlan(){
-  const ad = adherence(), dp = dayProtein(today());
-  $('main').innerHTML = `<div class="sum"><span><b>~${2350 + (targets().almuerzo.kcal - 800) + (targets().cena.kcal - 700)} kcal</b></span><span><b>200 g</b> proteína</span><span>Igual todos los días</span></div>
-  ${kcalCard()}
-  <div class="sum"><span>Proteína hoy: <b>${dp.p}${dp.unknown ? '+?' : ''} / 200 g</b></span><span>Semana: <b>${ad == null ? '—' : ad + '%'}</b> cumplido</span></div>
-  ${adjBanner()}
-  <button class="v" data-nt="calc">🍽️ ¿Comés algo que no está en la dieta?<small>CALCULAR</small></button>`
-  + planMeals().map(x => x.g
-    ? `<section class="sec g"><h2><span class="t">${x.t}</span> · Gimnasio</h2></section>`
-    : `<section class="sec meal"><h2><span class="t">${x.t}</span> ${x.n}</h2><div class="block"><p class="main">${x.m}</p>${x.a.map(a => `<p class="alt o">${a}</p>`).join('')}${x.s ? `<p class="alt">¿Querés cambiar algo? Mirá la pestaña <b>Cambios</b>.</p>` : ''}${mealChecks(x.k)}</div></section>`).join('')
-  + `<p class="foot">Pesos en cocido · ensalada libre · tocá cómo te fue en cada comida</p>`;
-}
-
-// ---------- progreso: peso, cintura y ajuste automático ----------
-let WEIGHTS = load('fm-weights', []);   // [{date, kg, waist}]
-function weeklyAvgs(){
-  const g = {};
-  WEIGHTS.forEach(x => { const k = weekStart(x.date); (g[k] = g[k] || []).push(x.kg); });
-  return Object.keys(g).sort().map(k => ({k, n: g[k].length, avg: g[k].reduce((a, b) => a + b, 0) / g[k].length}));
-}
-function evaluateAdj(){
-  const cur = weekStart(today());
-  const wk = weeklyAvgs().filter(x => x.k < cur && x.n >= 2);
-  if (wk.length < 2) return null;
-  const since = ADJ.hist.length ? ADJ.hist[ADJ.hist.length - 1].date : '0000-00-00';
-  const deltas = [];
-  for (let i = 1; i < wk.length; i++) {
-    const gap = Math.round((parseD(wk[i].k) - parseD(wk[i - 1].k)) / 6048e5) || 1;
-    deltas.push({k: wk[i].k, rate: (wk[i].avg - wk[i - 1].avg) / gap});
-  }
-  const after = deltas.filter(d => d.k >= since);
-  const last = after[after.length - 1];
-  if (last && last.rate < -1 && ADJ.alm < 2) {
-    ADJ.alm++; ADJ.hist.push({date: today(), type: 'alm', msg: `Bajaste ${Math.abs(last.rate).toFixed(1).replace('.', ',')} kg en una semana: más carbohidratos en el almuerzo`}); store('fm-adj', ADJ); return ADJ.hist[ADJ.hist.length - 1].msg;
-  }
-  if (after.length >= 2 && after.slice(-2).every(d => d.rate > -0.5) && ADJ.cena < 2) {
-    ADJ.cena++; ADJ.hist.push({date: today(), type: 'cena', msg: '2 semanas bajando menos de 0,5 kg: menos carbohidratos en la cena'}); store('fm-adj', ADJ); return ADJ.hist[ADJ.hist.length - 1].msg;
-  }
-  return null;
-}
-function chartSVG(){
-  if (WEIGHTS.length < 2) return `<p class="alt">El gráfico aparece cuando tengas al menos 2 pesajes.</p>`;
-  const pts = WEIGHTS.slice().sort((a, b) => a.date.localeCompare(b.date));
-  const avgs = weeklyAvgs();
-  const mid = a => parseD(a.k).getTime() + 3 * 864e5;
-  const times = pts.map(p => parseD(p.date).getTime()).concat(avgs.map(mid));
-  const t0 = Math.min(...times), t1 = Math.max(Math.max(...times), t0 + 864e5 * 6);
-  const vals = pts.map(p => p.kg).concat(avgs.map(a => a.avg));
-  const lo = Math.floor(Math.min(...vals) - 0.5), hi = Math.ceil(Math.max(...vals) + 0.5);
-  const Wd = 340, H = 180, L = 34, R = 8, T = 10, B = 24;
-  const X = t => L + (t - t0) / (t1 - t0) * (Wd - L - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
-  const step = Math.max(1, Math.round((hi - lo) / 4));
-  let grid = ''; for (let v = lo; v <= hi; v += step) grid += `<line x1="${L}" x2="${Wd - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#2a2a2e"/><text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
-  const line = avgs.map(a => `${X(mid(a)).toFixed(1)},${Y(a.avg).toFixed(1)}`).join(' ');
-  const xl = [pts[0].date, pts[pts.length - 1].date].map((d, i) => `<text x="${i ? Wd - R : L}" y="${H - 6}" text-anchor="${i ? 'end' : 'start'}">${fmtD(d)}</text>`).join('');
-  return `<svg viewBox="0 0 ${Wd} ${H}" class="chart" role="img" aria-label="Peso a lo largo del tiempo">${grid}${xl}
-    ${pts.map(p => `<circle cx="${X(parseD(p.date).getTime()).toFixed(1)}" cy="${Y(p.kg).toFixed(1)}" r="3" fill="#8d8d93"/>`).join('')}
-    ${avgs.length > 1 ? `<polyline points="${line}" fill="none" stroke="#ff3b1f" stroke-width="3" stroke-linejoin="round"/>` : ''}
-    ${avgs.map(a => `<circle cx="${X(mid(a)).toFixed(1)}" cy="${Y(a.avg).toFixed(1)}" r="4.5" fill="#ff3b1f"/>`).join('')}
-  </svg><p class="alt"><b style="color:var(--accent)">●</b> promedio semanal · <b style="color:var(--muted)">●</b> cada pesaje</p>`;
-}
-let PROG_MSG = ['', false];
-function renderProg(){
-  const avgs = weeklyAvgs(), ad = adherence();
-  const rows = avgs.slice().reverse().slice(0, 8).map((a, i, arr) => {
-    const prev = arr[i + 1], d = prev ? a.avg - prev.avg : null;
-    return `<tr><td>${fmtD(a.k)}</td><td>${a.avg.toFixed(1).replace('.', ',')} kg</td><td>${d == null ? '—' : (d > 0 ? '+' : '') + d.toFixed(1).replace('.', ',')}</td><td>${a.n}</td></tr>`;
-  }).join('');
-  const lastW = WEIGHTS.slice().sort((a, b) => b.date.localeCompare(a.date)).find(x => x.waist);
-  $('main').innerHTML = `<section class="sec cf"><h2>Anotar pesaje</h2><div class="tip">
-    <p class="alt">Pesate en ayunas, después de ir al baño, 3–4 mañanas por semana.</p>
-    <div class="grid2"><label>Fecha<input type="date" id="wdate" value="${today()}"></label>
-      <label>Peso (kg)<input type="text" inputmode="decimal" id="wkg" placeholder="Ej: 93,4"></label>
-      <label>Cintura (cm, opcional)<input type="text" inputmode="decimal" id="wwaist" placeholder="${lastW ? lastW.waist : 'Ej: 92'}"></label></div>
-    <button class="go" data-act="addw">Guardar</button>
-    <p class="msg${PROG_MSG[1] ? ' err' : ''}">${esc(PROG_MSG[0])}</p>
-  </div></section>
-  ${adjBanner()}
-  <section class="sec"><h2>Tu peso</h2><div class="tip">${chartSVG()}</div></section>
-  <section class="sec"><h2>Por semana</h2>${rows ? `<table class="eq"><tr><th>Semana del</th><th>Promedio</th><th>Cambio</th><th>Pesajes</th></tr>${rows}</table>` : `<div class="tip"><p class="alt">Todavía no hay pesajes.</p></div>`}
-    <div class="tip"><p class="alt">Meta: bajar 0,6–0,8 kg por semana. La app ajusta la dieta sola cuando cierra cada semana. Cumplimiento de esta semana: <b>${ad == null ? '—' : ad + '%'}</b>.</p>
-    ${lastW ? `<p class="alt">Última cintura: <b>${String(lastW.waist).replace('.', ',')} cm</b> (${fmtD(lastW.date)})</p>` : ''}</div></section>
-  <section class="sec"><h2>¿Caen tus cargas?</h2><div class="tip"><p class="alt">Si notás que bajan los pesos en el gimnasio o los ritmos al correr, sumá carbohidratos en el almuerzo.</p>
-    <button class="lnk" data-act="weak">Sí, me siento flojo: sumar ¼ de carbohidratos al almuerzo</button></div></section>
-  ${WEIGHTS.length ? `<section class="sec"><h2>Pesajes</h2>${WEIGHTS.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 20).map(x => `<div class="block row"><p>${fmtD(x.date)} · <b>${String(x.kg).replace('.', ',')} kg</b>${x.waist ? ` · ${String(x.waist).replace('.', ',')} cm` : ''}</p><button class="lnk" data-act="delw" data-date="${x.date}">borrar</button></div>`).join('')}</section>` : ''}`;
-}
-
-// ---------- calculadora (OpenRouter) ----------
-const OR_MODEL = "anthropic/claude-haiku-5.5";
-let CMODE = 'eat';
-let CM = (h => h < 12 ? "desayuno" : h < 17 ? "almuerzo" : h < 20 ? "merienda" : "cena")(new Date().getHours());
-let CDESC = "", CIMG = null, CRES = null, CBUSY = false, CMSG = ["", false], CEDITKEY = false, CADDED = false;
-function orKey(){ try { return localStorage.getItem('fm-or-key') || ''; } catch(e){ return ''; } }
-function setKey(k){ try { k ? localStorage.setItem('fm-or-key', k) : localStorage.removeItem('fm-or-key'); } catch(e){} }
-function cbar(label, val, goal, unit){
-  const pct = Math.max(0, Math.min(100, goal ? val / goal * 100 : 0)), ok = val >= goal * .85 && val <= goal * 1.15;
-  return `<div class="bar"><div class="bt"><span>${label}</span><span>${Math.round(val)} / ${goal} ${unit}</span></div><div class="track"><div class="fill${ok ? ' ok' : ''}" style="width:${pct}%"></div></div></div>`;
-}
-function calcMacros(r){ const g = Math.round(Number(r.gramos) || 0), p = r.por100 || {}; return {g, kcal: (Number(p.kcal) || 0) * g / 100, p: (Number(p.p) || 0) * g / 100, c: (Number(p.c) || 0) * g / 100, gr: (Number(p.g) || 0) * g / 100}; }
-function resultHTML(r, t, mealKey){
-  const m = calcMacros(r), p = r.por100 || {}, ag = (r.agregar || []).filter(Boolean);
-  return `<section class="sec"><h2>${esc(r.plato || 'Tu plato')}</h2><div class="tip"><div class="big">${m.g}<small>gramos</small></div><div class="porc">${esc(r.porcion_texto || '')}</div>${r.consejo ? `<p class="alt">${esc(r.consejo)}</p>` : ''}
-    ${CADDED ? `<p class="done-ok">✓ Sumado a tu ${esc(t.label.toLowerCase())} de hoy</p>` : `<button class="go" data-act="addcalc">Sumar a mi ${esc(t.label.toLowerCase())} de hoy</button>`}</div></section>
-  <section class="sec"><h2>Cómo te cubre el ${esc(t.label.toLowerCase())}</h2><div class="tip">${cbar('Calorías', m.kcal, t.kcal, 'kcal')}${cbar('Proteína', m.p, t.p, 'g')}${cbar('Carbohidratos', m.c, t.c, 'g')}${cbar('Grasa', m.gr, t.g, 'g')}<p class="alt">Solo el plato, sin los agregados.</p></div></section>
-  ${ag.length ? `<section class="sec"><h2>Sumale</h2><div class="tip"><ul>${ag.map(a => `<li>${esc(a)}</li>`).join('')}</ul></div></section>` : ''}
-  <section class="sec"><h2>Lo que calculé</h2><div class="tip"><ul>${(r.ingredientes || []).map(i => `<li>${esc(i)}</li>`).join('')}</ul><p class="alt">Cada 100 g: ${Math.round(p.kcal || 0)} kcal · ${Math.round(p.p || 0)} g proteína · ${Math.round(p.c || 0)} g carbos · ${Math.round(p.g || 0)} g grasa · confianza ${esc(r.confianza || 'media')}</p></div></section>`;
-}
-function eatHTML(r, mealKey){
-  const ing = r.ingredientes || [], tot = r.total || {};
-  const label = mealKey === 'extra' ? 'extra' : targets()[mealKey].label.toLowerCase();
-  return `<section class="sec"><h2>${esc(r.plato || 'Lo que comiste')}</h2><div class="tip">
-    <div class="kbig"><b>${Math.round(tot.kcal || 0)}</b><span>kcal · ${Math.round(tot.p || 0)} g prot · ${Math.round(tot.c || 0)} g carbos · ${Math.round(tot.g || 0)} g grasa</span></div>
-    ${r.porcion ? `<p class="alt">Porción estimada: ${esc(r.porcion)}</p>` : ''}
-    ${CADDED ? `<p class="done-ok">✓ Sumado a tu día (${esc(label)})</p>` : `<button class="go" data-act="addeat">Sumar a mi día</button>`}
-  </div></section>
-  <section class="sec"><h2>Ingredientes</h2><table class="eq"><tr><th>Qué</th><th>Cant.</th><th>kcal</th><th>Prot</th></tr>${ing.map(i => `<tr><td>${esc(i.n)}</td><td>${esc(i.cant || '')}</td><td>${Math.round(i.kcal || 0)}</td><td>${Math.round(i.p || 0)} g</td></tr>`).join('')}</table>
-    <div class="tip"><p class="alt">${r.nota ? esc(r.nota) + ' · ' : ''}Confianza ${esc(r.confianza || 'media')}. Si sabés el peso exacto de algo, ponelo en la descripción y recalculá.</p></div></section>`;
-}
-function eatPrompt(desc, hasImg){
-  return `Sos nutricionista deportivo y hablás en español rioplatense (vos), simple y directo.
-La persona (hombre, 94 kg, entrena fuerza y corre) te cuenta algo que YA comió y quiere saber cuántas calorías y macros tiene para anotarlo en su día.
-Comida: ${desc || "(sin descripción, usá la foto)"}${hasImg ? "\nHay una foto adjunta." : ""}
-
-Tareas:
-1. Desarmá el plato en ingredientes con cantidades típicas de la comida casera argentina. Si la persona dio pesos o cantidades, usalos tal cual. Si no, asumí una porción normal de adulto (ej: sandwich de milanesa completo = 1 milanesa de carne de 150 g frita, pan francés 120 g, 1 huevo frito, 2 fetas de jamón, 2 fetas de queso, lechuga, tomate, mayonesa 15 g).
-2. Para cada ingrediente dá cantidad (en g, ml o unidades), kcal, proteína, carbohidratos y grasa.
-3. Sumá el total.
-
-Respondé SOLO con JSON válido, sin texto extra:
-{"plato":"nombre corto","porcion":"descripción corta de la porción asumida","ingredientes":[{"n":"ingrediente","cant":"150 g","kcal":0,"p":0,"c":0,"g":0}],"total":{"kcal":0,"p":0,"c":0,"g":0},"nota":"una frase opcional","confianza":"alta|media|baja"}`;
-}
-function renderCalc(){
-  const key = orKey(), T = targets();
-  if (!key || CEDITKEY) {
-    $('main').innerHTML = `<section class="sec cf"><h2>Conectar OpenRouter</h2><div class="tip">
-      <p>Pegá tu clave de OpenRouter. <b>Se guarda solo en este celular</b>, no en GitHub.</p>
-      <p class="alt">Conviene crear una clave nueva solo para esta app, con un límite de gasto de US$1 o 2.</p>
-      <input type="password" id="orkey" placeholder="sk-or-..." autocomplete="off">
-      <button class="go" data-act="savekey">Guardar</button>
-      ${key ? `<button class="lnk" data-act="cancelkey">Cancelar</button>` : ''}
-      <p class="msg${CMSG[1] ? ' err' : ''}">${esc(CMSG[0])}</p></div></section>`;
-    return;
-  }
-  const t = T[CM === 'extra' ? 'merienda' : CM], eat = CMODE === 'eat';
-  $('main').innerHTML = `<div class="mode cmode"><button data-act="cmode" data-v="eat" aria-pressed="${eat}">Lo que comí</button><button data-act="cmode" data-v="plan" aria-pressed="${!eat}">¿Cuánto como?</button></div>
-  <section class="sec cf"><h2>${eat ? 'Registrar lo que comí' : 'Calculadora de platos'}</h2><div class="tip">
-    <p class="alt">${eat ? 'Escribí qué comiste (y cuánto, si lo sabés) o sacale una foto. La IA lo desarma en ingredientes con sus calorías y lo sumás al día.' : 'Para comidas que no están en la dieta. Escribí qué vas a comer o sacale una foto, y te digo cuánto comer.'}</p>
-    <label class="h">${eat ? '¿En qué comida va?' : '¿Qué comida es?'}</label>
-    <div class="mseg${eat ? ' five' : ''}">${MKEYS.map(k => `<button aria-pressed="${k === CM}" data-act="cm" data-k="${k}">${T[k].label}</button>`).join('')}${eat ? `<button aria-pressed="${CM === 'extra'}" data-act="cm" data-k="extra">Extra</button>` : ''}</div>
-    ${eat ? '' : `<div class="tg">Objetivo: <b>~${t.kcal} kcal</b> · <b>${t.p} g</b> proteína · ${t.c} g carbos · ${t.g} g grasa</div>`}
-    <label class="h" for="cdesc">${eat ? '¿Qué comiste?' : '¿Qué vas a comer?'}</label>
-    <textarea id="cdesc" placeholder="${eat ? 'Ej: sandwich de milanesa completo con lechuga, tomate, huevo, jamón y queso' : 'Ej: zapallito relleno con carne molida, cebolla, morrón y queso. Cada zapallito pesa unos 200 g.'}">${esc(CDESC)}</textarea>
-    <label class="h">Foto del plato (opcional)</label>
-    <div class="ph"><label class="btn" for="cfile">📷 Sacar o subir foto</label><input id="cfile" type="file" accept="image/*" capture="environment">
-      <div class="th" style="display:${CIMG ? 'block' : 'none'}"><img alt="Foto del plato" src="${CIMG || ''}"><button data-act="crm" aria-label="Quitar foto">×</button></div></div>
-    <button class="go" data-act="cgo"${CBUSY ? ' disabled' : ''}>${CBUSY ? 'Calculando…' : eat ? 'Ver calorías' : 'Calcular'}</button>
-    <p class="msg${CMSG[1] ? ' err' : ''}">${esc(CMSG[0])}</p>
-  </div></section>
-  ${CRES ? (CRES.mode === 'eat' ? eatHTML(CRES.r, CRES.m) : resultHTML(CRES.r, T[CRES.m], CRES.m)) : ''}
-  <p class="foot">Estimación aproximada · v${APP_VERSION} · <button class="lnk" data-act="editkey">cambiar clave</button></p>`;
-}
-async function shrinkImg(file){
-  const url = URL.createObjectURL(file);
-  try {
-    const img = await new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = url; });
-    const sc = Math.min(1, 1024 / Math.max(img.width, img.height)), c = document.createElement('canvas');
-    c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
-    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-    return c.toDataURL('image/jpeg', 0.85);
-  } finally { URL.revokeObjectURL(url); }
-}
-function calcPrompt(desc, t, hasImg){
-  return `Sos nutricionista deportivo y hablás en español rioplatense (vos), simple y directo.
-Persona: hombre, 1,86 m, 94 kg, entrena fuerza pesada 4 días por semana y corre 3 veces por semana. Está en déficit para bajar grasa y mantener músculo.
-Comida: ${t.label}. Objetivo de esta comida: ~${t.kcal} kcal, ${t.p} g de proteína, ${t.c} g de carbohidratos, ${t.g} g de grasa.
-Plato que va a comer: ${desc || "(sin descripción, usá la foto)"}${hasImg ? "\nHay una foto del plato adjunta." : ""}
-
-Tareas:
-1. Identificá los ingredientes y estimá la composición del plato ya cocido por cada 100 g (kcal, proteína, carbohidratos, grasa). Si te dio pesos, usalos. Si no, asumí recetas caseras argentinas típicas.
-2. Calculá cuántos gramos del plato comer para acercarse al objetivo de kcal sin pasarse, con la proteína lo más cerca posible.
-3. Si con esa porción falta más de 10 g de proteína, sugerí 1 agregado simple con gramos (huevo, claras, pollo, atún, jamón cocido o port salut light). Si faltan verduras, sumá "ensalada libre".
-4. Traducí la porción a algo fácil de ver (ej: "1 zapallito y medio", "1 plato hondo al ras").
-
-Respondé SOLO con JSON válido, sin texto extra:
-{"plato":"nombre corto","ingredientes":["..."],"por100":{"kcal":0,"p":0,"c":0,"g":0},"gramos":0,"porcion_texto":"...","agregar":["..."],"consejo":"una frase","confianza":"alta|media|baja"}`;
-}
-async function runCalc(){
-  if (CBUSY) return;
-  const ta = $('cdesc'); if (ta) CDESC = ta.value.trim();
-  if (!CDESC && !CIMG) { CMSG = ["Escribí qué vas a comer o sacale una foto.", true]; renderCalc(); return; }
-  CBUSY = true; CMSG = ["", false]; renderCalc();
-  const eat = CMODE === 'eat', t = targets()[CM === 'extra' ? 'merienda' : CM], content = [{type: "text", text: eat ? eatPrompt(CDESC, !!CIMG) : calcPrompt(CDESC, t, !!CIMG)}];
-  if (CIMG) content.push({type: "image_url", image_url: {url: CIMG}});
-  try {
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {"Authorization": "Bearer " + orKey(), "Content-Type": "application/json", "X-Title": "Plan Felipe"},
-      body: JSON.stringify({model: OR_MODEL, max_tokens: 2000, reasoning: {enabled: false}, messages: [{role: "system", content: "Respondé únicamente con un objeto JSON válido. Nada de texto antes o después."}, {role: "user", content}]})
-    });
-    const data = await res.json().catch(() => ({}));
-    if (res.status === 401) throw new Error("La clave no funciona. Tocá \"cambiar clave\" y pegala de nuevo.");
-    if (res.status === 402) throw new Error("No te queda saldo en OpenRouter. Cargá crédito y probá de nuevo.");
-    if (res.status === 429) throw new Error("Muchas consultas seguidas. Esperá un minuto.");
-    if (!res.ok) throw new Error((data.error && data.error.message) || "OpenRouter devolvió un error. Probá de nuevo.");
-    if (data.error) throw new Error(data.error.message || "OpenRouter devolvió un error.");
-    const ch = data.choices?.[0] || {};
-    if (ch.error) throw new Error(ch.error.message || "El modelo devolvió un error.");
-    let txt = ch.message?.content ?? "";
-    if (Array.isArray(txt)) txt = txt.map(x => typeof x === "string" ? x : (x.text || "")).join("");
-    txt = String(txt).replace(/```(json)?/gi, "").trim();
-    const a = txt.indexOf('{'), z = txt.lastIndexOf('}');
-    if (a < 0 || z <= a) throw new Error(txt ? "La IA respondió algo que no entiendo: \"" + txt.slice(0, 140) + "\"" : "La IA no devolvió texto (" + (ch.finish_reason || "sin motivo") + "). Probá de nuevo.");
-    let r; try { r = JSON.parse(txt.slice(a, z + 1)); } catch (pe) { throw new Error("La respuesta vino incompleta: \"" + txt.slice(0, 140) + "\""); }
-    if (eat) {
-      r.ingredientes = (r.ingredientes || []).map(i => ({n: i.n || '', cant: i.cant || '', kcal: +i.kcal || 0, p: +i.p || 0, c: +i.c || 0, g: +i.g || 0}));
-      const sum = k => r.ingredientes.reduce((a, i) => a + i[k], 0);
-      r.total = {kcal: +(r.total && r.total.kcal) || sum('kcal'), p: +(r.total && r.total.p) || sum('p'), c: +(r.total && r.total.c) || sum('c'), g: +(r.total && r.total.g) || sum('g')};
-      if (!r.total.kcal) throw new Error("No pude estimar las calorías. Describí mejor lo que comiste.");
-    } else {
-      r.gramos = Number(String(r.gramos ?? "").replace(/[^0-9.]/g, "")) || 0;
-      if (!r.gramos) throw new Error("No pude calcular la porción. Describí mejor el plato.");
-    }
-    CRES = {r, m: CM, mode: eat ? 'eat' : 'plan'}; CADDED = false; CMSG = ["", false];
-  } catch (e) {
-    CMSG = [(e && e.message) ? (e.message === "Failed to fetch" ? "No hay conexión con OpenRouter. Revisá internet y probá de nuevo." : e.message) : "Algo falló. Probá de nuevo.", true];
-  } finally {
-    CBUSY = false; renderCalc();
-    if (CRES && !CMSG[1]) { const h = document.querySelectorAll('#main .sec')[1]; h && h.scrollIntoView({behavior: 'smooth'}); }
-  }
-}
-
-// ---------- lista de compras ----------
-let SHOP = load('fm-shop', {});
-function shopItems(){
-  const f = factors(), wk = n => Math.round(n * 7);
-  const kg = g => g >= 1000 ? (g / 1000).toFixed(1).replace('.', ',') + ' kg' : r5(g) + ' g';
-  return [
-    ['Proteínas', [
-      ['Pechuga de pollo', kg(wk(270)), '200 g cocido por día en el almuerzo (≈270 g crudo)'],
-      ['Carne magra (lomo, peceto, nalga, cuadril)', kg(wk(270)), '200 g cocido por día en la cena (≈270 g crudo)'],
-      ['Huevos', '35 + claras', '5 huevos por día; las claras pueden ser de botella (≈700 ml) o 21 huevos más'],
-      ['Jamón cocido natural', kg(wk(60)), '60 g por día en la merienda'],
-      ['Queso port salut light', kg(wk(40)), '40 g por día en la merienda']]],
-    ['Carbohidratos', [
-      ['Arroz', kg(wk(250 * f.alm / 2.8)), `crudo, para el almuerzo (${r5(250 * f.alm)} g cocido por día)`],
-      ['Papa', kg(wk(235 * f.cena * 1.05)), `para la cena (${r5(235 * f.cena)} g cocida por día)`],
-      ['Pan integral', '14 rebanadas', '2 por día en el desayuno (≈1 paquete)'],
-      ['Fruta', '14 unidades', '2 por día: desayuno y merienda']]],
-    ['Grasas y verduras', [
-      ['Palta', '4 unidades', '½ por día en el almuerzo'],
-      ['Aceite de oliva', '≈110 ml', '1 cda por día en la cena'],
-      ['Verduras para ensalada', '14 platos', 'lechuga, tomate, zanahoria, pepino, rúcula, cebolla, brócoli, zapallito…']]]
-  ];
-}
-function renderShop(){
-  const wk = weekStart(today()), got = SHOP[wk] || {};
-  $('main').innerHTML = `<div class="sum"><span>Semana del <b>${fmtD(wk)}</b></span><span>Para 7 días de plan</span></div>`
-  + shopItems().map(([g, items]) => `<section class="sec"><h2>${g}</h2>${items.map(([n, q, note]) => {
-      const id = norm(n); return `<label class="block shop${got[id] ? ' got' : ''}"><input type="checkbox" data-shop="${esc(id)}"${got[id] ? ' checked' : ''}><span><b>${esc(n)}</b> · ${esc(q)}<br><small>${esc(note)}</small></span></label>`; }).join('')}</section>`).join('')
-  + `<p class="foot">Las cantidades siguen tu ajuste actual · <button class="lnk" data-act="shopreset">desmarcar todo</button></p>`;
-}
-
-// ---------- cambios / equivalencias ----------
-function renderEq(){
-  const f = factors();
-  const EQ = [
-    ["Proteína (en cocido)", ["Alimento", "Porción"], [["Pollo (pechuga)", "200 g"], ["Carne magra (lomo, peceto, nalga, cuadril)", "200 g"], ["Carne molida especial*", "220 g"], ["Atún al natural", "230 g (2 latas)"], ["Merluza u otro pescado", "260 g"]], "* Con carne molida, poné la mitad del aceite o la palta."],
-    ["Carbohidratos (en cocido)", ["Alimento", "Almuerzo", "Cena"], [["Arroz", r5(250 * f.alm) + " g", r5(145 * f.cena) + " g"], ["Fideos", r5(235 * f.alm) + " g", r5(135 * f.cena) + " g"], ["Papa", r5(400 * f.alm) + " g", r5(235 * f.cena) + " g"], ["Batata", r5(350 * f.alm) + " g", r5(200 * f.cena) + " g"]], (ADJ.alm || ADJ.cena) ? "Incluye tu ajuste actual." : ""],
-    ["Grasa", ["Esto", "Equivale a"], [["½ palta chica (70 g)", "1 cda de aceite de oliva o 20 g de frutos secos"]], ""],
-    ["Desayuno y merienda", ["Esto", "Equivale a"], [["1 tostada integral", "2 galletas de arroz o 20 g de granola"], ["1 fruta", "1 banana chica o 2 mandarinas"], ["1 huevo", "2 claras o 30 g de jamón"]], ""]
-  ];
-  const RULES = [
-    "<b>Es igual todos los días:</b> entrenes, descanses o corras el fondo.",
-    "<b>Pesos en cocido.</b> Pesá las primeras semanas hasta que te salga a ojo.",
-    "<b>Ensalada libre</b> en almuerzo y cena: lechuga, tomate, rúcula, zanahoria, pepino, repollo, cebolla, brócoli, zapallito, berenjena, chauchas, espinaca, morrón.",
-    "<b>Libres siempre:</b> mate amargo, café, té, agua, edulcorante, limón, vinagre, mostaza y especias.",
-    "<b>Todos los días:</b> 3–4 litros de agua, 8.000–10.000 pasos y dormir 7–9 horas.",
-    "<b>Fondo de más de 75 min:</b> llevá 1 gel o 3 dátiles por hora para correr.",
-    "<b>1 comida libre por semana.</b> Alcohol al mínimo.",
-    "<b>Pesate</b> en la pestaña Progreso. La app ajusta los carbohidratos sola según cómo bajes."
-  ];
-  $('main').innerHTML = EQ.map(([title, head, rows, note]) => `<section class="sec"><h2>${title}</h2><table class="eq"><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</table>${note ? `<div class="tip"><p class="alt">${note}</p></div>` : ''}</section>`).join('')
-    + `<section class="sec"><h2>Reglas</h2><div class="tip">${RULES.map(r => `<p>${r}</p>`).join('')}</div></section>`
-    + `<p class="foot">Cambiá un alimento por otro de la misma tabla</p>`;
-}
-
-// =====================================================================
 // NAVEGACIÓN Y EVENTOS
 // =====================================================================
-const NTABS = [['plan', 'Plan'], ['prog', 'Progreso'], ['calc', 'Calculadora'], ['shop', 'Compras'], ['eq', 'Cambios']];
 function renderTop(){
-  document.querySelectorAll('#mode button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === MODE)));
-  $('ttl').textContent = MODE === 'n' ? 'Plan de nutrición' : 'Plan de entrenamiento';
   const dd = $('days');
-  if (MODE === 'n') {
-    $('weeks').innerHTML = NTABS.map(([k, l]) => `<button role="tab" aria-pressed="${k === NT}" data-nt="${k}">${l}</button>`).join('');
-    dd.className = 'days hide'; dd.innerHTML = '';
-  } else {
-    $('weeks').innerHTML = `<button role="tab" aria-pressed="${TV === 'week'}" data-w="0">🏋️ Gym</button>`
-      + `<button role="tab" aria-pressed="${TV === 'run'}" data-tv="run">🏃 Running</button><button role="tab" aria-pressed="${TV === 'import'}" data-tv="import">+ Excel</button>`;
-    if (TV === 'week') {
-      const wn = DATA[W].name;
-      dd.className = 'days';
-      dd.innerHTML = DATA[W].days.map((d, i) => `<button role="tab" aria-pressed="${i === D}" data-d="${i}" class="${DONE.some(x => x.w === wn && x.d === i) ? 'done' : ''}${TODAY_POS.w === W && TODAY_POS.d === i ? ' hoy' : ''}"><span>${esc(d.name.replace(/D[IÍ]A/i, 'Día'))}</span></button>`).join('');
-    } else { dd.className = 'days hide'; dd.innerHTML = ''; }
-  }
-  const sel = $('weeks').querySelector('[aria-pressed="true"]'); sel && sel.scrollIntoView({inline: 'center', block: 'nearest'});
+  $('weeks').innerHTML = `<button role="tab" aria-pressed="${TV === 'week'}" data-w="0">🏋️ Gym</button>`
+    + `<button role="tab" aria-pressed="${TV === 'run'}" data-tv="run">🏃 Running</button><button role="tab" aria-pressed="${TV === 'import'}" data-tv="import">+ Excel</button>`;
+  if (TV === 'week') {
+    const wn = DATA[W].name;
+    dd.className = 'days';
+    dd.innerHTML = DATA[W].days.map((d, i) => `<button role="tab" aria-pressed="${i === D}" data-d="${i}" class="${DONE.some(x => x.w === wn && x.d === i) ? 'done' : ''}${TODAY_POS.w === W && TODAY_POS.d === i ? ' hoy' : ''}"><span>${esc(d.name.replace(/D[IÍ]A/i, 'Día'))}</span></button>`).join('');
+  } else { dd.className = 'days hide'; dd.innerHTML = ''; }
 }
-function renderMain(){
-  if (MODE === 'n') ({plan: renderPlan, prog: renderProg, calc: renderCalc, shop: renderShop, eq: renderEq}[NT] || renderPlan)();
-  else ({week: renderWeek, run: renderRun, import: renderImport}[TV] || renderWeek)();
-}
+function renderMain(){ ({week: renderWeek, run: renderRun, import: renderImport}[TV] || renderWeek)(); }
 function renderAll(scroll){ renderTop(); renderMain(); if (scroll !== false) window.scrollTo({top: 0}); }
 
 document.addEventListener('click', async e => {
   const b = e.target.closest('button, [data-act]'); if (!b) return;
   const ds = b.dataset;
-  if (ds.m) { MODE = ds.m; saveUI(); return renderAll(); }
-  if (ds.nt) { NT = ds.nt; if (ds.cmode) { CMODE = ds.cmode; CRES = null; } saveUI(); return renderAll(); }
   if (ds.w !== undefined) { TV = 'week'; W = +ds.w; D = Math.min(D, DATA[W].days.length - 1); saveUI(); return renderAll(); }
   if (ds.d !== undefined) { D = +ds.d; return renderAll(); }
   if (ds.tv) { TV = ds.tv; saveUI(); return renderAll(); }
@@ -844,67 +457,15 @@ document.addEventListener('click', async e => {
     RUNS.push({id: Date.now(), date: $('rdate').value || today(), type: $('rtype').value, km, min, notes: $('rnotes').value.trim()}); store('fm-run', RUNS); return renderAll(false);
   }
   if (act === 'delrun') { RUNS = RUNS.filter(r => String(r.id) !== ds.id); store('fm-run', RUNS); return renderAll(false); }
-  if (act === 'meal') {
-    const d = today(), st = MLOG[d] = MLOG[d] || {}; st[ds.k] = st[ds.k] === ds.v ? undefined : ds.v; store('fm-meals', MLOG); return renderAll(false);
-  }
-  if (act === 'undoadj') {
-    const last = ADJ.hist.pop();
-    if (last) ADJ[last.type] = Math.max(0, ADJ[last.type] - 1); else { ADJ.alm = 0; ADJ.cena = 0; }
-    store('fm-adj', ADJ); return renderAll(false);
-  }
-  if (act === 'weak') { if (ADJ.alm < 2) { ADJ.alm++; ADJ.hist.push({date: today(), type: 'alm', msg: 'Te sentiste flojo: más carbohidratos en el almuerzo'}); store('fm-adj', ADJ); PROG_MSG = ['Listo: el almuerzo ahora lleva ¼ más de carbohidratos.', false]; } else PROG_MSG = ['Ya tenés el máximo de carbohidratos en el almuerzo. Si seguís flojo, revisá el sueño.', false]; return renderAll(false); }
-  if (act === 'addw') {
-    const kg = Number(String($('wkg').value).replace(',', '.')), waist = Number(String($('wwaist').value).replace(',', '.')) || null, date = $('wdate').value || today();
-    if (!kg || kg < 40 || kg > 200) { PROG_MSG = ['Poné tu peso en kg, por ejemplo 93,4.', true]; return renderAll(false); }
-    WEIGHTS = WEIGHTS.filter(x => x.date !== date); WEIGHTS.push({date, kg, waist}); store('fm-weights', WEIGHTS);
-    const ch = evaluateAdj(); PROG_MSG = [ch ? 'Guardado. Ajusté tu dieta: ' + ch + '.' : 'Guardado.', false]; return renderAll(false);
-  }
-  if (act === 'delw') { WEIGHTS = WEIGHTS.filter(x => x.date !== ds.date); store('fm-weights', WEIGHTS); PROG_MSG = ['', false]; return renderAll(false); }
-  if (act === 'cmode') { CMODE = ds.v; CRES = null; CMSG = ['', false]; if (CMODE !== 'eat' && CM === 'extra') CM = 'merienda'; return renderCalc(); }
-  if (act === 'addeat' && CRES && CRES.mode === 'eat') {
-    const d = today(), r = CRES.r;
-    (CLOG[d] = CLOG[d] || []).push({meal: CRES.m, plato: r.plato || 'Comida', gramos: 0, kcal: Math.round(r.total.kcal), p: Math.round(r.total.p)}); store('fm-calclog', CLOG);
-    CADDED = true; return renderCalc();
-  }
-  if (act === 'delcalc') { const d = today(); (CLOG[d] || []).splice(+ds.i, 1); store('fm-calclog', CLOG); return renderAll(false); }
-  if (act === 'cm') { const ta = $('cdesc'); if (ta) CDESC = ta.value; CM = ds.k; return renderCalc(); }
-  if (act === 'cgo') return runCalc();
-  if (act === 'crm') { CIMG = null; return renderCalc(); }
-  if (act === 'editkey') { CEDITKEY = true; CMSG = ['', false]; return renderCalc(); }
-  if (act === 'cancelkey') { CEDITKEY = false; return renderCalc(); }
-  if (act === 'savekey') {
-    const k = ($('orkey').value || '').trim();
-    if (!/^sk-or-/.test(k)) { CMSG = ['Esa no parece una clave de OpenRouter (empieza con sk-or-).', true]; return renderCalc(); }
-    setKey(k); CEDITKEY = false; CMSG = ['Listo, clave guardada en este celular.', false]; return renderCalc();
-  }
-  if (act === 'addcalc' && CRES) {
-    const m = calcMacros(CRES.r), d = today();
-    (CLOG[d] = CLOG[d] || []).push({meal: CRES.m, plato: CRES.r.plato || 'Plato', gramos: m.g, kcal: Math.round(m.kcal), p: Math.round(m.p)}); store('fm-calclog', CLOG);
-    CADDED = true; return renderCalc();
-  }
-  if (act === 'shopreset') { delete SHOP[weekStart(today())]; store('fm-shop', SHOP); return renderAll(false); }
   if (act === 'update') {
     store('fm-upd-try', {v: ds.v, t: Date.now()});
     try { await fetch(location.pathname, {cache: 'reload'}); } catch(e){}
     location.replace(location.pathname + '?v=' + encodeURIComponent(ds.v));
   }
 });
-document.addEventListener('input', e => {
-  if (e.target.id === 'cdesc') CDESC = e.target.value;
-});
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ad-in')) { e.preventDefault(); const box = e.target.closest('.ad'), all = [...box.querySelectorAll('.ad-in')], i = all.indexOf(e.target); if (all[i + 1]) { all[i + 1].focus(); all[i + 1].select(); } else box.querySelector('[data-act="kgsave"]').click(); } });
-document.addEventListener('change', async e => {
-  if (e.target.id === 'xfile') { const f = e.target.files && e.target.files[0]; if (f) importExcel(f); return; }
-  if (e.target.dataset && e.target.dataset.shop) {
-    const wk = weekStart(today()), s = SHOP[wk] = SHOP[wk] || {}; s[e.target.dataset.shop] = e.target.checked; store('fm-shop', SHOP);
-    e.target.closest('.shop').classList.toggle('got', e.target.checked); return;
-  }
-  if (e.target.id === 'cfile') {
-    const f = e.target.files && e.target.files[0]; if (!f) return;
-    const ta = $('cdesc'); if (ta) CDESC = ta.value;
-    try { CIMG = await shrinkImg(f); } catch (err) { CMSG = ['No pude leer la foto.', true]; }
-    renderCalc();
-  }
+document.addEventListener('change', e => {
+  if (e.target.id === 'xfile') { const f = e.target.files && e.target.files[0]; if (f) importExcel(f); }
 });
 
 // ---------- aviso de versión nueva ----------
