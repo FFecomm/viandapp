@@ -326,6 +326,9 @@ a.v.sm{margin-top:2px;padding:7px 10px;font-size:14px;align-self:flex-start;clip
 .rk{font:400 18px Anton,sans-serif;color:var(--accent);white-space:nowrap}
 .cf .go{margin:0}
 .st-in::placeholder{font-size:13px}
+.sec-btn{border:1px solid var(--line);background:var(--chip);color:var(--ink);font:700 15px "Barlow Condensed",sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:11px 0;border-radius:4px;cursor:pointer}
+.pv-last{margin-top:4px !important;padding-top:6px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.pv-last b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -334,7 +337,7 @@ a.v.sm{margin-top:2px;padding:7px 10px;font-size:14px;align-self:flex-start;clip
 <nav id="nav"><button data-tab="home"><i>🏋️</i>Inicio</button><button data-tab="run"><i>🏃</i>Running</button><button data-tab="profile"><i>👤</i>Perfil</button></nav>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.16-3";
+const APP_VERSION = "2026.11.16-4";
 const BASE_DATA = [{"name": "Semana 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}, {"t": "mas pesado q la semana anterior"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}], [{"t": "WOD HIBRIDO"}, {"t": "3 RONDAS"}, {"t": "500 MTS ski"}, {"t": "15 WALLBALL 12 kg"}, {"t": "40 MTS WALKING LUNGES DB 22.5kg"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg - 70kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG o mas"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg - 100kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "warm up 10'"}], [{"t": "trabajo fuerte:"}, {"t": "4x 400 mts"}, {"t": "rest 2' entre set"}], [{"t": "3 set"}, {"t": "1 km anotar tiempos"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}, {"t": "1 con 150kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG a 110kg"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "IR A RC"}], [{"t": "1 KM RUN"}, {"t": "25 MTS SLED PUSH 130KG"}, {"t": "800 MTS RUN"}, {"t": "25 MTS SLED PULL 130KG"}, {"t": "600 MTS RUN"}, {"t": "60 MTS FAMMER CARRY DB KB 32KG"}], [{"t": "TIME OBJETIVO: 19'"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "10 KM REGENERATIV O"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
@@ -450,6 +453,23 @@ function noteRow(key){
   const v = ensureVals(key, 1)[0], pv = (NOTES[key] || []).find(h => h.date !== today() && h.t);
   return `<div class="st-r nt${v.ok ? ' ok' : ''}" data-k="${esc(key)}" data-i="0"><input class="st-in tx" data-f="kg" type="text" value="${esc(v.kg)}" placeholder="${pv ? 'Anterior: ' + esc(pv.t) : 'Tiempo o nota (opcional)'}" aria-label="Tiempo o nota"><button class="st-c" data-act="tick" aria-label="Marcar hecho">✓</button></div>`;
 }
+function prevLine(key){ const pv = prevEntry(key) || todayEntry(key); if (!pv) return ''; const t = (pv.kg || []).map((_, i) => prevCell(pv, i)).filter(x => x !== '–').join(' · '); return t ? `<p class="pv-last">Última vez (${fmtD(pv.date)}): <b>${esc(t)}</b></p>` : ''; }
+function renderPreview(){
+  const w = DATA[0], day = w.days[D], act = ACTIVE && ACTIVE.w === w.name ? ACTIVE : null;
+  const vid = it => `<a class="v sm" href="${esc(it.v)}" target="_blank" rel="noopener">${play}Ver video</a>`;
+  const secs = day.sections.map(s => `<h3 class="wsec">${esc(s.title)}</h3>` + s.blocks.map(b => {
+    const pl = blockPlan(b, s.title);
+    const body = b.map((it, k) => it.v ? vid(it) : `<p class="${k === 0 && !isSets(it.t) ? 'ex-n' : 'ex-x'}">${esc(it.t)}</p>`).join('');
+    let last = '';
+    if (pl) last = pl.type === 'rounds' ? pl.rows.map(r => prevLine(r.key)).join('') : prevLine(pl.key);
+    else { const pv = (NOTES[noteKey(b)] || []).find(h => h.t); if (pv) last = `<p class="pv-last">Última vez (${fmtD(pv.date)}): <b>${esc(pv.t)}</b></p>`; }
+    return `<div class="ex plain">${body}${last}</div>`;
+  }).join('')).join('');
+  $('main').innerHTML = `<button class="lnk back" data-act="back">← Volver</button>
+    <div class="hero sm"><h2>${esc(w.name)} · Día ${D + 1}</h2><p>Solo lectura: no inicia la sesión</p></div>
+    ${secs}
+    ${act ? (act.d === D ? `<button class="go" data-act="resume">Continuar entrenamiento</button>` : '') : `<button class="go" data-act="start">Empezar entrenamiento</button>`}`;
+}
 function elapsed(){ const s = Math.max(0, Math.floor((Date.now() - ACTIVE.start) / 1000)); const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60); return (h ? h + ':' + pad(m) : m) + ':' + pad(s % 60); }
 function progress(){ let done = 0, tot = 0; Object.values(ACTIVE.vals).forEach(v => v.forEach(x => { tot++; if (x.ok) done++; })); return {done, tot}; }
 function renderWorkout(){
@@ -524,6 +544,7 @@ function renderHome(){
     <h2>${D === nextDay() && !isDone(D) ? 'Entrenamiento de hoy' : 'Día ' + (D + 1)}</h2>
     <p class="card-m">${exs.length} ejercicios con peso · ${day.sections.length} bloques</p>
     <ul class="prev">${dayPreview(day)}</ul>
+    <button class="sec-btn" data-act="preview">👁 Ver rutina del día</button>
     ${act && act.d === D ? `<button class="go" data-act="resume">Continuar entrenamiento</button>` : `<button class="go" data-act="start"${act ? ' disabled' : ''}>${isDone(D) ? 'Repetir este día' : 'Empezar entrenamiento'}</button>`}
   </section>
   <section class="sec"><h2>Historial</h2>${SESSIONS.length ? SESSIONS.slice(0, 15).map(s => `<button class="hi" data-act="hist" data-id="${s.id}"><div class="ri-d"><b>${fmtD(s.date).slice(0, 2)}</b><span>${MONTHS[parseD(s.date).getMonth()]}</span></div><div class="ri-m"><b>${esc(s.w)} · Día ${s.d + 1}</b><span>${durFmt(s.dur)} · ${s.sets} series · ${volFmt(s.vol)}${s.prs && s.prs.length ? ` · 🏆 ${s.prs.length}` : ''}</span></div><i>›</i></button>`).join('') : `<div class="tip"><p class="alt">Acá van a aparecer tus entrenamientos terminados.</p></div>`}</section>`;
@@ -714,13 +735,14 @@ const TITLES = {home: 'Entrenamiento', run: 'Running', profile: 'Perfil'};
 function renderTop(){
   const full = VIEW === 'workout';
   document.body.classList.toggle('inwork', full);
-  $('ttl').textContent = VIEW === 'summary' ? 'Resumen' : VIEW === 'hist' ? 'Sesión' : VIEW === 'exo' ? 'Progreso' : TITLES[TAB];
+  $('ttl').textContent = VIEW === 'summary' ? 'Resumen' : VIEW === 'hist' ? 'Sesión' : VIEW === 'exo' ? 'Progreso' : VIEW === 'preview' ? 'Rutina' : TITLES[TAB];
   document.querySelectorAll('#nav button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tab === TAB)));
 }
 function renderMain(){
   if (VIEW === 'workout' && ACTIVE) return renderWorkout();
   if (VIEW === 'summary' && SUMMARY) { $('main').innerHTML = sessionHTML(SUMMARY, true); return; }
   if (VIEW === 'hist') { const s = SESSIONS.find(x => String(x.id) === String(HIST_ID)); if (s) { $('main').innerHTML = sessionHTML(s, false); return; } VIEW = null; }
+  if (VIEW === 'preview') return renderPreview();
   if (VIEW === 'exo' && EXO_KEY && LOGS[EXO_KEY]) return renderExo();
   ({home: renderHome, run: renderRun, profile: renderProfile}[TAB] || renderHome)();
 }
@@ -735,6 +757,7 @@ document.addEventListener('click', async e => {
   if (ds.day !== undefined) { D = +ds.day; return renderAll(false); }
   const act = ds.act; if (!act) return;
   if (act === 'start') { ACTIVE = {w: DATA[0].name, d: D, start: Date.now(), vals: {}}; store('fm-active', ACTIVE); VIEW = 'workout'; renderAll(); store('fm-active', ACTIVE); return; }
+  if (act === 'preview') { VIEW = 'preview'; return renderAll(); }
   if (act === 'resume') { D = ACTIVE.d; VIEW = 'workout'; return renderAll(); }
   if (act === 'tick') {
     const row = b.closest('.st-r'), k = row.dataset.k, i = +row.dataset.i, v = ACTIVE.vals[k][i], inp = row.querySelector('[data-f="kg"]'), rp = row.querySelector('[data-f="reps"]');
