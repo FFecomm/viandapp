@@ -337,7 +337,7 @@ a.v.sm{margin-top:2px;padding:7px 10px;font-size:14px;align-self:flex-start;clip
 <nav id="nav"><button data-tab="home"><i>🏋️</i>Inicio</button><button data-tab="run"><i>🏃</i>Running</button><button data-tab="profile"><i>👤</i>Perfil</button></nav>
 <div id="upd" hidden></div>
 <script>
-const APP_VERSION = "2026.11.16-7";
+const APP_VERSION = "2026.11.16-8";
 const BASE_DATA = [{"name": "Semana 10", "days": [{"name": "DÍA 1", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"v": "https://www.youtube.com/watch?v=2iNlXWO2sgc"}, {"t": "3x20 lado"}]]}, {"title": "FUERZA", "blocks": [[{"t": "BACK SQUAT"}, {"t": "5 al 75%"}, {"t": "3 al 80%"}, {"t": "3 al 85%"}, {"t": "1 al 87%"}]]}, {"title": "PLIO + TRANSFERENCIA", "blocks": [[{"t": "3 set ( super serie)"}, {"t": "LANDMINE THRUSTER 10 rep"}, {"v": "https://www.youtube.com/watch?v=FlfhcM9isDA"}, {"t": "BROAD JUMP OVER VALLAS 5 pasadas"}, {"v": "https://www.youtube.com/shorts/fTChbtnLR3w"}], [{"t": "BULGARIAN SQUAT JUMP OVER VALLAS 4x5/5"}, {"v": "https://www.youtube.com/watch?v=Ekq6fICVdZw"}], [{"t": "PRENSA 45°"}, {"t": "12 10 8 6"}, {"t": "Peso: 120kg a 140kg"}, {"t": "mas pesado q la semana anterior"}]]}, {"title": "TREN SUPERIOR", "blocks": [[{"t": "CHIN UP 4x?"}, {"v": "https://www.youtube.com/results?search_query=chin+up+exercise"}], [{"t": "BICEPS 21 X 4"}, {"v": "https://www.youtube.com/results?search_query=biceps+21s+exercise"}], [{"t": "WOD HIBRIDO"}, {"t": "3 RONDAS"}, {"t": "500 MTS ski"}, {"t": "15 WALLBALL 12 kg"}, {"t": "40 MTS WALKING LUNGES DB 22.5kg"}]]}]}, {"name": "DÍA 2", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PLANK DRAG"}, {"v": "https://www.youtube.com/shorts/2a9sgCeaWhI"}, {"t": "3x20"}]]}, {"title": "FUERZA DE EMPUJE", "blocks": [[{"t": "PUSH JERK"}, {"t": "5 5 3 3 1"}, {"t": "Peso: 60kg - 70kg"}, {"v": "https://www.youtube.com/shorts/z_Ub47S1XI4"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "PRESS TRAS NUCA SENTADO DB DB 20KG o mas"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/HihTS8_ohe0"}], [{"t": "HIGH HANG PULL DB 20KG"}, {"t": "3x 12 por lado"}, {"v": "https://www.youtube.com/watch?v=SxQE9oUXd_I"}]]}, {"title": "FUERZA HYROX", "blocks": [[{"t": "SLED PULL"}, {"t": "4x10 mts"}, {"t": "Peso: 80kg - 100kg"}, {"v": "https://www.youtube.com/watch?v=TNI-pUsSCPI"}]]}, {"title": "TRICEPS", "blocks": [[{"t": "FONDOS DIPS c/lastre"}, {"t": "4x?"}, {"v": "https://www.youtube.com/shorts/s5BLhbKWD3E"}], [{"t": "TRICEPS BARRA W"}, {"t": "4x 10 a 12 rep"}, {"v": "https://www.youtube.com/shorts/sAZcbERXSNg"}]]}, {"title": "RUN", "blocks": [[{"t": "warm up 10'"}], [{"t": "trabajo fuerte:"}, {"t": "4x 400 mts"}, {"t": "rest 2' entre set"}], [{"t": "3 set"}, {"t": "1 km anotar tiempos"}]]}]}, {"name": "DÍA 3", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "SIDE BEND KB"}, {"t": "3X10/10"}, {"v": "https://www.youtube.com/shorts/K4nE02-FywI"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PESO MUERTO"}, {"t": "5 con 100kg"}, {"t": "3 con 120kg"}, {"t": "3x1 con 130 a 140kg"}, {"t": "1 con 150kg"}]]}, {"title": "ACCESORIOS", "blocks": [[{"t": "4 SET"}, {"t": "8 SUMO DEADLIFT 100KG a 110kg"}, {"t": "8/8 BACK REVERSE LUNGES 60KG"}, {"v": "https://www.youtube.com/shorts/jolYORaNnxM"}], [{"t": "SUPINE MARCH KICK HAMSTRING"}, {"t": "4x15\" segúndos sobre box de espuma"}, {"v": "https://www.youtube.com/watch?v=zDX3j_GqA5A"}]]}, {"title": "ESPALDA", "blocks": [[{"t": "REMO HAMMER MAQUINA"}, {"t": "12 10 10 8"}], [{"t": "REMO POLEA BAJA PESADO"}, {"t": "12 10 10 8"}, {"v": "https://www.youtube.com/shorts/I3Wi6GK0QMk"}], [{"t": "POLEA DORSAL ATRÁS"}, {"t": "15 12 10 10"}, {"v": "https://www.youtube.com/watch?v=pOmyhD7qb7E"}]]}, {"title": "HYROX", "blocks": [[{"t": "IR A RC"}], [{"t": "1 KM RUN"}, {"t": "25 MTS SLED PUSH 130KG"}, {"t": "800 MTS RUN"}, {"t": "25 MTS SLED PULL 130KG"}, {"t": "600 MTS RUN"}, {"t": "60 MTS FAMMER CARRY DB KB 32KG"}], [{"t": "TIME OBJETIVO: 19'"}]]}]}, {"name": "DÍA 4", "sections": [{"title": "ZONA MEDIA", "blocks": [[{"t": "PRESS PALOF BANDED"}, {"t": "3X20"}, {"v": "https://www.youtube.com/watch?v=suXbr509tFQ"}]]}, {"title": "FUERZA", "blocks": [[{"t": "PECHO PLANO"}, {"t": "10 con 70kg"}, {"t": "8 con 80kg"}, {"t": "6 con 90kg"}, {"t": "2x2 con 95kg a 100kg"}]]}, {"title": "PECHO", "blocks": [[{"t": "CRUCE PECHO POLEA"}, {"t": "4x12"}], [{"t": "PRESS INCLINADO DB DB 17.5kg a 22.5kg"}, {"t": "4x 8 a 12 rep"}]]}, {"title": "OLY", "blocks": [[{"t": "HANG POWER CLEAN"}, {"t": "4X3"}, {"v": "https://www.youtube.com/shorts/6PZj3fqVBaM"}], [{"t": "ERG ROW técnico"}, {"t": "4 SET X 500 MTS"}, {"t": "REST 2' ENTRE"}], [{"t": "NOTA:"}, {"t": "ELITE: SUB 2'04\""}, {"t": "PRO: SUB 2'14\""}]]}, {"title": "RUN", "blocks": [[{"t": "10 KM REGENERATIV O"}]]}]}]}];
 const $ = id => document.getElementById(id);
 const play = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" fill="var(--accent)"/><path d="M9 7l8 5-8 5z" fill="#fff"/></svg>';
@@ -489,7 +489,7 @@ function renderWorkout(){
     <button class="lnk center" data-act="discard">Descartar entrenamiento</button>`;
 }
 function finishWorkout(){
-  const w = DATA[0], day = w.days[ACTIVE.d], td = today();
+  const w = DATA[0], day = w.days[ACTIVE.d], td = ACTIVE.date || today();
   let sets = 0, vol = 0; const prs = [], ex = [];
   day.sections.forEach(sec => sec.blocks.forEach(b => {
     const pl = blockPlan(b, sec.title);
@@ -515,10 +515,23 @@ function finishWorkout(){
     });
   }));
   store('fm-logs2', LOGS); store('fm-notes', NOTES);
-  const ses = {id: Date.now(), date: td, w: w.name, d: ACTIVE.d, dur: Math.min(240, Math.max(1, Math.round((Date.now() - ACTIVE.start) / 60000))), sets, vol: Math.round(vol), prs, ex};
-  SESSIONS.unshift(ses); store('fm-sessions', SESSIONS);
+  if (ACTIVE.editing) SESSIONS = SESSIONS.filter(x => x.id !== ACTIVE.editing);
+  const ses = {raw: JSON.parse(JSON.stringify(ACTIVE.vals)), id: Date.now(), date: td, w: w.name, d: ACTIVE.d, dur: Math.min(240, Math.max(1, Math.round((Date.now() - ACTIVE.start) / 60000))), sets, vol: Math.round(vol), prs, ex};
+  SESSIONS.unshift(ses); SESSIONS.sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id); store('fm-sessions', SESSIONS);
   if (!DONE.some(x => x.w === w.name && x.d === ACTIVE.d)) { DONE.push({w: w.name, d: ACTIVE.d, date: td}); store('fm-done', DONE); }
   ACTIVE = null; store('fm-active', null); D = nextDay(); VIEW = 'summary'; SUMMARY = ses;
+}
+function reopenSession(ses){
+  const w = DATA[0]; if (ACTIVE || ses.w !== w.name || !w.days[ses.d]) return false;
+  let vals = ses.raw ? JSON.parse(JSON.stringify(ses.raw)) : null;
+  if (!vals) {   // sesiones viejas: reconstruir desde el resumen
+    vals = {}; const parse = t => { const m = String(t || '').match(/^([\d.,]*)(?:×(\d+))?$/); return t ? {kg: m ? m[1] : '', reps: m && m[2] ? m[2] : '', ok: true} : {kg: '', reps: '', ok: false}; };
+    w.days[ses.d].sections.forEach(sec => sec.blocks.forEach(b => { const pl = blockPlan(b, sec.title);
+      if (!pl) { const e = ses.ex.find(x => x.note !== undefined && x.name === noteName(b)); if (e) vals[noteKey(b)] = [{kg: e.note || '', reps: '', ok: true}]; return; }
+      (pl.type === 'rounds' ? pl.rows.map(r => ({key: r.key, name: r.label})) : [{key: pl.key, name: pl.name}]).forEach(it => { const e = ses.ex.find(x => x.note === undefined && x.name === it.name); if (e) vals[it.key] = e.kg.map(parse); }); }));
+  }
+  ACTIVE = {w: w.name, d: ses.d, start: Date.now() - ses.dur * 60000, vals, editing: ses.id, date: ses.date}; store('fm-active', ACTIVE);
+  D = ses.d; VIEW = 'workout'; SUMMARY = null; return true;
 }
 function durFmt(m){ return m >= 60 ? `${Math.floor(m / 60)} h ${pad(m % 60)}` : `${m} min`; }
 function volFmt(v){ return v >= 1000 ? (v / 1000).toFixed(1).replace('.', ',') + ' t' : v + ' kg'; }
@@ -527,7 +540,9 @@ function sessionHTML(ses, isSummary){
   <div class="stats"><div><b>${durFmt(ses.dur)}</b><span>Duración</span></div><div><b>${ses.sets}</b><span>Series</span></div><div><b>${volFmt(ses.vol)}</b><span>Movidos</span></div></div>
   ${ses.prs && ses.prs.length ? `<section class="sec pr"><h2>🏆 Récords</h2>${ses.prs.map(p => `<div class="block row"><p>${esc(p.name)}</p><p><b>${p.reps ? p.reps + ' reps' : kgFmt(p.kg) + ' kg'}</b> <span class="alt">antes ${p.reps ? p.prev : kgFmt(p.prev)}</span></p></div>`).join('')}</section>` : ''}
   <section class="sec"><h2>Ejercicios</h2>${ses.ex.length ? ses.ex.map(e => `<div class="block"><p class="first">${esc(e.name)}</p><p class="sets">${e.note !== undefined ? (e.note ? esc(e.note) : '✓ Hecho') : e.kg.filter(Boolean).length ? e.kg.map(k => k || '–').join(' · ') : e.n + ' series'}</p></div>`).join('') : `<div class="tip"><p class="alt">No anotaste pesos en esta sesión.</p></div>`}</section>
-  ${isSummary ? `<button class="go" data-act="back">Listo</button>` : `<button class="lnk center" data-act="delses" data-id="${ses.id}">Borrar esta sesión</button>`}`;
+  ${isSummary ? `<button class="go" data-act="back">Listo</button>` : ''}
+  ${ses.w === DATA[0].name && !ACTIVE ? `<button class="sec-btn" data-act="reopen" data-id="${ses.id}">${isSummary ? '¿Terminaste sin querer? Seguir entrenando' : 'Editar o continuar esta sesión'}</button>` : ''}
+  ${isSummary ? '' : `<button class="lnk center" data-act="delses" data-id="${ses.id}">Borrar esta sesión</button>`}`;
 }
 function nextDay(){ const w = DATA[0]; for (let i = 0; i < w.days.length; i++) if (!DONE.some(x => x.w === w.name && x.d === i)) return i; return 0; }
 function renderHome(){
@@ -769,7 +784,12 @@ document.addEventListener('click', async e => {
     v.kg = inp.value.trim(); if (rp) v.reps = rp.value.trim(); v.ok = !v.ok; row.classList.toggle('ok', v.ok); store('fm-active', ACTIVE);
     const p = progress(), el = $('wprog'); if (el) el.textContent = `${p.done}/${p.tot}`; return;
   }
-  if (act === 'finish') { finishWorkout(); return renderAll(); }
+  if (act === 'finish') {
+    const p = progress(), left = p.tot - p.done;
+    if (left > 0 && Date.now() - DISCARD_ARMED > 4000) { DISCARD_ARMED = Date.now(); b.textContent = `Faltan ${left} · tocá de nuevo`; return; }
+    DISCARD_ARMED = 0; finishWorkout(); return renderAll();
+  }
+  if (act === 'reopen') { const ses = SESSIONS.find(x => String(x.id) === ds.id); if (ses && reopenSession(ses)) return renderAll(); return; }
   if (act === 'discard') {
     if (Date.now() - DISCARD_ARMED > 4000) { DISCARD_ARMED = Date.now(); b.textContent = '¿Seguro? Tocá de nuevo para descartar'; return; }
     ACTIVE = null; store('fm-active', null); VIEW = null; DISCARD_ARMED = 0; return renderAll();
